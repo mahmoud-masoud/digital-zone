@@ -4,7 +4,7 @@ import SearchBox from './SearchBox';
 import { HiMiniShoppingCart } from 'react-icons/hi2';
 import { FaX, FaBars } from 'react-icons/fa6';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import isMobileOrTablet from '../../Utils/isMobileOrTablet';
 import { useSelector } from 'react-redux';
 
@@ -40,7 +40,10 @@ const Header = () => {
         {isMobileOrTablet && isOpen && <Navbar />}
         {!isMobileOrTablet && <Navbar />}
 
-        <Link to={'cart'}>
+        <Link
+          to={'cart'}
+          className='hover:bg-after focus:bg-after px-4 py-1.5 rounded-full'
+        >
           <div className='relative'>
             <HiMiniShoppingCart className='text-3xl text-white' />
             <span

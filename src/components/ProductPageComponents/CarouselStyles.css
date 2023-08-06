@@ -1,0 +1,35 @@
+/* .swiper {
+  height: 500px;
+  max-width: 500px;
+  position: relative;
+} */
+
+/* .swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper {
+  padding: 10px 0;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.mySwiper .swiper-slide {
+  width: 100%;
+  height: 200px;
+  padding: 2px 6px;
+}
+
+
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+} */
+
+.mySwiper .swiper-slide-thumb-active {
+  border: 2px solid #0071dc;
+}

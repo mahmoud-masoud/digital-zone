@@ -13,8 +13,8 @@ const ProductPage = () => {
     return <p> Item not found</p>;
   }
   return (
-    <Wrapper className={'px-3 mb-16 flex gap-4 '}>
-      <div className='flex gap-4 flex-col flex-1'>
+    <Wrapper className={'px-3 mb-16 flex gap-4'}>
+      <div className='flex gap-4 flex-col w-[70%]'>
         <ProductImages image={item.image} />
         <ProductQuickHighlights highlights={item.highlights} />
         <ProductDetails description={item.description} />

@@ -1,4 +1,4 @@
-import Carousel from '../components/Carousel';
+import Carousel from '../components/BannersCarousel/Carousel';
 import Categories from '../components/Categories';
 import BestSellers from '../components/BestSellers';
 

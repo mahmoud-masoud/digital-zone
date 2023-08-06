@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../../store/cartItems';
+import { useEffect } from 'react';
 const AddToCartBtn = ({ title, price, id, image }) => {
-  const dispatch = useDispatch();
-
   const [btnState, setBtnState] = useState({
     clicked: false,
     content: 'Add to cart',
   });
-
   const [quantity, setQuantity] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const itemQuantity = useSelector(
+    (state) => state.cartItems.items.find((item) => item.id === id)?.quantity
+  );
+
+  useEffect(() => {
+    if (itemQuantity) {
+      setQuantity(itemQuantity);
+    }
+  }, [quantity]);
 
   const addToCartFirstTimeHandler = () => {
     setBtnState(() => {
