@@ -21,17 +21,17 @@ const ProductImagesForMobile = () => {
         className='max-w-full max-h-[500px]'
       >
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img1.webp' alt='' />
+          <img src='/images/ProductImages/img1.webp' alt='' />
         </SwiperSlide>
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img2.webp' alt='' />
+          <img src='/public/images/ProductImages/img2.webp' alt='' />
         </SwiperSlide>
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img3.webp' alt='' />
+          <img src='/public/images/ProductImages/img3.webp' alt='' />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src='../../../public/images/ProductImages/image4webp.webp'
+            src='/public/images/ProductImages/image4webp.webp'
             alt=''
           />
         </SwiperSlide>
