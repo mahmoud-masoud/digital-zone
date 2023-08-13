@@ -26,7 +26,7 @@ const SearchBox = () => {
   return (
     <>
       <form
-        className={`${showSuggestions && 'px-4'} md:p-0
+        className={`${showSuggestions && 'px-4 z-[100000000000]'} md:p-0
          flex gap-2 search-box w-full flex-1 md:w-80 md:static
     ${showSuggestions && 'absolute transition right-0'}`}
       >

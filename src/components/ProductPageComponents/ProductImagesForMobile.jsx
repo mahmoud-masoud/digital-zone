@@ -22,7 +22,7 @@ const ProductImagesForMobile = () => {
       >
         <SwiperSlide>
           <img
-            src='../../../public/images/ProductImages/img1.webp'
+            src='/images/ProductImages/img1.webp'
             alt=''
             height='366'
             width='366'
@@ -31,7 +31,7 @@ const ProductImagesForMobile = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src='../../../public/images/ProductImages/img2.webp'
+            src='/images/ProductImages/img2.webp'
             alt=''
             height='366'
             width='366'
@@ -40,7 +40,7 @@ const ProductImagesForMobile = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src='../../../public/images/ProductImages/img3.webp'
+            src='/images/ProductImages/img3.webp'
             alt=''
             height='366'
             width='366'
