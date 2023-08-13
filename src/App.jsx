@@ -5,9 +5,13 @@ import Laptops from './components/Laptops/Laptops';
 import Headphones from './components/Headphones/Headphones';
 import MobilePhones from './components/MobilePhones/MobilePhones';
 import SmartWatches from './components/SmartWatches/SmartWatches';
-import ProductPage from './pages/ProductPage';
+
 import Cart from './pages/Cart';
 import ErrorPage from './UI/ErrorPage';
+import Loading from './UI/Loading';
+import LazyLoadComponent from './Utils/LazyLoadComponent';
+import Favorites from './pages/Favorites';
+import { useEffect } from 'react';
 
 function App() {
   const router = createBrowserRouter([
@@ -22,14 +26,64 @@ function App() {
         { path: 'headphones', element: <Headphones /> },
         { path: 'mobile-phones', element: <MobilePhones /> },
         { path: 'smart-watches', element: <SmartWatches /> },
-        { path: ':productId', element: <ProductPage /> },
-        { path: 'laptops/:productId', element: <ProductPage /> },
-        { path: 'headphones/:productId', element: <ProductPage /> },
-        { path: 'mobile-phones/:productId', element: <ProductPage /> },
-        { path: 'smart-watches/:productId', element: <ProductPage /> },
+        {
+          path: ':productId',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/ProductPage'}
+              fallback={<Loading />}
+            />
+          ),
+        },
+        {
+          path: 'favorites',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/Favorites'}
+              fallback={<Loading />}
+            />
+          ),
+        },
+        {
+          path: 'laptops/:productId',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/ProductPage'}
+              fallback={<Loading />}
+            />
+          ),
+        },
+        {
+          path: 'headphones/:productId',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/ProductPage'}
+              fallback={<Loading />}
+            />
+          ),
+        },
+        {
+          path: 'mobile-phones/:productId',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/ProductPage'}
+              fallback={<Loading />}
+            />
+          ),
+        },
+        {
+          path: 'smart-watches/:productId',
+          element: (
+            <LazyLoadComponent
+              url={'../pages/ProductPage'}
+              fallback={<Loading />}
+            />
+          ),
+        },
       ],
     },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />

@@ -5,6 +5,7 @@ import CartEmpty from '../components/Cart/CartEmpty';
 import { useSelector } from 'react-redux';
 const Cart = () => {
   const cartItems = useSelector((state) => state.cartItems.items);
+  // console.log(cartItems);
 
   const cartContent = cartItems.length ? (
     <>

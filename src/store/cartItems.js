@@ -51,6 +51,22 @@ const cartItems = createSlice({
       state.quantity -= existingItem.quantity;
       state.items = state.items.filter((item) => item.id !== itemId);
     },
+
+    addAllFavoritesItems(state, action) {
+      const { favoritesItems, favoritesTotalPrice } = action.payload;
+      state.cartTotalPrice += favoritesTotalPrice;
+
+      favoritesItems.forEach((favItem) => {
+        const existingItem = state.items.find((item) => item.id === favItem.id);
+        state.quantity += +favItem.quantity;
+        if (existingItem) {
+          existingItem.totalPrice += favItem.totalPrice;
+          existingItem.quantity += +favItem.quantity;
+        } else {
+          state.items.push(favItem);
+        }
+      });
+    },
   },
 });
 

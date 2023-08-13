@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../../../store/cartItems';
 import { useEffect } from 'react';
+import { cartActions } from '../../store/cartItems';
 const AddToCartBtn = ({ title, price, id, image }) => {
   const [btnState, setBtnState] = useState({
     clicked: false,

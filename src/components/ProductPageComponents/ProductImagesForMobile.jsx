@@ -18,21 +18,42 @@ const ProductImagesForMobile = () => {
           disableOnInteraction: false,
         }}
         modules={[Scrollbar, Autoplay]}
-        className='max-w-full max-h-[500px]'
+        className='max-w-full h-full'
       >
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img1.webp' alt='' />
+          <img
+            src='../../../public/images/ProductImages/img1.webp'
+            alt=''
+            height='366'
+            width='366'
+            className='w-full'
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img2.webp' alt='' />
+          <img
+            src='../../../public/images/ProductImages/img2.webp'
+            alt=''
+            height='366'
+            width='366'
+            className='w-full'
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src='../../../public/images/ProductImages/img3.webp' alt='' />
+          <img
+            src='../../../public/images/ProductImages/img3.webp'
+            alt=''
+            height='366'
+            width='366'
+            className='w-full'
+          />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src='../../../public/images/ProductImages/image4webp.webp'
             alt=''
+            height='366'
+            width='366'
+            className='w-full'
           />
         </SwiperSlide>
       </Swiper>

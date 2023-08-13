@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 import Header from './Header/Header';
 
 const Root = () => {
@@ -6,6 +6,7 @@ const Root = () => {
     <>
       <Header />
       <Outlet />
+      <ScrollRestoration />
     </>
   );
 };

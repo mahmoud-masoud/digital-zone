@@ -17,7 +17,7 @@ const Categories = () => {
 
       <Link to={'mobile-phones'}>
         <Category
-          img={'/images/Categories/pixel.jpg'}
+          img={'/images/Categories/phone.jpg'}
           title={'Mobile Phones'}
         />
       </Link>

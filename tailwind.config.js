@@ -30,7 +30,7 @@ export default {
         background: '#FFF',
       },
       boxShadow: {
-        'search-shadow': '0 0 0 4px #72B2EE',
+        'search-shadow': '0 0 0 2px #000',
         'card-shadow': '0 0 4px 0px rgb(0, 0, 0,.2)',
       },
     },

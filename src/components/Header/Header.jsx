@@ -1,10 +1,10 @@
-import Navbar from './Navbar';
+import Navbar from './NavBar/Navbar';
 import Wrapper from '../../UI/Wrapper';
 import SearchBox from './SearchBox';
 import { HiMiniShoppingCart } from 'react-icons/hi2';
 import { FaX, FaBars } from 'react-icons/fa6';
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import isMobileOrTablet from '../../Utils/isMobileOrTablet';
 import { useSelector } from 'react-redux';
 
@@ -18,10 +18,10 @@ const Header = () => {
   const cartQuantity = useSelector((state) => state.cartItems.quantity);
 
   return (
-    <header className='bg-primary mb-10 p-4'>
+    <header className='bg-primary mb-8 p-4 sticky top-0 z-[100000] '>
       <Wrapper
         className={
-          'flex flex-wrap gap-4 md:flex-row items-center  md:justify-between'
+          'flex flex-wrap gap-2 md:gap-4 md:flex-row items-center  md:justify-between'
         }
       >
         <button className='z-[110000] text-light' onClick={navHandler}>

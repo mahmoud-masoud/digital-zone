@@ -20,7 +20,7 @@ const CartItems = () => {
         <div className=' p-4 '>
           <ul>
             {cartItems.map((item) => (
-              <li key={item.id}>
+              <li key={item.id} className='last:border-none bb-2 py-4'>
                 <CartItem
                   id={item.id}
                   title={item.title}

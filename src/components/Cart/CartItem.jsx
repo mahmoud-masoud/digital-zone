@@ -21,7 +21,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
     dispatch(cartActions.removeItemPermanently(id));
   };
   return (
-    <div className='bb-2 py-4'>
+    <>
       <Link to={`/${id}`}>
         <div className='flex mb-6 gap-4'>
           <div className='img-box w-24'>
@@ -70,7 +70,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default CartItem;

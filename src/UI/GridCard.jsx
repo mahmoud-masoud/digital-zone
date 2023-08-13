@@ -6,8 +6,8 @@ const GridCard = ({ img, title, price }) => {
           src={img}
           alt={title}
           loading='lazy'
-          width={500}
-          height={500}
+          width='200'
+          height='200'
           className='max-w-full h-auto'
         />
       </div>

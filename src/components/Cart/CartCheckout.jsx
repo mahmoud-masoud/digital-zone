@@ -10,10 +10,10 @@ const CartCheckout = () => {
   return (
     <div className='shadow-card-shadow w-full rounded-md mb-[200px] md:mb-0 md:w-1/3 self-start sticky top-6 py-4 '>
       {isMobileOrTablet ? (
-        <MobileCheckout />
+        <MobileCheckout cartTotalPrice={totalPrice} />
       ) : (
         <div className='bb-2 p-4 flex flex-col gap-4'>
-          <button className='w-full bg-primary font-bold text-white px-4 py-2 rounded-full'>
+          <button className='w-full bg-primary hover:bg-after font-bold text-white px-4 py-2 rounded-full'>
             Continue to checkout
           </button>
           <CartNote />

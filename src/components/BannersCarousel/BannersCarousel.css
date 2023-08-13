@@ -1,7 +1,7 @@
 .swiper-pagination-bullet {
   background-color: white;
   width: 20px;
-  height: 5px;
+  height: 4px;
   border-radius: 0;
   opacity: 0.7;
 }
@@ -9,4 +9,11 @@
 .swiper-pagination-bullet-active {
   background-color: #0071dc;
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .swiper-pagination-bullet {
+    width: 16px;
+    height: 3.2px;
+  }
 }

@@ -930,7 +930,7 @@ export const bestSellers = [
     id: '1',
     title: 'iPhone 14 Pro Max',
     price: 999,
-    image: '/images/mobile-phones/iphone-14-pro-max.png',
+    image: '/images/mobile-phones/iPhone-14-pro-max.png',
     description: `
     iPhone 14 Pro Max. Capture incredible detail with a 48MP Main camera. Experience iPhone in a whole new way with Dynamic Island and Always-On display. And get peace of mind with groundbreaking safety features.
 Key Features

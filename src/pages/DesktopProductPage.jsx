@@ -14,7 +14,7 @@ const ProductPage = () => {
   }
   return (
     <Wrapper className={'px-3 mb-16 flex gap-4'}>
-      <div className='flex gap-4 flex-col w-[70%]'>
+      <div className='flex gap-8 flex-col w-[70%]'>
         <ProductImages image={item.image} />
         <ProductQuickHighlights highlights={item.highlights} />
         <ProductDetails description={item.description} />
