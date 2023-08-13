@@ -49,7 +49,7 @@ const ProductImagesForMobile = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src='../../../public/images/ProductImages/image4webp.webp'
+            src='/images/ProductImages/image4webp.webp'
             alt=''
             height='366'
             width='366'
