@@ -9,11 +9,12 @@ import SmartWatches from './components/SmartWatches/SmartWatches';
 import Cart from './pages/Cart';
 import ErrorPage from './UI/ErrorPage';
 import Loading from './UI/Loading';
-import LazyLoadComponent from './Utils/LazyLoadComponent';
-import Favorites from './pages/Favorites';
-import { useEffect } from 'react';
+
+import { lazy, Suspense } from 'react';
 
 function App() {
+  const LazyProductPage = lazy(() => import('./pages/ProductPage'));
+  const LazyFavoritesPage = lazy(() => import('./pages/Favorites'));
   const router = createBrowserRouter([
     {
       path: '/',
@@ -29,55 +30,49 @@ function App() {
         {
           path: ':productId',
           element: (
-            <LazyLoadComponent
-              url={'../pages/ProductPage'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyProductPage />
+            </Suspense>
           ),
         },
         {
           path: 'favorites',
           element: (
-            <LazyLoadComponent
-              url={'../pages/Favorites'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyFavoritesPage />
+            </Suspense>
           ),
         },
         {
           path: 'laptops/:productId',
           element: (
-            <LazyLoadComponent
-              url={'../pages/ProductPage'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyProductPage />
+            </Suspense>
           ),
         },
         {
           path: 'headphones/:productId',
           element: (
-            <LazyLoadComponent
-              url={'../pages/ProductPage'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyProductPage />
+            </Suspense>
           ),
         },
         {
           path: 'mobile-phones/:productId',
           element: (
-            <LazyLoadComponent
-              url={'../pages/ProductPage'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyProductPage />
+            </Suspense>
           ),
         },
         {
           path: 'smart-watches/:productId',
           element: (
-            <LazyLoadComponent
-              url={'../pages/ProductPage'}
-              fallback={<Loading />}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyProductPage />
+            </Suspense>
           ),
         },
       ],
