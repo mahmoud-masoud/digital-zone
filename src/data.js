@@ -16,6 +16,7 @@ nematic mode now in 4K Dolby Vision up to 30 fps
     Dynamic Island, a magical new way to interact with iPhone
 48MP Main camera for up to 4x greater resolution
 nematic mode now in 4K Dolby Vision up to 30 fps`,
+    images: [{ img1: '/path', img2: '/path', img3: '/path' }],
   },
   {
     id: '2',
@@ -367,22 +368,36 @@ export const laptops = [
   {
     id: '21',
     image: '../images/laptops/Acer-Chromebook.webp',
-    title: 'Acer Chromebook',
-    price: 700,
-    description: `
-    Dynamic Island, a magical new way to interact with iPhone
-48MP Main camera for up to 4x greater resolution
-nematic mode now in 4K Dolby Vision up to 30 fps
-    
-    6.7-inch Super Retina XDR display1 featuring Always-On and ProMotion
-Dynamic Island, a magical new way to interact with iPhone
-48MP Main camera for up to 4x greater resolution
-nematic mode now in 4K Dolby Vision up to 30 fps
-    `,
+
+    title:
+      'Acer Chromebook 315, 15.6" HD, Intel Celeron N4000, 4GB RAM, 64GB eMMC, Silver, CB315-3H-C19A',
+    price: 199.0,
+    productDetails: {
+      detailsTitle: `Acer Chromebook 315 CB315-3H-C19A, Intel Celeron 
+      N4000, 15.6" HD, 4GB LPDDR4, 64GB eMMC, Gigabit WiFi, Bluetooth 5.0
+      , Protective Sleeve, Pure Silver, Chrome OS`,
+      features: [
+        'Powered by an Intel Celeron processor, the Chromebook loads content rich webpages fast, provide crisp video playback, and enable you to multitask effortlessly by allowing multiple pages to run at the same time.',
+        'The large 15.6” display with an anti-glare coating, narrow 0.37 inch bezel gives users a greater workspace more flexible so they can be more productive in bright conditions.  Includes integrated numeric keypad.',
+        '12.5 hours of battery life goes a long way. With just a single charge, get in a full day’s work with time to spare. The powerful long lasting battery means you don’t have to take the power adapter with you.',
+        'Memory: 4GB',
+        'Storage: 64GB',
+        'Color: Pure Silver ',
+      ],
+    },
     highlights: `
-    Dynamic Island, a magical new way to interact with iPhone
-48MP Main camera for up to 4x greater resolution
-nematic mode now in 4K Dolby Vision up to 30 fps`,
+    Screen Size
+0.37\", 15.6\"
+Hard Drive Capacity
+64 GB
+RAM Memory
+4 GB
+Assembled Product Weight
+3.59 lb
+Has Touchscreen
+N
+Color
+Silver`,
   },
   {
     id: '22',

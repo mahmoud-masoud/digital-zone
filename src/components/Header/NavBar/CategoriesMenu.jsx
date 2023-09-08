@@ -1,15 +1,14 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const CategoriesMenu = ({ setDropDawnMenu }) => {
+const CategoriesMenu = ({ setDropDawnMenu, closeDropDownMenuHandler }) => {
   return (
     <ul
       className='absolute text-fontColor bg-white shadow-card-shadow z-[1000] top-full left-1/2
-rounded-b-md p-4 flex flex-wrap justify-around gap-4'
+rounded-b-md p-4 flex flex-wrap justify-around gap-4 '
     >
       <li
         className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={() => setDropDawnMenu(false)}
+        onClick={closeDropDownMenuHandler}
       >
         <Link to={'mobile-phones'}>
           Mobile Phones
@@ -23,7 +22,7 @@ rounded-b-md p-4 flex flex-wrap justify-around gap-4'
       </li>
       <li
         className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={() => setDropDawnMenu(false)}
+        onClick={closeDropDownMenuHandler}
       >
         <Link to={'laptops'}>
           Laptops
@@ -37,7 +36,7 @@ rounded-b-md p-4 flex flex-wrap justify-around gap-4'
       </li>
       <li
         className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={() => setDropDawnMenu(false)}
+        onClick={closeDropDownMenuHandler}
       >
         <Link to={'headphones'}>
           Headphones
@@ -51,7 +50,7 @@ rounded-b-md p-4 flex flex-wrap justify-around gap-4'
       </li>
       <li
         className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={() => setDropDawnMenu(false)}
+        onClick={closeDropDownMenuHandler}
       >
         <Link to={'smart-watches'}>
           Smart Watches

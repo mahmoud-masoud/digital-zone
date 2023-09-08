@@ -10,9 +10,12 @@ import './CarouselStyles.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import ProductImg from './ProductImg';
+import { rule } from 'postcss';
+
 // import CarouselBtns from './ProductBuyBox/CarouselBtns';
 
-const ProductImages = ({ image, title }) => {
+const ProductImages = ({ images, title }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -31,29 +34,17 @@ const ProductImages = ({ image, title }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className='mySwiper max-h-full w-[100px]'
         >
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/img1.webp' alt='' />
-          </SwiperSlide>
-
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/img2.webp' alt='' />
-          </SwiperSlide>
-
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/img3.webp' alt='' />
-          </SwiperSlide>
-
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/image4webp.webp' alt='' />
-          </SwiperSlide>
-
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/image5.webp' alt='' />
-          </SwiperSlide>
-
-          <SwiperSlide className='rounded-md border-2 border-gray-200 p-1'>
-            <img src='/images/ProductImages/image6.webp' alt='' />
-          </SwiperSlide>
+          {images?.map((url) => {
+            return (
+              <SwiperSlide
+                key={url}
+                className='rounded-md border-2 border-gray-200 p-1'
+              >
+                {/* <ProductImg url={url} /> */}
+                <img src={url} alt='' loading='lazy' />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
 
         <button
@@ -79,24 +70,14 @@ const ProductImages = ({ image, title }) => {
         modules={[Thumbs]}
         className='mySwiper2 max-w-[500px]'
       >
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/img1.webp' alt='' />
-        </SwiperSlide>
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/img2.webp' alt='' />
-        </SwiperSlide>
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/img3.webp' alt='' />
-        </SwiperSlide>
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/image4webp.webp' alt='' />
-        </SwiperSlide>
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/image5.webp' alt='' />
-        </SwiperSlide>
-        <SwiperSlide className=''>
-          <img src='/images/ProductImages/image6.webp' alt='' />
-        </SwiperSlide>
+        {images?.map((url) => {
+          return (
+            <SwiperSlide key={url}>
+              {/* <ProductImg url={url} /> */}
+              <img src={url} alt='' loading='lazy' />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

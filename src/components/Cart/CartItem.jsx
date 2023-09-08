@@ -56,7 +56,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           <button
             onClick={addToCart}
             className='rounded-full w-6 h-6 p-0.5 hover:bg-gray-500
-           hover:text-white flex items-center justify-center'
+           hover:text-white flex items-center justify-center focus:bg-gray-500 focus:text-white'
           >
             <FaPlus />
           </button>
@@ -64,7 +64,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           <button
             onClick={removeFromTheCart}
             className='rounded-full w-6 h-6 p-0.5 hover:bg-gray-500
-           hover:text-white flex items-center justify-center'
+           hover:text-white flex items-center justify-center focus:bg-gray-500 focus:text-white'
           >
             <FaMinus />
           </button>

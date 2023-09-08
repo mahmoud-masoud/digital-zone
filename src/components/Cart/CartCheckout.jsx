@@ -8,7 +8,10 @@ const CartCheckout = () => {
   const totalPrice = useSelector((state) => state.cartItems.cartTotalPrice);
 
   return (
-    <div className='shadow-card-shadow w-full rounded-md mb-[200px] md:mb-0 md:w-1/3 self-start sticky top-6 py-4 '>
+    <div
+      className='shadow-card-shadow w-full rounded-md mb-[200px] md:mb-0 md:w-1/3
+     self-start sticky top-24 py-4 '
+    >
       {isMobileOrTablet ? (
         <MobileCheckout cartTotalPrice={totalPrice} />
       ) : (

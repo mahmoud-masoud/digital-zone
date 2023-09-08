@@ -1,3 +1,5 @@
+import ProductImg from '../components/ProductPageComponents/ProductImg';
+
 const ProductCard = ({ img, title, price }) => {
   return (
     <div className='flex flex-col justify-between '>
@@ -13,7 +15,7 @@ const ProductCard = ({ img, title, price }) => {
         />
       </div>
       <div>
-        <p className='font-semibold text-sm'>{title}</p>
+        <p className='font-semibold text-sm truncate '>{title}</p>
         <span>{`$${price}`}</span>
       </div>
     </div>

@@ -17,8 +17,8 @@ const ProductInfo = ({ title, price, id, image }) => {
 
   return (
     <div
-      className='bg-white mb-4 w-full  md:w-auto self-start xl:w-[30%] md:rounded-lg 
-    md:shadow-card-shadow md:p-4 md:sticky top-4'
+      className='bg-white mb-4 w-full md:w-auto self-start xl:w-[30%] md:rounded-lg 
+    md:shadow-card-shadow md:p-4 md:sticky top-24'
     >
       <div className='flex justify-end pb-2'>
         <button onClick={addItemToFavList}>

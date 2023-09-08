@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { favoritesActions } from '../../store/favorites';
 import { useState } from 'react';
+import { auth } from '../../Utils/firebase';
+import { removeProductFromFavorites } from '../../Utils/firebase-functions';
 
 const options = [
   { value: 1 },
@@ -18,20 +20,25 @@ const options = [
 ];
 
 const FavItem = ({ title, image, price, id }) => {
-  const dispatch = useDispatch();
+  const userUID = auth?.currentUser?.uid;
 
-  const favoritesItems = useSelector((state) => state.favorites.favoritesItems);
-  const itemQuantity = favoritesItems.find((item) => item.id === id).quantity;
+  // const dispatch = useDispatch();
+
+  // const favoritesItems = useSelector(
+  //   (state) => state.favorites?.favoritesItems
+  // );
+  // const itemQuantity = favoritesItems.find((item) => item.id === id)?.quantity;
 
   const selectedValueHandler = (e) => {
     const selectValue = e.target.value;
-    dispatch(
-      favoritesActions.increaseItemQuantity({ id, quantity: selectValue })
-    );
+    // dispatch(
+    //   favoritesActions.increaseItemQuantity({ id, quantity: selectValue })
+    // );
   };
 
   const removeItem = () => {
-    dispatch(favoritesActions.removeItem(id));
+    // dispatch(favoritesActions.removeItem(id));
+    removeProductFromFavorites(userUID, id);
   };
 
   return (
@@ -70,7 +77,7 @@ const FavItem = ({ title, image, price, id }) => {
               id='select'
               className='text-fontColor'
               onChange={selectedValueHandler}
-              defaultValue={itemQuantity}
+              // defaultValue={itemQuantity}
             >
               {options.map((option) => {
                 return (
