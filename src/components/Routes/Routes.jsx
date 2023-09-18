@@ -19,7 +19,7 @@ import CategoryPage from '../../pages/CategoryPage';
 const LazyProductPage = lazy(() => import('../../pages/ProductPage'));
 const LazyFavoritesPage = lazy(() => import('../../pages/Favorites'));
 const LazyLoginPage = lazy(() => import('../../pages/Login'));
-const LazySignupPage = lazy(() => import('../../pages/Signup'));
+const LazySignupPage = lazy(() => import('../../pages/SignupPage'));
 const LazyAdminPage = lazy(() => import('../../pages/Admin'));
 const AnimatedRoute = ({ children }) => {
   const location = useLocation();
