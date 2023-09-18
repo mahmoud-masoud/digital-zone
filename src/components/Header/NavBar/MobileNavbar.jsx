@@ -2,9 +2,14 @@ import { Link } from 'react-router-dom';
 import { FaAngleDown } from 'react-icons/fa6';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useState } from 'react';
+import MobileAccountAvatar from './MobileAccountAvatar';
+import { FiLogOut } from 'react-icons/fi';
+import { auth } from '../../../Utils/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const MobileNavbar = ({ closeNavbar }) => {
   const [accordion, setAccordion] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
 
   const handleAccordionBlur = () => {
     setTimeout(() => {
@@ -23,10 +28,13 @@ const MobileNavbar = ({ closeNavbar }) => {
       >
         <IoCloseSharp />
       </button>
+
       <ul
         className='flex flex-col px-4 w-[320px] absolute left-0 bg-white h-full 
-      pt-24 border-r border-3'
+      py-20 border-r border-3'
       >
+        <MobileAccountAvatar />
+
         <li className='text-xl'>
           <button
             className=' w-full group'
@@ -91,6 +99,20 @@ const MobileNavbar = ({ closeNavbar }) => {
         >
           <Link to={'favorites'}>Favorites</Link>
         </li>
+
+        {user && (
+          <a
+            href=''
+            className='mt-auto hover:text-primary'
+            onClick={() => {
+              auth.signOut();
+            }}
+          >
+            <div className=' flex gap-2 items-center'>
+              <span>Logout</span> <FiLogOut />
+            </div>
+          </a>
+        )}
       </ul>
     </nav>
   );

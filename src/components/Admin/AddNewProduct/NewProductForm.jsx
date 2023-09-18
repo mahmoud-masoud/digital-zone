@@ -10,6 +10,9 @@ import ProductHighlights from './ProductHighlights';
 import UploadGallery from './imges-grid/UploadGallery';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { v4 as uuidv4, v4 } from 'uuid';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../Utils/firebase';
 
 const NewProductForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,12 +22,15 @@ const NewProductForm = () => {
   const { title, description, images, highlights, price, category } =
     useSelector((state) => state.newProductFormData);
 
+  const productId = v4();
+  console.log(price);
   const formSubmitHandler = async (e) => {
-    console.log(category);
     setIsSubmitting(true);
     e.preventDefault();
     try {
       const imagesUrls = await uploadImages(images, category, title);
+
+      console.log('upload images successfully');
 
       const productData = {
         title,
@@ -32,10 +38,19 @@ const NewProductForm = () => {
         description,
         price: price,
         images: imagesUrls,
+        id: productId,
       };
 
-      await addProduct(category, productData);
-      console.log('every thing ok');
+      const productsCollectionRef = collection(
+        db,
+        'categories',
+        category,
+        'products'
+      );
+      const productDocRef = doc(productsCollectionRef, productId);
+
+      await setDoc(productDocRef, productData);
+      console.log('done added product');
 
       setIsSuccess(true);
       setIsSubmitting(false);

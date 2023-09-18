@@ -6,7 +6,9 @@ const NewProductPrice = () => {
   const dispatch = useDispatch();
 
   const enteredPriceHandler = (e) => {
-    dispatch(newProductFormDataActions.addPrice(+e.target.value));
+    let value = +e.target.value;
+
+    dispatch(newProductFormDataActions.addPrice(value));
   };
 
   return (

@@ -5,9 +5,11 @@ import CategoriesMenu from './CategoriesMenu';
 import { useEffect, useState } from 'react';
 import AccountDropDown from './AccountDropDown';
 import { auth } from '../../../Utils/firebase';
-
+import LoadingSpinner from '../../../UI/LoadingSpinner';
+import { useAuthState } from 'react-firebase-hooks/auth';
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const [user, loading, error] = useAuthState(auth);
+
   const [dropDownMenu, setDropDownMenu] = useState(false);
   const [isAccountDropDown, setIsAccountDropDown] = useState(false);
 
@@ -21,22 +23,6 @@ const Navbar = () => {
   const closeDropDownMenuHandler = () => {
     setDropDownMenu(false);
   };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in, you can access user information
-
-        setUser(user);
-      } else {
-        // User is not signed in
-        setUser(null);
-      }
-    });
-
-    // Unsubscribe from the listener when the component unmounts
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     if (isAccountDropDown || dropDownMenu) {
@@ -130,7 +116,16 @@ const Navbar = () => {
            font-normal text-[16px]  px-4 py-1.5 rounded-full flex items-center gap-1'
             onClick={() => setIsAccountDropDown(true)}
           >
-            {user ? (
+            {loading && <LoadingSpinner />}
+
+            {!user && !loading && (
+              <div className='flex flex-col justify-center items-center text-sm'>
+                <BsPersonFill className='text-xl' />
+                Sign in
+              </div>
+            )}
+
+            {user && (
               <div>
                 {user.photoURL ? (
                   <div className='w-12 h-12 rounded-full  overflow-hidden'>
@@ -143,11 +138,6 @@ const Navbar = () => {
                 ) : (
                   <p>Hi, {user.displayName}</p>
                 )}
-              </div>
-            ) : (
-              <div className='flex flex-col justify-center items-center text-sm'>
-                <BsPersonFill className='text-xl' />
-                Sign in
               </div>
             )}
           </button>

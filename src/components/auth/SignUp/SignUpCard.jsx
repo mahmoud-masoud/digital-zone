@@ -44,9 +44,7 @@ const SignupCard = () => {
           displayName,
           email,
           uid,
-          uid,
           favorites: [],
-          cartItems: [],
         },
         uid
       );
@@ -82,9 +80,7 @@ const SignupCard = () => {
           displayName,
           email,
           uid,
-          uid,
           favorites: [],
-          cartItems: [],
         },
         uid
       );

@@ -1,37 +1,50 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { favoritesActions } from '../store/favorites';
 import HeartIcon from './HeartIcon';
-import { useEffect } from 'react';
-import { addProductToFavorites, getProduct } from '../Utils/firebase-functions';
-import { auth } from '../Utils/firebase';
+import { useEffect, useState } from 'react';
+import { addProductToFavorites } from '../Utils/firebase-functions';
+import { auth, db } from '../Utils/firebase';
 import { useLocation } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { collection, doc, onSnapshot, query, where } from 'firebase/firestore';
 
 const AddToFavoritesBtn = ({ title, price, id, image }) => {
+  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
   const location = useLocation();
   const pathAfterDomain = location.pathname.split('/');
   const category = pathAfterDomain[1];
-
-  const func = async () => {
-    const userUID = auth?.currentUser?.uid;
-    const product = await getProduct(category, id);
-    addProductToFavorites(userUID, { ...product, id });
-  };
-  const dispatch = useDispatch();
-  const favListItems = useSelector((state) => state.favorites.favoritesItems);
-  const isItemInFavList = favListItems.find((item) => item.id === id);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const addItemToFavList = (e) => {
-    dispatch(favoritesActions.addItem({ title, price, id, image }));
     e.preventDefault();
-    func();
+    addProductToFavorites(user.uid, { title, price, image, id });
   };
+
+  useEffect(() => {
+    if (!user) return;
+
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      const favoriteItemRef = collection(userRef, 'favorites');
+
+      const q = query(favoriteItemRef, where('id', '==', id));
+
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          setIsFavorite(true);
+        }
+      });
+
+      return unsubscribe;
+    } catch (error) {
+      console.log('error from catch', error);
+    }
+  }, [user]);
 
   return (
     <button
       className='absolute top-2 right-2 z-10 flex justify-center items-center bg-white p-0.5 w-8 h-8 rounded-full'
       onClick={addItemToFavList}
     >
-      <HeartIcon className='' setBg={isItemInFavList} id={id} />
+      <HeartIcon className='' setBg={isFavorite} id={id} />
     </button>
   );
 };

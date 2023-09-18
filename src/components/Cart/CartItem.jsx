@@ -1,35 +1,29 @@
 import { FaArrowRotateLeft, FaMinus, FaPlus } from 'react-icons/fa6';
-import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../../store/cartItems';
+
 import { Link } from 'react-router-dom';
+import useCart from '../../Hooks/useCart';
+
 const CartItem = ({ title, price, totalPrice, image, id }) => {
-  const itemQuantity = useSelector(
-    (state) => state.cartItems.items.find((item) => item.id == id).quantity
-  );
+  const {
+    quantity,
+    sendingProduct,
+    addToCart,
+    removeFromCart,
+    removeProductPermanently,
+    userLoading,
+    userError,
+  } = useCart({ title, price, id, image });
 
-  const dispatch = useDispatch();
-
-  const addToCart = () => {
-    dispatch(cartActions.addItem({ price, id }));
-  };
-
-  const removeFromTheCart = () => {
-    dispatch(cartActions.removeItem(id));
-  };
-
-  const removeItemPermanently = () => {
-    dispatch(cartActions.removeItemPermanently(id));
-  };
   return (
     <>
-      <Link to={`/${id}`}>
+      <Link to={`/ip/${id}`}>
         <div className='flex mb-6 gap-4'>
-          <div className='img-box w-24'>
-            <img src={image} alt={title} className='max-w-full' />
+          <div className='img-box w-24 shrink-0 flex justify-center items-center'>
+            <img src={image} alt={title} className='max-w-full max-h-full' />
           </div>
 
           <div className='item-name'>
-            <h3>{title}</h3>
+            <h3 className='text-sm'>{title}</h3>
             <span>Color: purple</span>
             <div className='flex gap-2 items-center'>
               <FaArrowRotateLeft className='bg-primary w-5 h-5 p-1 rounded-full text-white' />
@@ -38,13 +32,16 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           </div>
 
           <div className='item-price ml-auto'>
-            <span className='font-bold text-lg'>{`$${totalPrice}`}</span>
+            <span className='font-bold text-lg'>{totalPrice}</span>
           </div>
         </div>
       </Link>
 
       <div className='cart-item-actions flex justify-between md:justify-end gap-4  md:gap-10'>
-        <button onClick={removeItemPermanently} className='underline text-sm'>
+        <button
+          onClick={removeProductPermanently}
+          className='underline text-sm'
+        >
           Remove
         </button>
         <button className='underline'>Save for later</button>
@@ -60,9 +57,9 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           >
             <FaPlus />
           </button>
-          <span className='inline-block font-bold'>{itemQuantity}</span>
+          <span className='inline-block font-bold'>{quantity}</span>
           <button
-            onClick={removeFromTheCart}
+            onClick={removeFromCart}
             className='rounded-full w-6 h-6 p-0.5 hover:bg-gray-500
            hover:text-white flex items-center justify-center focus:bg-gray-500 focus:text-white'
           >

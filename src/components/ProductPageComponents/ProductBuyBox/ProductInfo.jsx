@@ -3,17 +3,12 @@ import HeartIcon from '../../../UI/HeartIcon';
 import { FaShippingFast } from 'react-icons/fa';
 import AddToCartBtn from './AddToCartBtn';
 import ProductColors from './ProductColors';
-import { useDispatch, useSelector } from 'react-redux';
-import { favoritesActions } from '../../../store/favorites';
 
-const ProductInfo = ({ title, price, id, image }) => {
-  const dispatch = useDispatch();
-  const favListItems = useSelector((state) => state.favorites.favoritesItems);
-  const isItemInFavList = favListItems.find((item) => item.id === id);
+import AddToFavoritesBtn from '../../../UI/AddToFavoritesBtn';
+import { useParams } from 'react-router-dom';
 
-  const addItemToFavList = () => {
-    dispatch(favoritesActions.addItem({ title, price, id, image }));
-  };
+const ProductInfo = ({ title, price, id, image, quantity }) => {
+  const productID = useParams().productId;
 
   return (
     <div
@@ -21,13 +16,13 @@ const ProductInfo = ({ title, price, id, image }) => {
     md:shadow-card-shadow md:p-4 md:sticky top-24'
     >
       <div className='flex justify-end pb-2'>
-        <button onClick={addItemToFavList}>
-          <HeartIcon
-            className='inline-block mr-1.5'
-            setBg={isItemInFavList}
-            id={id}
-          />
-        </button>
+        <AddToFavoritesBtn
+          id={productID}
+          price={price}
+          title={title}
+          image={image}
+          fetchedQuantity={quantity}
+        />
       </div>
       <h2 className='font-bold text-lg'>{title}</h2>
       <div

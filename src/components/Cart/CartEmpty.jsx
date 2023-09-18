@@ -29,25 +29,25 @@ const CartEmpty = () => {
 
         <div className='mt-10 flex gap-4 items-center justify-center flex-wrap'>
           <Link
-            to={'/laptops'}
+            to={'/ct/laptops'}
             className='border-2 border-dark hover:bg-light rounded-full px-4 py-1'
           >
             Laptops
           </Link>
           <Link
-            to={'/mobile-phones'}
+            to={'/ct/mobile-phones'}
             className='border-2 border-dark hover:bg-light rounded-full px-4 py-1'
           >
             Mobile Phones
           </Link>
           <Link
-            to={'/Headphones'}
+            to={'/ct/headphones'}
             className='border-2 border-dark hover:bg-light rounded-full px-4 py-1'
           >
             Headphones
           </Link>
           <Link
-            to={'/smart-watches'}
+            to={'/ct/smart-watches'}
             className='border-2 border-dark hover:bg-light rounded-full px-4 py-1'
           >
             Smart Watches

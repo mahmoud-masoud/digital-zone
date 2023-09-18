@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../../../Utils/firebase';
 import { signOut } from 'firebase/auth';
@@ -9,11 +8,11 @@ const AccountDropDown = ({
   openAccountDropDown,
 }) => {
   return (
-    <div className='absolute top-full'>
+    <div className=''>
       <div
-        className='bg-white text-fontColor -translate-x-1/2 shadow-lg
+        className='absolute top-full bg-white text-fontColor -translate-x-1/2 shadow-lg
          rounded-b-xl flex flex-col p-4 border-2 border-t-0
-        items-center justify-center relative z-[5]'
+        items-center justify-center z-[5]'
         onClick={closeAccountDropDown}
       >
         <Link
@@ -37,7 +36,7 @@ const AccountDropDown = ({
         </Link>
       </div>
       <div
-        className='fixed right-0 left-0 top-[84px] bottom-0 bg-[#0006] z-[4]'
+        className='absolute w-screen h-screen right-0 top-full bg-[#0006] z-[4]'
         onClick={closeAccountDropDown}
       ></div>
     </div>

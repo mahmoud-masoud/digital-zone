@@ -1,19 +1,9 @@
 import Wrapper from '../../UI/Wrapper';
-import { mobilePhones } from '../../data';
-import ProductCard from '../../UI/ProductCard';
 import { Link } from 'react-router-dom';
 import HomePageCard from '../../UI/HomePageCard';
-import { useEffect, useState } from 'react';
-import { getProductsByCategory } from '../../Utils/firebase-functions';
+import useCategory from '../../Hooks/useCategory';
 const MobilePhones = () => {
-  const [products, setProducts] = useState(null);
-  useEffect(() => {
-    const getProducts = async () => {
-      const productsDataResponse = await getProductsByCategory('mobile-phones');
-      setProducts(productsDataResponse);
-    };
-    getProducts();
-  }, []);
+  const { products, loading, error } = useCategory('mobile-phones');
 
   return (
     <Wrapper>

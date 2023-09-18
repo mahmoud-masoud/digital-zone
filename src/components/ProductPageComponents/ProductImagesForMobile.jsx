@@ -8,7 +8,7 @@ import './CarouselStyles.css';
 // import required modules
 import { Scrollbar, Autoplay } from 'swiper/modules';
 
-const ProductImagesForMobile = () => {
+const ProductImagesForMobile = ({ images }) => {
   return (
     <>
       <Swiper
@@ -20,42 +20,17 @@ const ProductImagesForMobile = () => {
         modules={[Scrollbar, Autoplay]}
         className='max-w-full h-full'
       >
-        <SwiperSlide>
-          <img
-            src='/images/ProductImages/img1.webp'
-            alt=''
-            height='366'
-            width='366'
-            className='w-full'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src='/images/ProductImages/img2.webp'
-            alt=''
-            height='366'
-            width='366'
-            className='w-full'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src='/images/ProductImages/img3.webp'
-            alt=''
-            height='366'
-            width='366'
-            className='w-full'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src='/images/ProductImages/image4webp.webp'
-            alt=''
-            height='366'
-            width='366'
-            className='w-full'
-          />
-        </SwiperSlide>
+        {images.map((imgSrc) => (
+          <SwiperSlide>
+            <img
+              src={imgSrc}
+              alt=''
+              height='366'
+              width='366'
+              className='w-full'
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

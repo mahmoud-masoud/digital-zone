@@ -1,29 +1,18 @@
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import { cartActions } from '../store/cartItems';
+import useCart from '../Hooks/useCart';
+import LoadingSpinner from './LoadingSpinner';
 
 const CardAddToCart = ({ title, price, id, image }) => {
-  const dispatch = useDispatch();
-
-  const itemQuantity = useSelector(
-    (state) => state.cartItems.items.find((item) => item?.id === id)?.quantity
-  );
-  const [quantity, setQuantity] = useState(itemQuantity ? itemQuantity : 0);
-
-  const addToCart = () => {
-    dispatch(cartActions.addItem({ title, price, id, image }));
-    setQuantity(quantity + 1);
-  };
-
-  const removeFromCart = () => {
-    if (quantity > 0) {
-      dispatch(cartActions.removeItem(id));
-      setQuantity(quantity - 1);
-    }
-  };
-
   const [isClickOutside, setIsClickOutside] = useState(true);
+  const {
+    quantity,
+    sendingProduct,
+    addToCart,
+    removeFromCart,
+    userLoading,
+    userError,
+  } = useCart({ title, price, id, image });
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -44,7 +33,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
     <div
       className={`bg-primary scale-[.8] md:scale-100 overflow-hidden main-btn ${
         quantity > 0 ? 'p-1 gap-6' : 'w-fit active:bg-after hover:bg-after'
-      } rounded-full flex justify-between items-center text-white`}
+      } rounded-full flex justify-between items-center text-white `}
       onClick={(e) => e.preventDefault()}
       ref={buttonRef}
     >
@@ -67,7 +56,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
         <button
           className={`${
             (isClickOutside || quantity === 0) && 'hidden'
-          } hover:bg-medium  p-2 rounded-full focus:bg-medium`}
+          } hover:bg-medium  p-2 rounded-full focus:bg-medium `}
           onClick={addToCart}
           autoFocus
         >
@@ -78,14 +67,20 @@ const CardAddToCart = ({ title, price, id, image }) => {
       <button
         onClick={addToCart}
         className={`${
-          quantity === 0 ? 'block' : 'hidden'
-        } font-medium py-2 px-5`}
+          quantity === 0 && !sendingProduct ? 'block' : 'hidden'
+        } font-medium py-2 px-5 `}
       >
         <div className='flex gap-1 items-center'>
           <FaPlus className='text-sm' />
           <span>Add</span>
         </div>
       </button>
+
+      {sendingProduct && quantity === 0 && (
+        <div className='w-24 py-1 flex justify-center items-center '>
+          <LoadingSpinner />
+        </div>
+      )}
     </div>
   );
 };

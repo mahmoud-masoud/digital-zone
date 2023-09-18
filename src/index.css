@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow-x: hidden;
+}
 @layer components {
   .bb-2 {
     @apply border-gray-200 border-b-[1.7px];
   }
 }
 
-body {
-  overflow-x: hidden;
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

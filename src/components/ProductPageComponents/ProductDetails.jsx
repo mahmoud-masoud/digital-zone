@@ -2,7 +2,7 @@ const ProductDetails = ({ description }) => {
   return (
     <div className=''>
       <h3 className='text-xl font-bold mb-4'>About this item</h3>
-      <div className='bg-white p-4 text-gray-600 '>
+      <div className='bg-white pl-2 text-gray-600 '>
         <p>{description}</p>
       </div>
     </div>
