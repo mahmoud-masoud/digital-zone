@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+
 import SignupCard from '../components/auth/SignUp/SignupCard';
 
 const SignUp = () => {
