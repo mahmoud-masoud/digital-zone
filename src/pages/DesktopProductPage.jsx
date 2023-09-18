@@ -1,31 +1,38 @@
 import { useParams } from 'react-router-dom';
-import data from '../data';
+
 import ProductImages from '../components/ProductPageComponents/ProductImages';
 import Wrapper from '../UI/Wrapper';
 import ProductInfo from '../components/ProductPageComponents/ProductBuyBox/ProductInfo';
 import ProductQuickHighlights from '../components/ProductPageComponents/ProductQuickHighlights';
 import ProductDetails from '../components/ProductPageComponents/ProductDetails';
 
+import Loading from '../UI/Loading';
+import useProductPage from '../Hooks/useProductPage';
+
 const ProductPage = () => {
-  const productId = useParams().productId;
-  const item = data.find((item) => item.id == productId);
-  if (!item) {
-    return <p> Item not found</p>;
-  }
-  return (
+  const { product, isLoading, hasError } = useProductPage();
+
+  return isLoading ? (
+    <Loading />
+  ) : product ? (
     <Wrapper className={'px-3 mb-16 flex gap-4'}>
       <div className='flex gap-8 flex-col w-[70%]'>
-        <ProductImages image={item.image} />
-        <ProductQuickHighlights highlights={item.highlights} />
-        <ProductDetails description={item.description} />
+        <ProductImages images={product?.images} />
+        {product?.highlights && (
+          <ProductQuickHighlights highlights={product.highlights} />
+        )}
+        <ProductDetails description={product?.description} />
       </div>
       <ProductInfo
-        title={item.title}
-        price={item.price}
-        id={item.id}
-        image={item.image}
+        title={product?.title}
+        price={product?.price}
+        id={product?.id}
+        image={product?.images[0]}
+        quantity={product?.quantity}
       />
     </Wrapper>
+  ) : (
+    <p>No Product Found !</p>
   );
 };
 export default ProductPage;

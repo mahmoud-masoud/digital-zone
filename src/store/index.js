@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartItems from './cartItems.js';
+
+import newProductFormData from './newProductFormData.js';
 import favorites from './favorites.js';
+import cartItems from './cartItems.js';
 const store = configureStore({
-  reducer: { cartItems, favorites },
+  reducer: { newProductFormData, favorites, cartItems },
 });
 
 export default store;

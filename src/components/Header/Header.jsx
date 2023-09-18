@@ -2,58 +2,66 @@ import Navbar from './NavBar/Navbar';
 import Wrapper from '../../UI/Wrapper';
 import SearchBox from './SearchBox';
 import { HiMiniShoppingCart } from 'react-icons/hi2';
-import { FaX, FaBars } from 'react-icons/fa6';
-import { useState } from 'react';
+import { HiMiniBars3 } from 'react-icons/hi2';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import isMobileOrTablet from '../../Utils/isMobileOrTablet';
+
+import Logo from '../../UI/Logo';
+import MobileNavbar from './NavBar/MobileNavbar';
 import { useSelector } from 'react-redux';
+import CartIcon from './CartIcon';
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isInputOnFocus, setInputOnFocus] = useState(false);
 
-  const navHandler = () => {
-    setIsOpen(!isOpen);
+  const handleInputOnFocus = () => {
+    setInputOnFocus(false);
   };
 
-  const cartQuantity = useSelector((state) => state.cartItems.quantity);
+  const [navbarIsOpen, setNavbar] = useState(false);
+  const navHandler = () => {
+    setNavbar(!navbarIsOpen);
+  };
+
+  const closeNavbar = () => {
+    setNavbar(false);
+  };
+
+  useEffect(() => {
+    if (navbarIsOpen) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = 'auto';
+    }
+  }, [navbarIsOpen]);
 
   return (
-    <header className='bg-primary mb-8 p-4 sticky top-0 z-[100000] '>
+    <header className='bg-primary mb-8 p-4 sticky top-0 z-[100000]'>
       <Wrapper
         className={
-          'flex flex-wrap gap-2 md:gap-4 md:flex-row items-center  md:justify-between'
+          'flex flex-wrap gap-2 md:gap-4 md:flex-row items-center md:justify-between'
         }
       >
-        <button className='z-[110000] text-light' onClick={navHandler}>
-          {isOpen ? (
-            <FaX className='text-3xl md:hidden text-fontColor' />
-          ) : (
-            <FaBars className='text-3xl md:hidden' />
-          )}
+        <button
+          className={`z-[10000] text-white ${isInputOnFocus && 'opacity-0'}`}
+          onClick={navHandler}
+        >
+          {!navbarIsOpen && <HiMiniBars3 className='text-3xl md:hidden' />}
         </button>
         <Link to={'/'}>
-          <h1 className='text-white'>LOGO</h1>
+          <Logo />
         </Link>
 
-        <SearchBox />
+        <SearchBox
+          isInputOnFocus={isInputOnFocus}
+          setInputOnFocus={setInputOnFocus}
+          handleInputOnFocus={handleInputOnFocus}
+        />
 
-        {isMobileOrTablet && isOpen && <Navbar />}
-        {!isMobileOrTablet && <Navbar />}
+        {navbarIsOpen && <MobileNavbar closeNavbar={closeNavbar} />}
+        <Navbar />
 
-        <Link
-          to={'cart'}
-          className='hover:bg-after focus:bg-after px-4 py-1.5 rounded-full'
-        >
-          <div className='relative'>
-            <HiMiniShoppingCart className='text-3xl text-white' />
-            <span
-              className='bg-secondary  p-0.5 text-dark w-5 h-5 flex items-center justify-center
-               rounded-full absolute -top-2 -right-2'
-            >
-              {cartQuantity}
-            </span>
-          </div>
-        </Link>
+        <CartIcon isInputOnFocus={isInputOnFocus} />
       </Wrapper>
     </header>
   );

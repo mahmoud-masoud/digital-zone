@@ -1,14 +1,10 @@
-import { useSelector } from 'react-redux';
 import CartItem from './CartItem';
-import { Link } from 'react-router-dom';
 
-const CartItems = () => {
-  const cartItems = useSelector((state) => state.cartItems.items);
-
+const CartItems = ({ cartItems }) => {
   return (
     <div className='flex-1'>
       <h1 className='text-2xl mb-6'>
-        <span className='font-bold'>Cart</span> {cartItems.length} Items
+        <span className='font-bold'>Cart</span> {cartItems?.length} Items
       </h1>
       <div className='shadow-card-shadow rounded-md'>
         <div className='p-4 bg-light md:p-8'>
@@ -19,7 +15,7 @@ const CartItems = () => {
 
         <div className=' p-4 '>
           <ul>
-            {cartItems.map((item) => (
+            {cartItems?.map((item) => (
               <li key={item.id} className='last:border-none bb-2 py-4'>
                 <CartItem
                   id={item.id}
@@ -27,6 +23,7 @@ const CartItems = () => {
                   image={item.image}
                   totalPrice={item.totalPrice}
                   price={item.price}
+                  quantity={item.quantity}
                 />
               </li>
             ))}

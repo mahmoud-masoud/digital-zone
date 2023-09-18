@@ -1,8 +1,14 @@
-import AddToCartBtn from './AddToCartBtn';
+import AddToCartBtn from '../ProductPageComponents/ProductBuyBox/AddToCartBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { favoritesActions } from '../../store/favorites';
+
 import { useState } from 'react';
+import { auth } from '../../Utils/firebase';
+import {
+  removeProductFromFavorites,
+  updateNeededQuantity,
+} from '../../Utils/firebase-functions';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const options = [
   { value: 1 },
@@ -17,26 +23,22 @@ const options = [
   { value: 10 },
 ];
 
-const FavItem = ({ title, image, price, id }) => {
-  const dispatch = useDispatch();
-
-  const favoritesItems = useSelector((state) => state.favorites.favoritesItems);
-  const itemQuantity = favoritesItems.find((item) => item.id === id).quantity;
+const FavItem = ({ title, image, price, id, fetchedNeededQuantity }) => {
+  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
 
   const selectedValueHandler = (e) => {
-    const selectValue = e.target.value;
-    dispatch(
-      favoritesActions.increaseItemQuantity({ id, quantity: selectValue })
-    );
+    const selectedNeededQuantity = +e.target.value;
+
+    updateNeededQuantity(user.uid, id, selectedNeededQuantity);
   };
 
   const removeItem = () => {
-    dispatch(favoritesActions.removeItem(id));
+    removeProductFromFavorites(user.uid, id);
   };
 
   return (
     <>
-      <Link to={`/${id}`}>
+      <Link to={`/ip/${id}`}>
         <div className='flex justify-between'>
           <div className='flex justify-between gap-4 md:gap-6 lg:gap-10'>
             <div className='max-w-[100px] lg:max-w-[150px]'>
@@ -70,7 +72,7 @@ const FavItem = ({ title, image, price, id }) => {
               id='select'
               className='text-fontColor'
               onChange={selectedValueHandler}
-              defaultValue={itemQuantity}
+              defaultValue={fetchedNeededQuantity ? fetchedNeededQuantity : 1}
             >
               {options.map((option) => {
                 return (

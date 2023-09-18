@@ -16,7 +16,7 @@ export default {
       // => @media (min-width: 1280px) { ... }
 
       // '2xl': '1536px',
-      // // => @media (min-width: 1536px) { ... }
+      // => @media (min-width: 1536px) { ... }
     },
     extend: {
       colors: {
@@ -32,6 +32,10 @@ export default {
       boxShadow: {
         'search-shadow': '0 0 0 2px #000',
         'card-shadow': '0 0 4px 0px rgb(0, 0, 0,.2)',
+      },
+      keyframes: {},
+      animation: {
+        pulse: 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },

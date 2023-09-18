@@ -5,7 +5,7 @@ const Category = ({ img, title }) => {
      justify-between flex-1'
     >
       <div
-        className=' bg-light w-[75px] h-[75px] flex items-center
+        className='bg-white w-[75px] h-[75px] flex items-center
        justify-center rounded-full p-2 overflow-hidden md:w-[120px] md:h-[120px]'
       >
         <img src={img} alt={title} className='max-w-full' />

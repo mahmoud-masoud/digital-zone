@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { FaX } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import ALL_PRODUCTS from '../../data';
-const SearchBox = () => {
-  const [showSuggestions, setShowSuggestions] = useState(false);
+
+const SearchBox = ({ setInputOnFocus, isInputOnFocus, handleInputOnFocus }) => {
   const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     const closeSuggestions = (e) => {
       if (!e.target.closest('.search-box')) {
-        setShowSuggestions(false);
+        setInputOnFocus(false);
       }
     };
     document.addEventListener('click', closeSuggestions);
@@ -19,16 +19,12 @@ const SearchBox = () => {
     };
   }, []);
 
-  const handleSuggestionClick = () => {
-    setShowSuggestions(false);
-  };
-
   return (
     <>
       <form
-        className={`${showSuggestions && 'px-4 z-[100000000000]'} md:p-0
-         flex gap-2 search-box w-full flex-1 md:w-80 md:static
-    ${showSuggestions && 'absolute transition right-0'}`}
+        className={`${isInputOnFocus && 'px-4 z-[100]'} md:p-0
+         flex gap-2 search-box w-full transition-all duration-300 flex-1 md:w-80 md:static
+    ${isInputOnFocus && 'absolute right-0'}`}
       >
         <div className='relative flex-1 w-full'>
           <input
@@ -39,8 +35,8 @@ const SearchBox = () => {
               setSearchInput(e.target.value);
             }}
             className={`rounded-full w-full p-2 h-10 pl-4 pr-16 focus:transition
-          ${showSuggestions && 'rounded-none'}`}
-            onClick={() => setShowSuggestions(true)}
+          ${isInputOnFocus && 'rounded-none'}`}
+            onClick={() => setInputOnFocus(true)}
           />
           <div className='absolute right-[5px] top-[5px] flex gap-2 bg-sky-'>
             <button
@@ -57,30 +53,30 @@ const SearchBox = () => {
             </button>
           </div>
           {/* Suggestions Box */}
-          {showSuggestions && (
+          {isInputOnFocus && (
             <div
               className='w-full bg-white h-screen md:h-auto fixed left-0 top-[74px]
             md:absolute md:top-[42px] shadow-lg p-4 transition'
             >
               <ul>
-                <li onClick={handleSuggestionClick}>
+                <li onClick={handleInputOnFocus}>
                   <Link to={'laptops'}>go to home</Link>
                 </li>
-                <li onClick={handleSuggestionClick}>
+                <li onClick={handleInputOnFocus}>
                   <Link to={'laptops'}>go to home</Link>
                 </li>
-                <li onClick={handleSuggestionClick}>
+                <li onClick={handleInputOnFocus}>
                   <Link to={'laptops'}>go to home</Link>
                 </li>
               </ul>
             </div>
           )}
         </div>
-        {showSuggestions && (
+        {isInputOnFocus && (
           <button
             type='button'
             className='md:hidden text-white underline'
-            onClick={handleSuggestionClick}
+            onClick={handleInputOnFocus}
           >
             Cancel
           </button>

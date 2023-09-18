@@ -1,8 +1,10 @@
 import Wrapper from '../../UI/Wrapper';
-import { mobilePhones } from '../../data';
-import ProductCard from '../../UI/ProductCard';
 import { Link } from 'react-router-dom';
+import HomePageCard from '../../UI/HomePageCard';
+import useCategory from '../../Hooks/useCategory';
 const MobilePhones = () => {
+  const { products, loading, error } = useCategory('mobile-phones');
+
   return (
     <Wrapper>
       <section
@@ -10,12 +12,13 @@ const MobilePhones = () => {
         md:grid-cols-5 lg:grid-cols-6 
       '
       >
-        {mobilePhones.map((product) => (
+        {products?.map((product) => (
           <Link to={product.id} key={product.id}>
-            <ProductCard
-              img={product.image}
-              title={product.title}
+            <HomePageCard
+              id={product.id}
+              img={product.images[0]}
               price={product.price}
+              title={product.title}
             />
           </Link>
         ))}

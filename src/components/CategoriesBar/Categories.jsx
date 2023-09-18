@@ -3,26 +3,26 @@ import Category from './Category';
 
 const Categories = () => {
   return (
-    <section className='container mx-auto flex justify-around pt-10 pb-16 gap-4'>
-      <Link to={'laptops'}>
+    <section className='container mx-auto flex justify-around py-4 mt-10 mb-14 gap-4 bg-light rounded-3xl'>
+      <Link to={'ct/laptops'}>
         <Category img={'/images/Categories/laptop.png'} title={'Laptops'} />
       </Link>
 
-      <Link to={'headphones'}>
+      <Link to={'ct/headphones'}>
         <Category
           img={'/images/Categories/headphone.jpg'}
           title={'Headphones'}
         />
       </Link>
 
-      <Link to={'mobile-phones'}>
+      <Link to={'ct/mobile-phones'}>
         <Category
           img={'/images/Categories/phone.jpg'}
           title={'Mobile Phones'}
         />
       </Link>
 
-      <Link to={'smart-watches'}>
+      <Link to={'ct/smart-watches'}>
         <Category
           img={'/images/Categories/smart-watch.png'}
           title={'Smart Watches'}
