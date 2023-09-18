@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import SignupCard from '../components/auth/SignUp/SignupCard';
+import SignupComponents from '../components/auth/CreateAccount/SignupComponents';
 
 const SignUp = () => {
   return (
@@ -10,7 +10,7 @@ const SignUp = () => {
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.5 }}
     >
-      <SignupCard />
+      <SignupComponents />
     </motion.div>
   );
 };

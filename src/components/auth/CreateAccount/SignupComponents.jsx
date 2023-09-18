@@ -12,7 +12,7 @@ import {
 } from 'firebase/auth';
 import { addNewUser } from '../../../Utils/firebase-functions';
 
-const SignupCard = () => {
+const SignupComponents = () => {
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState('');
@@ -195,4 +195,4 @@ const SignupCard = () => {
     </section>
   );
 };
-export default SignupCard;
+export default SignupComponents;
