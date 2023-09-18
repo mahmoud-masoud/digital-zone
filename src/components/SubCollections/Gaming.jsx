@@ -9,7 +9,7 @@ const Gaming = () => {
           All Gaming
         </h1>
         <div className='rounded-lg md:rounded-xl overflow-hidden mb-12'>
-          <img src='../../../public/images/new/gaming-banner.png' alt='' />
+          <img src='/images/new/gaming-banner.png' alt='' />
         </div>
 
         <div className=''>

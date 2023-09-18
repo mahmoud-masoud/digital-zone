@@ -91,7 +91,7 @@ nematic mode now in 4K Dolby Vision up to 30 fps
     id: '7',
     title: 'Oneplus 10r',
     price: 700,
-    image: '../public/images/Temp/0.webp',
+    image: '/images/Temp/0.webp',
     description: `
     iPhone 14 Pro Max. Capture incredible detail with a 48MP Main camera. Experience iPhone in a whole new way with Dynamic Island and Always-On display. And get peace of mind with groundbreaking safety features.
 Key Features
@@ -105,7 +105,7 @@ nematic mode now in 4K Dolby Vision up to 30 fps
     id: '8',
     title: 'Oneplus 10r',
     price: 700,
-    image: '../public/images/Temp/download.webp',
+    image: '/images/Temp/download.webp',
     description: `
     iPhone 14 Pro Max. Capture incredible detail with a 48MP Main camera. Experience iPhone in a whole new way with Dynamic Island and Always-On display. And get peace of mind with groundbreaking safety features.
 Key Features

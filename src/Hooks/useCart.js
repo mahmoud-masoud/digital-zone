@@ -70,8 +70,8 @@ const useCart = ({ title, price, id, image }) => {
   };
 
   const removeFromCart = () => {
-    removeProductFromTheCart(userUid, productId, price);
     setQuantity((prev) => (prev -= 1));
+    removeProductFromTheCart(userUid, productId, price);
   };
 
   const removeProductPermanently = () => {
