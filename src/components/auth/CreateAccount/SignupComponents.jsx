@@ -44,7 +44,6 @@ const SignupComponents = () => {
           displayName,
           email,
           uid,
-          favorites: [],
         },
         uid
       );
@@ -72,7 +71,7 @@ const SignupComponents = () => {
 
   const signUpWithGoogle = async () => {
     try {
-      const userCredential = await signInWithPopup(auth, googlAuthProvider);
+      const userCredential = await signInWithRedirect(auth, googlAuthProvider);
       const { displayName, email, uid } = userCredential.user;
 
       addNewUser(
@@ -80,7 +79,6 @@ const SignupComponents = () => {
           displayName,
           email,
           uid,
-          favorites: [],
         },
         uid
       );

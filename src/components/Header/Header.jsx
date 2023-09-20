@@ -33,6 +33,8 @@ const Header = () => {
     } else {
       document.documentElement.style.overflowY = 'auto';
     }
+
+    return () => (document.documentElement.style.overflowY = 'auto');
   }, [navbarIsOpen]);
 
   return (
@@ -58,7 +60,7 @@ const Header = () => {
           handleInputOnFocus={handleInputOnFocus}
         />
 
-        {navbarIsOpen && <MobileNavbar closeNavbar={closeNavbar} />}
+        {<MobileNavbar closeNavbar={closeNavbar} navbarIsOpen={navbarIsOpen} />}
         <Navbar />
 
         <CartIcon isInputOnFocus={isInputOnFocus} />

@@ -16,38 +16,52 @@ const Carousel = () => {
   const images = [img1, img2, img3, img4];
 
   return (
-    <div className='container relative mx-auto h-auto flex items-center justify-center overflow-hidden'>
-      <Swiper
-        className='w-full'
-        navigation={{
-          nextEl: '.next',
-          prevEl: '.prev',
-        }}
-        pagination={{
-          clickable: true,
-          type: 'bullets',
-        }}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        modules={[Navigation, Pagination, Autoplay]}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={image.toString()}>
-            <picture>
-              <source
-                srcSet={`/images/Carousel/small-images/small-${index + 1}.png`}
-                type='image/png'
-                media='(max-width: 768px)'
-                height='300'
-              />
-              <img src={image} alt='' className='max-w-full' height='300' />
-            </picture>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div
+      className='container relative mx-auto h-auto 
+    flex items-center justify-center px-3 md:p-0'
+    >
+      <div className='rounded-xl overflow-hidden'>
+        <Swiper
+          className='w-full'
+          navigation={{
+            nextEl: '.next',
+            prevEl: '.prev',
+          }}
+          pagination={{
+            clickable: true,
+            type: 'bullets',
+          }}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[Navigation, Pagination, Autoplay]}
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={image.toString()}>
+              <picture>
+                <source
+                  srcSet={`/images/Carousel/small-images/small-${
+                    index + 1
+                  }.png`}
+                  type='image/png'
+                  media='(max-width: 768px)'
+                  height='300'
+                  width='auto'
+                />
+                <img
+                  src={image}
+                  alt=''
+                  className='max-w-full'
+                  height='300'
+                  width='auto'
+                />
+              </picture>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
       <button
         className='hidden md:flex prev absolute items-center justify-end -left-[45px]
        h-[70px] w-[70px] bg-white z-10 rounded-full text-3xl text-primary'

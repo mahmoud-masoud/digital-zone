@@ -30,6 +30,7 @@ const Navbar = () => {
     } else {
       document.documentElement.style.overflowY = 'auto';
     }
+    return () => (document.documentElement.style.overflowY = 'auto');
   }, [isAccountDropDown, dropDownMenu]);
 
   useEffect(() => {
