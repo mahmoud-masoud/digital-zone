@@ -6,7 +6,7 @@ const Admin = () => {
   return (
     <>
       <AdminNavbar />
-      <Wrapper className={'flex justify-center items-center'}>
+      <Wrapper className={'flex justify-center items-center p-4'}>
         <NewProductForm />
       </Wrapper>
     </>

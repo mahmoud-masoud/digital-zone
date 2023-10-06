@@ -10,7 +10,7 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 import './BannersCarousel.css';
 
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const Carousel = () => {
   const images = [img1, img2, img3, img4];
@@ -36,7 +36,7 @@ const Carousel = () => {
             delay: 2500,
             disableOnInteraction: false,
           }}
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[Pagination, Autoplay]}
         >
           {images.map((image, index) => (
             <SwiperSlide key={image.toString()}>
@@ -62,7 +62,7 @@ const Carousel = () => {
           ))}
         </Swiper>
       </div>
-      <button
+      {/* <button
         className='hidden md:flex prev absolute items-center justify-end -left-[45px]
        h-[70px] w-[70px] bg-white z-10 rounded-full text-3xl text-primary'
       >
@@ -73,7 +73,7 @@ const Carousel = () => {
        h-[70px] w-[70px] bg-white z-10 rounded-full text-3xl text-primary'
       >
         <FaAngleRight />
-      </button>
+      </button> */}
     </div>
   );
 };

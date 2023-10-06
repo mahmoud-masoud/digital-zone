@@ -15,7 +15,7 @@ const NewProductDescription = () => {
         name='description'
         id='description'
         placeholder='Product Description'
-        className='border border-black rounded-lg p-2 min-h-[200px]'
+        className='border border-black rounded-lg p-2 min-h-[150px]'
         onChange={enteredDescriptionHandler}
       ></textarea>
     </div>

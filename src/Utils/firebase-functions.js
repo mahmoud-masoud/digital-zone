@@ -34,7 +34,7 @@ export async function getCurrentUserUID() {
   }
 }
 
-export const uploadImages = async (blobUrls, category, title) => {
+export const uploadImages = async (blobUrls, category, productId) => {
   const imagesUrls = [];
   let fileName = 0;
   try {
@@ -42,7 +42,10 @@ export const uploadImages = async (blobUrls, category, title) => {
       const blobData = await fetch(blobUrl).then((response) => response.blob());
       const resFile = new File([blobData], fileName++, { type: blobData.type });
 
-      const storageRef = ref(storage, `${category}/${title}/${resFile.name}`);
+      const storageRef = ref(
+        storage,
+        `${category}/${productId}/${resFile.name}`
+      );
       const uploadedTask = await uploadBytes(storageRef, resFile);
       const url = await getDownloadURL(uploadedTask.ref);
       imagesUrls.push(url);

@@ -41,7 +41,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
         <button
           className={`${
             (isClickOutside || quantity === 0) && 'hidden'
-          } hover:bg-medium  p-2 rounded-full focus:bg-medium `}
+          } hover:bg-medium  p-2 rounded-full focus:bg-medium`}
           onClick={removeFromCart}
         >
           <FaMinus />

@@ -6,9 +6,10 @@ const CreateNewProductBtn = ({ isError, isSubmitting, isSuccess }) => {
       <button
         type='submit'
         className='bg-primary py-2 px-6 text-white rounded-md ml-auto'
+        disabled={isSubmitting}
       >
         <div className='flex gap-4 font-semibold'>
-          <span>Save</span> {isSubmitting && <LoadingSpinner />}
+          {isSubmitting ? <LoadingSpinner /> : 'Save'}
         </div>
       </button>
     </div>

@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   title: '',
   description: '',
+  features: [],
   highlights: '',
   images: [],
   price: 0,
   category: '',
+  tags: [],
 };
 
 const newProductFormData = createSlice({
@@ -30,6 +32,13 @@ const newProductFormData = createSlice({
     },
     addCategory(state, action) {
       state.category = action.payload;
+    },
+    addTags(state, action) {
+      state.tags = action.payload;
+    },
+
+    addFeatures(state, action) {
+      state.features = action.payload;
     },
   },
 });

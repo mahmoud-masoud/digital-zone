@@ -71,7 +71,8 @@ const SignupComponents = () => {
 
   const signUpWithGoogle = async () => {
     try {
-      const userCredential = await signInWithRedirect(auth, googlAuthProvider);
+      const userCredential = await signInWithPopup(auth, googlAuthProvider);
+
       const { displayName, email, uid } = userCredential.user;
 
       addNewUser(

@@ -8,6 +8,7 @@ import Loading from '../UI/Loading';
 
 const MobileProductPage = () => {
   const { product, isLoading, hasError } = useProductPage();
+  console.log(product);
   return isLoading ? (
     <Loading />
   ) : product ? (
@@ -21,7 +22,10 @@ const MobileProductPage = () => {
           image={product.images[0]}
         />
         <ProductQuickHighlights highlights={product.highlights} />
-        <ProductDetails description={product.description} />
+        <ProductDetails
+          description={product.description}
+          features={product?.features}
+        />
       </Wrapper>
     </>
   ) : (

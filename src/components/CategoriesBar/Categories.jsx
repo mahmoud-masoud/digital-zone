@@ -3,10 +3,10 @@ import Category from './Category';
 import Wrapper from '../../UI/Wrapper';
 const Categories = () => {
   return (
-    <section className='px-4 pt-8 md:pt-12'>
+    <section className='px-4 py-8 mt-4 md:py-12'>
       <Wrapper
         className={
-          'grid grid-cols-2 md:grid-cols-4 gap-4 justify-center items-center '
+          'grid grid-cols-2 md:grid-cols-4 md:gap-20 gap-4 justify-center items-center '
         }
       >
         <Link to={'ct/laptops'}>

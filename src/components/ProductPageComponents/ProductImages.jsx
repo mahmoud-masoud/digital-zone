@@ -38,10 +38,16 @@ const ProductImages = ({ images, title }) => {
             return (
               <SwiperSlide
                 key={url}
-                className='rounded-md border-2 border-gray-200 p-1'
+                className='rounded-md border-2 border-gray-200 p-1 
+                flex justify-center items-center'
               >
                 {/* <ProductImg url={url} /> */}
-                <img src={url} alt='' loading='lazy' />
+                <img
+                  src={url}
+                  alt=''
+                  loading='lazy'
+                  className='max-w-full max-h-full'
+                />
               </SwiperSlide>
             );
           })}
@@ -72,9 +78,15 @@ const ProductImages = ({ images, title }) => {
       >
         {images?.map((url) => {
           return (
-            <SwiperSlide key={url}>
-              {/* <ProductImg url={url} /> */}
-              <img src={url} alt='' loading='lazy' />
+            <SwiperSlide key={url} className='flex justify-center items-center'>
+              <img
+                src={url}
+                alt=''
+                loading='lazy'
+                width={'auto'}
+                height={500}
+                className='max-w-full max-h-full'
+              />
             </SwiperSlide>
           );
         })}

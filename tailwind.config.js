@@ -28,6 +28,7 @@ export default {
         dark: '#00264B',
         fontColor: '#000D1A',
         background: '#FFF',
+        overlay: 'rgba(0,0,0, .5)',
       },
       boxShadow: {
         'search-shadow': '0 0 0 2px #000',

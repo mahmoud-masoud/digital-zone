@@ -21,7 +21,10 @@ const ProductPage = () => {
         {product?.highlights && (
           <ProductQuickHighlights highlights={product.highlights} />
         )}
-        <ProductDetails description={product?.description} />
+        <ProductDetails
+          description={product?.description}
+          features={product?.features}
+        />
       </div>
       <ProductInfo
         title={product?.title}

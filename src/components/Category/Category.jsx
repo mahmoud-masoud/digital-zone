@@ -12,23 +12,25 @@ const Category = () => {
       {loading && <Loading />}
       {error && <p>Something went wrong, refresh the page</p>}
       {!loading && !error && (
-        <Wrapper>
-          <section
-            className='bg-white grid gap-10 p-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-      '
-          >
-            {products?.map((product) => (
-              <Link to={product.id} key={product.id}>
-                <HomePageCard
-                  id={product.id}
-                  img={product.images[0]}
-                  price={product.price}
-                  title={product.title}
-                />
-              </Link>
-            ))}
-          </section>
-        </Wrapper>
+        <section className='min-h-screen'>
+          <Wrapper>
+            <div
+              className='bg-white grid gap-10 p-4 grid-cols-2 md:grid-cols-3 
+          lg:grid-cols-4'
+            >
+              {products?.map((product) => (
+                <Link to={product.id} key={product.id}>
+                  <HomePageCard
+                    id={product.id}
+                    img={product.images[0]}
+                    price={product.price}
+                    title={product.title}
+                  />
+                </Link>
+              ))}
+            </div>
+          </Wrapper>
+        </section>
       )}
     </>
   );

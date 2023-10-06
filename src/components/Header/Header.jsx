@@ -10,6 +10,7 @@ import Logo from '../../UI/Logo';
 import MobileNavbar from './NavBar/MobileNavbar';
 import { useSelector } from 'react-redux';
 import CartIcon from './CartIcon';
+import DropdownViewCart from '../../UI/DropDownViewCart';
 
 const Header = () => {
   const [isInputOnFocus, setInputOnFocus] = useState(false);
@@ -38,7 +39,7 @@ const Header = () => {
   }, [navbarIsOpen]);
 
   return (
-    <header className='bg-primary mb-8 p-4 sticky top-0 z-[100000]'>
+    <header className='bg-primary mb-8 p-4 sticky top-0 z-[100]'>
       <Wrapper
         className={
           'flex flex-wrap gap-2 md:gap-4 md:flex-row items-center md:justify-between'

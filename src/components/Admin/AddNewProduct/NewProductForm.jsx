@@ -5,30 +5,41 @@ import NewProductPrice from './NewProductPrice';
 import CreateNewProductBtn from './CreateNewProductBtn';
 
 import { uploadImages } from '../../../Utils/firebase-functions';
-import { addProduct } from '../../../Utils/firebase-functions';
 import ProductHighlights from './ProductHighlights';
 import UploadGallery from './imges-grid/UploadGallery';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { v4 as uuidv4, v4 } from 'uuid';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../../../Utils/firebase';
+import Tags from './Tags';
+import ProductFeatures from './ProductFeatures';
 
 const NewProductForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { title, description, images, highlights, price, category } =
-    useSelector((state) => state.newProductFormData);
+  const {
+    title,
+    description,
+    features,
+    images,
+    highlights,
+    price,
+    category,
+    tags,
+  } = useSelector((state) => state.newProductFormData);
+
+  console.log(features);
 
   const productId = v4();
-  console.log(price);
+
   const formSubmitHandler = async (e) => {
     setIsSubmitting(true);
     e.preventDefault();
     try {
-      const imagesUrls = await uploadImages(images, category, title);
+      const imagesUrls = await uploadImages(images, category, productId);
 
       console.log('upload images successfully');
 
@@ -36,9 +47,12 @@ const NewProductForm = () => {
         title,
         highlights,
         description,
+        features,
         price: price,
         images: imagesUrls,
+        tags,
         id: productId,
+        timestamp: serverTimestamp(),
       };
 
       const productsCollectionRef = collection(
@@ -63,13 +77,15 @@ const NewProductForm = () => {
   return (
     <form className='my-20' onSubmit={formSubmitHandler}>
       <div>
-        <div className='flex flex-col gap-4 shadow-lg rounded-lg border p-6 min-w-[500px]'>
+        <div className='flex flex-col gap-8 shadow-lg rounded-lg border p-6 lg:w-[900px]'>
           <NewProductTitle />
           <ProductHighlights />
           <NewProductDescription />
+          <ProductFeatures />
           <UploadGallery />
           <NewProductPrice />
           <NewProductCollectionSelect />
+          <Tags />
         </div>
         {isError && (
           <div className='bg-red-200 p-2 py-4 mt-4 border-b-4 border-red-600'>
