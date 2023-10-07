@@ -14,6 +14,7 @@ import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../../../Utils/firebase';
 import Tags from './Tags';
 import ProductFeatures from './ProductFeatures';
+import Wrapper from '../../../UI/Wrapper';
 
 const NewProductForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,36 +76,40 @@ const NewProductForm = () => {
   };
 
   return (
-    <form className='my-20' onSubmit={formSubmitHandler}>
-      <div>
-        <div className='flex flex-col gap-8 shadow-lg rounded-lg border p-6 lg:w-[900px]'>
-          <NewProductTitle />
-          <ProductHighlights />
-          <NewProductDescription />
-          <ProductFeatures />
-          <UploadGallery />
-          <NewProductPrice />
-          <NewProductCollectionSelect />
-          <Tags />
-        </div>
-        {isError && (
-          <div className='bg-red-200 p-2 py-4 mt-4 border-b-4 border-red-600'>
-            Something went wrong!
-          </div>
-        )}
+    <div className='py-6'>
+      <Wrapper className={'w-full max-w-[900px]'}>
+        <form onSubmit={formSubmitHandler}>
+          <div>
+            <div className='flex flex-col gap-8 p-6 bg-white shadow-lg rounded-lg border'>
+              <NewProductTitle />
+              <ProductHighlights />
+              <NewProductDescription />
+              <ProductFeatures />
+              <UploadGallery />
+              <NewProductPrice />
+              <NewProductCollectionSelect />
+              <Tags />
+            </div>
+            {isError && (
+              <div className='bg-red-200 p-2 py-4 mt-4 border-b-4 border-red-600'>
+                Something went wrong!
+              </div>
+            )}
 
-        {isSuccess && (
-          <div className='bg-green-200 p-2 py-4 mt-4 border-b-4 border-green-600'>
-            Product added successfully
+            {isSuccess && (
+              <div className='bg-green-200 p-2 py-4 mt-4 border-b-4 border-green-600'>
+                Product added successfully
+              </div>
+            )}
+            <CreateNewProductBtn
+              isError={isError}
+              isSubmitting={isSubmitting}
+              isSuccess={isSuccess}
+            />
           </div>
-        )}
-        <CreateNewProductBtn
-          isError={isError}
-          isSubmitting={isSubmitting}
-          isSuccess={isSuccess}
-        />
-      </div>
-    </form>
+        </form>
+      </Wrapper>
+    </div>
   );
 };
 export default NewProductForm;
