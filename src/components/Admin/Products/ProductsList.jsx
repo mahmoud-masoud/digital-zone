@@ -30,8 +30,8 @@ const ProductsList = () => {
   return (
     <div className='bg-white rounded-xl mt-8 flex flex-col gap-4'>
       <ul>
-        {products.map((product) => (
-          <li className='border-b last:border-none'>
+        {products.map((product, index) => (
+          <li key={index} className='border-b last:border-none'>
             <Link to={product.id}>
               <Product title={product.title} img={product.images[0]} />
             </Link>

@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
-import { useDispatch } from 'react-redux';
-import { newProductFormDataActions } from '../../../store/newProductFormData';
 
-const Tags = () => {
+const Tags = ({ setValue }) => {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
-
-  const dispatch = useDispatch();
 
   const handleTagAdd = () => {
     if (tagInput.trim() !== '') {
@@ -26,7 +22,7 @@ const Tags = () => {
   };
 
   useEffect(() => {
-    dispatch(newProductFormDataActions.addTags(tags));
+    setValue('tags', tags);
   }, [tags]);
 
   return (

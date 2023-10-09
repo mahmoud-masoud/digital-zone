@@ -17,7 +17,7 @@ import CategoryPage from '../../pages/CategoryPage';
 import AdminRoot from '../Admin/Root';
 import AdminHome from '../../pages/Admin/Home';
 import Products from '../../pages/Admin/Products';
-import NewProductFrom from '../Admin/NewProduct/NewProductForm';
+import ProductFrom from '../Admin/NewProduct/ProductForm';
 
 const LazyProductPage = lazy(() => import('../../pages/ProductPage'));
 const LazyFavoritesPage = lazy(() => import('../../pages/Favorites'));
@@ -110,8 +110,8 @@ export const router = createBrowserRouter([
         path: 'products',
         element: <Products />,
       },
-      { path: 'products/new', element: <NewProductFrom /> },
-      { path: 'products/:productId', element: <NewProductFrom /> },
+      { path: 'products/new', element: <ProductFrom /> },
+      { path: 'products/:productId', element: <ProductFrom /> },
       {
         path: 'customers',
         element: <div className='bg-orange-400 w-60 h-60'>Customers</div>,

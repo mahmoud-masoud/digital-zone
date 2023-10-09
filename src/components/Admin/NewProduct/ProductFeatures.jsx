@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
-import { useDispatch } from 'react-redux';
-import { newProductFormDataActions } from '../../../store/newProductFormData';
-const ProductFeatures = () => {
+
+const ProductFeatures = ({ setValue }) => {
   const [featureInput, setFeatureInput] = useState('');
   const [features, setFeatures] = useState([]);
-
-  const dispatch = useDispatch();
 
   const addFeature = () => {
     if (featureInput.trim() !== '') {
@@ -23,7 +20,7 @@ const ProductFeatures = () => {
   };
 
   useEffect(() => {
-    dispatch(newProductFormDataActions.addFeatures(features));
+    setValue('features', features);
   }, [features]);
   return (
     <div className=''>

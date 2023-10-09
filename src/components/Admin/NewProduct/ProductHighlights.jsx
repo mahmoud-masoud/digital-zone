@@ -1,10 +1,7 @@
-import { useDispatch } from 'react-redux';
-import { newProductFormDataActions } from '../../../store/newProductFormData';
 import { useEffect, useState } from 'react';
+import { TiDelete } from 'react-icons/ti';
 
-const ProductHighlights = () => {
-  const dispatch = useDispatch();
-
+const ProductHighlights = ({ setValue }) => {
   const [highlightInput, setHighlight] = useState({ key: '', value: '' });
   const [highlights, setHighlights] = useState([]);
 
@@ -32,8 +29,16 @@ const ProductHighlights = () => {
     }
   };
 
+  const handleRemoveHighlight = (highlightToRemove) => {
+    console.log(highlightToRemove);
+    const updatedHighlights = highlights.filter(
+      (highlight) => highlight !== highlightToRemove
+    );
+    setHighlights(updatedHighlights);
+  };
+
   useEffect(() => {
-    dispatch(newProductFormDataActions.addHighlights(highlights));
+    setValue('highlights', highlights);
   }, [highlights]);
 
   return (
@@ -81,16 +86,28 @@ const ProductHighlights = () => {
         </button>
       </div>
 
-      {/* Display the added highlights */}
       <div>
-        <h3>Added Features:</h3>
-        <ul className='text-lg'>
-          {highlights.map((feature, index) => (
-            <li key={index}>
-              {feature.key}: {feature.value}
-            </li>
-          ))}
-        </ul>
+        <div className='bg-gray-100 rounded-lg'>
+          <ul className='flex flex-col md:flex-row flex-wrap p-5'>
+            {highlights.map((highlight, index) => (
+              <li
+                key={index + 10 * Date.now()}
+                className='flex gap-2 group md:w-1/2 text-sm py-1 text-gray-800 md:even:pl-5 md:odd:border-r border-gray-300'
+              >
+                <div className='flex font-medium w-2/3 '>{highlight.key}</div>
+                <div className='flex pr-2'>{highlight.value}</div>
+                <button
+                  type='button'
+                  onClick={() => handleRemoveHighlight(highlight)}
+                  className='hidden group-hover:block'
+                >
+                  {' '}
+                  <TiDelete />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

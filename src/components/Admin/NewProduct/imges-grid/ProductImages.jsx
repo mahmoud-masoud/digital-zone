@@ -14,11 +14,8 @@ import {
 } from '@dnd-kit/sortable';
 import { useDropzone } from 'react-dropzone';
 import { SortablePhoto } from './SortablePhoto';
-import { useDispatch } from 'react-redux';
-import { newProductFormDataActions } from '../../../../store/newProductFormData';
 
-const UploadGallery = () => {
-  const dispatch = useDispatch();
+const ProductImages = ({ setValue }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const [items, setItems] = useState(acceptedFiles);
 
@@ -34,7 +31,7 @@ const UploadGallery = () => {
   }, [acceptedFiles]);
 
   useEffect(() => {
-    dispatch(newProductFormDataActions.addImages(items));
+    setValue('images', items);
   }, [items]);
 
   return (
@@ -84,4 +81,4 @@ const UploadGallery = () => {
   }
 };
 
-export default UploadGallery;
+export default ProductImages;
