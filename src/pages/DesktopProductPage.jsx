@@ -7,10 +7,10 @@ import ProductQuickHighlights from '../components/ProductPageComponents/ProductQ
 import ProductDetails from '../components/ProductPageComponents/ProductDetails';
 
 import Loading from '../UI/Loading';
-import useProductPage from '../Hooks/useProductPage';
+import useProduct from '../Hooks/useProduct';
 
 const ProductPage = () => {
-  const { product, isLoading, hasError } = useProductPage();
+  const { product, isLoading, hasError } = useProduct();
 
   return isLoading ? (
     <Loading />

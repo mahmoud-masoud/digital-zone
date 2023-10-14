@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 
-const ProductHighlights = ({ setValue }) => {
+const ProductHighlights = ({ setValue, serverHighlights }) => {
   const [highlightInput, setHighlight] = useState({ key: '', value: '' });
-  const [highlights, setHighlights] = useState([]);
+  const [highlights, setHighlights] = useState(
+    serverHighlights ? serverHighlights : []
+  );
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;

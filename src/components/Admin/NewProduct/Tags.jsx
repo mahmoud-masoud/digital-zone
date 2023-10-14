@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { TiDelete } from 'react-icons/ti';
+import { useForm } from 'react-hook-form';
+import { FaX } from 'react-icons/fa6';
 
-const Tags = ({ setValue }) => {
-  const [tags, setTags] = useState([]);
+const Tags = ({ setValue, serverTags }) => {
+  const [tags, setTags] = useState(serverTags ? serverTags : []);
   const [tagInput, setTagInput] = useState('');
 
   const handleTagAdd = () => {
@@ -16,9 +17,9 @@ const Tags = ({ setValue }) => {
     setTagInput(e.target.value);
   };
 
-  const handleTagRemove = (tagToRemove) => {
-    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
-    setTags(updatedTags);
+  const handleTagRemove = (index) => {
+    const filteredTags = tags.filter((tag, idx) => idx !== index);
+    setTags(filteredTags);
   };
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const Tags = ({ setValue }) => {
       <div className='flex justify-between border border-black p-2 rounded-lg'>
         <input
           type='text'
+          name='tags'
           placeholder='Add a tag'
           value={tagInput}
           className='outline-none w-full'
@@ -49,20 +51,23 @@ const Tags = ({ setValue }) => {
           Add
         </button>
       </div>
-      <div className='flex gap-4 mt-4'>
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className='flex justify-center items-center bg-gray-200 px-3 py-1.5 shadow-sm rounded-md '
+      <div className='flex flex-wrap items-center gap-4 mt-4 '>
+        {tags.map((tag, index) => (
+          <div
+            key={Math.random() * Date.now()}
+            className='flex gap-2 justify-center items-center bg-gray-200
+             px-3 py-1.5 shadow-sm rounded-lg'
           >
-            {tag}
+            <span>{tag}</span>
             <button
-              className='w-4 ml-2 text-2xl'
-              onClick={() => handleTagRemove(tag)}
+              type='button'
+              className='flex justify-center items-center p-1
+               rounded-lg hover:bg-gray-300 w-4 text-[12px]'
+              onClick={() => handleTagRemove(index)}
             >
-              <TiDelete />
+              <FaX />
             </button>
-          </span>
+          </div>
         ))}
       </div>
     </div>

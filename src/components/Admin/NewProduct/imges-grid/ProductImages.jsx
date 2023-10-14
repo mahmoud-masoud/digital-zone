@@ -15,17 +15,15 @@ import {
 import { useDropzone } from 'react-dropzone';
 import { SortablePhoto } from './SortablePhoto';
 
-const ProductImages = ({ setValue }) => {
+const ProductImages = ({ setValue, serverImages }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-  const [items, setItems] = useState(acceptedFiles);
+  const [items, setItems] = useState(serverImages ? serverImages : []);
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   useEffect(() => {
     // Create URLs for the acceptedFiles
     const urls = acceptedFiles.map((file) => URL.createObjectURL(file));
-
-    // Update both allAcceptedFiles and items in one go
 
     setItems((prev) => [...prev, ...urls]);
   }, [acceptedFiles]);
@@ -34,6 +32,10 @@ const ProductImages = ({ setValue }) => {
     setValue('images', items);
   }, [items]);
 
+  const removeImg = (url) => {
+    const updatedItems = items.filter((item) => item !== url);
+    setItems(() => updatedItems);
+  };
   return (
     <>
       <section className='container'>
@@ -55,11 +57,23 @@ const ProductImages = ({ setValue }) => {
         <SortableContext items={items} strategy={rectSortingStrategy}>
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
             {items.map((url, index) => (
-              <SortablePhoto
+              <div
                 key={Math.random() * Date.now()}
-                url={url}
-                index={index}
-              />
+                className='bg-gray-300 rounded-2xl first:col-span-2 first:row-span-2'
+              >
+                <div className='relative group'>
+                  <SortablePhoto url={url} index={index} />
+                  <button
+                    className='absolute top-0 right-0 p-2 font-medium text-2xl hidden
+                     group-hover:block transition'
+                    onClick={() => {
+                      removeImg(url);
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         </SortableContext>

@@ -20,8 +20,8 @@ export const SortablePhoto = (props) => {
 
   return (
     <div
-      className='bg-white border shadow-md rounded-2xl p-2 flex justify-center items-center
-      aspect-square first:col-span-2 first:row-span-2'
+      className='bg-white  border rounded-2xl p-2 flex justify-center items-center
+      aspect-square '
       ref={setNodeRef}
       {...props}
       {...attributes}

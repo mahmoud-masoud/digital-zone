@@ -3,7 +3,7 @@ import { db } from '../Utils/firebase';
 import { collectionGroup, onSnapshot, query, where } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 
-const useProductPage = () => {
+const useProduct = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [product, setProduct] = useState();
@@ -41,4 +41,4 @@ const useProductPage = () => {
 
   return { product, isLoading, hasError };
 };
-export default useProductPage;
+export default useProduct;

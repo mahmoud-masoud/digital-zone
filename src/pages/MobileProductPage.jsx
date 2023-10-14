@@ -3,11 +3,11 @@ import Wrapper from '../UI/Wrapper';
 import ProductInfo from '../components/ProductPageComponents/ProductBuyBox/ProductInfo';
 import ProductQuickHighlights from '../components/ProductPageComponents/ProductQuickHighlights';
 import ProductDetails from '../components/ProductPageComponents/ProductDetails';
-import useProductPage from '../Hooks/useProductPage';
+import useProduct from '../Hooks/useProduct';
 import Loading from '../UI/Loading';
 
 const MobileProductPage = () => {
-  const { product, isLoading, hasError } = useProductPage();
+  const { product, isLoading, hasError } = useProduct();
   console.log(product);
   return isLoading ? (
     <Loading />

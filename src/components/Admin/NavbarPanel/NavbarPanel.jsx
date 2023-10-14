@@ -54,7 +54,7 @@ const NavbarPanel = () => {
               }}
             >
               <div className='flex items-center gap-3  py-1 px-4'>
-                <IoMdPricetags className='text-2xl text-gray-600' />
+                <IoMdPricetags className='text-2xl ' />
                 <span className='text-lg font-medium'>Products</span>
               </div>
             </NavLink>

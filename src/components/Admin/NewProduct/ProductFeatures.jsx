@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 
-const ProductFeatures = ({ setValue }) => {
+const ProductFeatures = ({ setValue, serverFeatures }) => {
   const [featureInput, setFeatureInput] = useState('');
-  const [features, setFeatures] = useState([]);
+  const [features, setFeatures] = useState(
+    serverFeatures ? serverFeatures : []
+  );
 
   const addFeature = () => {
     if (featureInput.trim() !== '') {
