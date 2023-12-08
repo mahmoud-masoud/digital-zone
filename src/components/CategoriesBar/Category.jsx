@@ -1,16 +1,16 @@
 const Category = ({ img, title }) => {
   return (
     <div
-      className='flex flex-col items-center
-     justify-between flex-1 bg-light p-2 rounded-xl'
+      className="flex flex-1 flex-col
+     items-center justify-between rounded-xl bg-light p-2"
     >
       <div
-        className=' w-[100px] h-[100px] flex items-center
-       justify-center overflow-hidden md:w-[150px] md:h-[150px] p-2 rounded-lg'
+        className=" flex h-[100px] w-[100px] items-center
+       justify-center overflow-hidden rounded-lg p-2 md:h-[150px] md:w-[150px]"
       >
-        <img src={img} alt={title} className='max-w-full' />
+        <img src={img} alt={title} className="max-w-full" />
       </div>
-      <p className='pt-2 font-medium text-lg text-dark'>{title}</p>
+      <p className="pt-2 text-lg font-medium text-dark">{title}</p>
     </div>
   );
 };

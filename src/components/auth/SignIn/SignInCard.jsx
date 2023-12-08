@@ -1,98 +1,119 @@
-import Wrapper from '../../../UI/Wrapper';
-import GoogleLogo from '../../../UI/GoogleLogo';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../../../Utils/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
+import Wrapper from "../../../UI/Wrapper";
+import GoogleLogo from "../../../UI/GoogleLogo";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, googlAuthProvider } from "../../../Utils/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useState } from "react";
+import FormInput from "../CreateAccount/FormInput";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginValidationSchema } from "../../../Utils/zod";
+import LoadingSpinner from "../../../UI/LoadingSpinner";
+import InputError from "../../../UI/InputError";
 
 const SignInCard = () => {
+  const [passwordError, setPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const navigate = useNavigate();
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
 
-  const signInWithEmailAndPasswordHandler = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginValidationSchema),
+  });
+
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+
     try {
-      const res = await signInWithEmailAndPassword(
-        auth,
-        enteredEmail,
-        enteredPassword
-      );
-      console.log(res);
-      navigate('/');
+      await signInWithEmailAndPassword(auth, email, password);
+      setPasswordError(false);
+      setEmailError(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error.code);
+
+      if (error.code === "auth/wrong-password") {
+        setPasswordError(true);
+        setEmailError(false);
+      }
+
+      if (error.code === "auth/user-not-found") {
+        setEmailError(true);
+        setPasswordError(false);
+      }
+    }
+  };
+
+  const signUpWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googlAuthProvider);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <section className='bg-light h-screen'>
-      <Wrapper className='flex justify-center items-center pt-24 px-4'>
-        <div className='bg-white shadow-lg rounded-xl p-8 md:min-w-[450px]'>
-          <h3 className='font-bold text-3xl mb-6 text-fontColor'>
+    <section className="h-screen bg-slate-50">
+      <Wrapper className="flex items-center justify-center px-4 pt-24">
+        <div className="rounded-xl bg-white p-8 shadow-lg md:min-w-[450px]">
+          <h3 className="mb-6 text-3xl font-bold text-fontColor">
             Log in to your account
           </h3>
 
           <form
-            className='flex flex-col gap-3'
-            onSubmit={signInWithEmailAndPasswordHandler}
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-3"
           >
-            <div className='flex flex-col'>
-              <label htmlFor='email' className='mb-1 text-primary font-medium'>
-                email address
-              </label>
-              <input
-                type='email'
-                id='email'
-                placeholder='Enter your email address'
-                onChange={(e) => setEnteredEmail(e.target.value)}
-                className='p-3 border border-gray-400 hover:border-primary rounded-lg
-                transition-all duration-300'
-              />
-            </div>
+            <FormInput
+              inputType={"email"}
+              label={"email address"}
+              name={"email"}
+              placeholder={"Enter your email address"}
+              register={register("email")}
+              errors={errors}
+            />
+            {emailError && <InputError message={"Email not found"} />}
 
-            <div className='flex flex-col'>
-              <label
-                htmlFor='password'
-                className='mb-1 text-primary font-medium'
-              >
-                password
-              </label>
-              <input
-                type='password'
-                id='password'
-                placeholder='Enter your password'
-                autoComplete='true'
-                onChange={(e) => setEnteredPassword(e.target.value)}
-                className='p-3 border border-gray-400 hover:border-primary rounded-lg
-                transition-all duration-300'
-              />
-            </div>
+            <FormInput
+              inputType={"Password"}
+              label={"password"}
+              name={"password"}
+              placeholder={"Enter a password"}
+              register={register("password")}
+              errors={errors}
+            />
+            {passwordError && <InputError message={"Password is wrong"} />}
 
             <button
-              className='bg-primary text-white p-3 mt-2 border border-gray-400 font-semibold 
-              rounded-lg hover:opacity-80 hover:text-white transition-all duration-300'
+              className="mt-2 h-12  rounded-lg  border border-gray-400 bg-primary p-1 font-semibold 
+              text-white transition-all duration-300 hover:text-white hover:opacity-80"
+              disabled={isSubmitting}
             >
-              Login
+              {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Login"}
             </button>
           </form>
-          <hr className='mt-6' />
+          <hr className="mt-6" />
           <button
-            className='flex justify-center items-center gap-2 mt-6 w-full px-1 py-2 border
-             border-gray-400 font-semibold rounded-lg
-          hover:bg-primary hover:text-white transition-all duration-300'
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-400
+             px-1 py-2 font-semibold
+          transition-all duration-300 hover:bg-primary hover:text-white"
+            onClick={() => signUpWithGoogle()}
           >
-            <div className='bg-white p-[.2rem] rounded-[4px]'>
+            <div className="rounded-[4px] bg-white p-[.2rem]">
               <GoogleLogo />
             </div>
             Sign In with Google
           </button>
 
-          <p className='mt-2 text-gray-500'>
+          <p className="mt-2 text-gray-500">
             Don't have an account?
             <Link
-              to={'/signup'}
-              className='ml-3 text-primary font-medium underline hover:no-underline'
+              to={"/signup"}
+              className="ml-3 font-medium text-primary underline hover:no-underline"
             >
               Sign up
             </Link>

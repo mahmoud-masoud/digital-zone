@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { db } from '../Utils/firebase';
-import { collectionGroup, onSnapshot, query, where } from 'firebase/firestore';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { db } from "../Utils/firebase";
+import { collectionGroup, onSnapshot, query, where } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 
 const useProduct = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,8 +12,8 @@ const useProduct = () => {
   useEffect(() => {
     // Create a query to fetch the product by ID
     const q = query(
-      collectionGroup(db, 'products'),
-      where('id', '==', productId)
+      collectionGroup(db, "products"),
+      where("id", "==", productId),
     );
 
     // Subscribe to real-time updates with onSnapshot
@@ -26,7 +26,7 @@ const useProduct = () => {
           setIsLoading(false);
         } else {
           // Product not found
-          console.log('There is no document with this ID');
+          console.log("There is no document with this ID");
           setProduct(null); // Reset data if not found
           setIsLoading(false);
         }

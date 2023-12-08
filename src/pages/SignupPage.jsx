@@ -1,17 +1,12 @@
-import { motion } from 'framer-motion';
-
-import SignupComponents from '../components/auth/CreateAccount/SignupComponents';
+import SignupComponents from "../components/auth/CreateAccount/SignupComponents";
+import TopBar from "../components/auth/Topbar";
 
 const SignUp = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 100 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div>
+      <TopBar title={"Sign up"} />
       <SignupComponents />
-    </motion.div>
+    </div>
   );
 };
 export default SignUp;

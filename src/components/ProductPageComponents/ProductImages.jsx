@@ -34,16 +34,16 @@ const ProductImages = ({ images, title }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className='mySwiper max-h-full w-[100px]'
         >
-          {images?.map((url) => {
+          {images?.map((imgObj) => {
             return (
               <SwiperSlide
-                key={url}
+                key={imgObj}
                 className='rounded-md border-2 border-gray-200 p-1 
                 flex justify-center items-center'
               >
                 {/* <ProductImg url={url} /> */}
                 <img
-                  src={url}
+                  src={imgObj}
                   alt=''
                   loading='lazy'
                   className='max-w-full max-h-full'
@@ -76,11 +76,14 @@ const ProductImages = ({ images, title }) => {
         modules={[Thumbs]}
         className='mySwiper2 max-w-[500px]'
       >
-        {images?.map((url) => {
+        {images?.map((imgObj) => {
           return (
-            <SwiperSlide key={url} className='flex justify-center items-center'>
+            <SwiperSlide
+              key={imgObj}
+              className='flex justify-center items-center'
+            >
               <img
-                src={url}
+                src={imgObj}
                 alt=''
                 loading='lazy'
                 width={'auto'}

@@ -1,8 +1,8 @@
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import { useEffect, useRef, useState } from 'react';
-import useCart from '../Hooks/useCart';
-import LoadingSpinner from './LoadingSpinner';
-
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import useCartProduct from "../Hooks/useCartProduct";
+import LoadingSpinner from "./LoadingSpinner";
+import { motion } from "framer-motion";
 const CardAddToCart = ({ title, price, id, image }) => {
   const [isClickOutside, setIsClickOutside] = useState(true);
   const {
@@ -12,7 +12,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
     removeFromCart,
     userLoading,
     userError,
-  } = useCart({ title, price, id, image });
+  } = useCartProduct({ title, price, id, image });
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -24,39 +24,39 @@ const CardAddToCart = ({ title, price, id, image }) => {
       }
     };
 
-    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener("click", handleOutsideClick);
 
-    return () => document.removeEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
   }, []);
 
   return (
-    <div
-      className={`bg-primary scale-[.8] md:scale-100 overflow-hidden main-btn ${
-        quantity > 0 ? 'p-1 gap-6' : 'w-fit active:bg-after hover:bg-after'
-      } rounded-full flex justify-between items-center text-white `}
+    <motion.div
+      className={`main-btn scale-[.8] overflow-hidden bg-primary md:scale-100 ${
+        quantity > 0 ? "gap-6 p-1" : "w-fit hover:bg-after active:bg-after"
+      } flex items-center justify-between rounded-full text-white`}
       onClick={(e) => e.preventDefault()}
       ref={buttonRef}
     >
       <>
         <button
           className={`${
-            (isClickOutside || quantity === 0) && 'hidden'
-          } hover:bg-medium  p-2 rounded-full focus:bg-medium`}
+            (isClickOutside || quantity === 0) && "hidden"
+          } rounded-full  p-2 hover:bg-medium focus:bg-medium`}
           onClick={removeFromCart}
         >
           <FaMinus />
         </button>
         <span
           className={`${
-            quantity === 0 ? 'hidden' : 'w-8 h-8'
-          } font-medium flex-1 text-center flex items-center justify-center`}
+            quantity === 0 ? "hidden" : "h-8 w-8"
+          } flex flex-1 items-center justify-center text-center font-medium`}
         >
           {quantity}
         </span>
         <button
           className={`${
-            (isClickOutside || quantity === 0) && 'hidden'
-          } hover:bg-medium  p-2 rounded-full focus:bg-medium `}
+            (isClickOutside || quantity === 0) && "hidden"
+          } rounded-full  p-2 hover:bg-medium focus:bg-medium `}
           onClick={addToCart}
           autoFocus
         >
@@ -67,21 +67,21 @@ const CardAddToCart = ({ title, price, id, image }) => {
       <button
         onClick={addToCart}
         className={`${
-          quantity === 0 && !sendingProduct ? 'block' : 'hidden'
-        } font-medium py-2 px-5 `}
+          quantity === 0 && !sendingProduct ? "block" : "hidden"
+        } px-5 py-2 font-medium `}
       >
-        <div className='flex gap-1 items-center'>
-          <FaPlus className='text-sm' />
+        <div className="flex items-center gap-1">
+          <FaPlus className="text-sm" />
           <span>Add</span>
         </div>
       </button>
 
       {sendingProduct && quantity === 0 && (
-        <div className='w-24 py-1 flex justify-center items-center '>
+        <div className="flex w-24 items-center justify-center py-1 ">
           <LoadingSpinner />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

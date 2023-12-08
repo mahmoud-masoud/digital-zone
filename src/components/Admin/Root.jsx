@@ -1,17 +1,16 @@
-import { Outlet } from 'react-router-dom';
-import AdminNav from './NavbarPanel/NavbarPanel';
-import TopBar from './TopBar';
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import NavbarPanel from "./NavbarPanel/NavbarPanel";
+import TopBar from "./TopBar";
+import NavbarTopBarWrapper from "./NavbarTopBarWrapper";
 
 const Root = () => {
   return (
     <>
-      <TopBar />
-      <div className='flex'>
-        <AdminNav />
-        <main className='pl-72 pt-16 flex-1 bg-gray-100 min-h-screen'>
-          <Outlet />
-        </main>
-      </div>
+      <NavbarTopBarWrapper />
+      <main className="min-h-screen flex-1 bg-gray-100 md:pl-64">
+        <Outlet />
+      </main>
+      <ScrollRestoration />
     </>
   );
 };

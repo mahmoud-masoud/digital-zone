@@ -8,8 +8,8 @@ const useCategory = (category) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const smartWatchesDocRef = doc(db, 'categories', category);
-    const productsCollectionRef = collection(smartWatchesDocRef, 'products');
+    const categoryRef = doc(db, 'categories', category);
+    const productsCollectionRef = collection(categoryRef, 'products');
 
     const unsubscribe = onSnapshot(
       productsCollectionRef,

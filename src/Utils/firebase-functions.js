@@ -1,5 +1,5 @@
-import { auth, db, storage } from './firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth, db, storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   getDocs,
   addDoc,
@@ -15,9 +15,8 @@ import {
   serverTimestamp,
   runTransaction,
   increment,
-} from 'firebase/firestore';
-import { checkTargetForNewValues } from 'framer-motion';
-import { defaultScreenReaderInstructions } from '@dnd-kit/core';
+} from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export async function getCurrentUserUID() {
   try {
@@ -26,7 +25,7 @@ export async function getCurrentUserUID() {
         console.log(user);
         return user.uid;
       } else {
-        throw new Error('Un auth user');
+        throw new Error("Un auth user");
       }
     });
   } catch (e) {
@@ -34,22 +33,35 @@ export async function getCurrentUserUID() {
   }
 }
 
-export const uploadImages = async (blobUrls, category, productId) => {
+export const uploadImages = async (urls, category, productId) => {
   const imagesUrls = [];
-  let fileName = 0;
+
   try {
-    for (const blobUrl of blobUrls) {
-      const blobData = await fetch(blobUrl).then((response) => response.blob());
-      const resFile = new File([blobData], fileName++, { type: blobData.type });
+    for (const imgUrl of urls) {
+      if (!imgUrl.startsWith("blob")) {
+        console.log(imgUrl);
+        imagesUrls.push(imgUrl);
+        continue;
+      }
+      const blobData = await fetch(imgUrl).then((response) => response.blob());
+      const resFile = new File(
+        [blobData],
+        Math.random() * 10 * Date.now() + 22,
+        { type: blobData.type },
+      );
 
       const storageRef = ref(
         storage,
-        `${category}/${productId}/${resFile.name}`
+        `${category}/${productId}/${resFile.name}`,
       );
       const uploadedTask = await uploadBytes(storageRef, resFile);
+
       const url = await getDownloadURL(uploadedTask.ref);
+
       imagesUrls.push(url);
     }
+
+    console.log(imagesUrls);
   } catch (error) {
     console.log(error);
   }
@@ -63,9 +75,9 @@ export const addProduct = async (category, props) => {
       ...props,
     });
 
-    console.log('Document written with ID: ', docRef.id);
+    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
-    console.error('Error adding document: ', e);
+    console.error("Error adding document: ", e);
   }
 };
 
@@ -78,7 +90,7 @@ export const getProduct = async (category, docId) => {
     return docSnap.data();
   } else {
     // docSnap.data() will be undefined in this case
-    console.log('No such document!');
+    console.log("No such document!");
   }
 };
 
@@ -97,21 +109,39 @@ export const getProductsByCategory = async (category) => {
   return docs;
 };
 
-export const addNewUser = async (userData, userUID) => {
+export const addingUserToUsersCollection = async (userData, userUID) => {
   try {
-    const docRef = doc(db, 'users', userUID);
+    const docRef = doc(db, "users", userUID);
     await setDoc(docRef, userData);
-    console.log('Document written with ID: ', userUID);
+    console.log("Document written with ID: ", userUID);
   } catch (e) {
-    console.error('Error adding document: ', e);
+    console.error("Error adding document: ", e);
+  }
+};
+
+export const createUser = async ({ email: userEmail, password, username }) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      password,
+    );
+
+    await updateProfile(userCredential.user, { displayName: username });
+
+    const { displayName, email, uid } = userCredential.user;
+
+    addingUserToUsersCollection({ displayName, email, uid }, uid);
+  } catch (error) {
+    return error.code;
   }
 };
 
 export const removeProductFromFavorites = async (userUID, productId) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const favoritesRef = collection(userRef, 'favorites');
+    const favoritesRef = collection(userRef, "favorites");
 
     const productRef = doc(favoritesRef, productId);
     await runTransaction(db, async (transaction) => {
@@ -120,7 +150,7 @@ export const removeProductFromFavorites = async (userUID, productId) => {
       if (productDoc.exists()) {
         transaction.delete(productRef);
       } else {
-        throw new Error('product not found');
+        throw new Error("product not found");
       }
     });
   } catch (error) {
@@ -130,13 +160,13 @@ export const removeProductFromFavorites = async (userUID, productId) => {
 
 export const getUserFavorites = async (userUID) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
     const userSnapshot = await getDoc(userRef);
 
     if (userSnapshot.exists()) {
       const userFavorites = userSnapshot.data().favorites;
       return userFavorites;
-    } else throw new Error('you must be logged in');
+    } else throw new Error("you must be logged in");
   } catch (error) {
     console.log(error);
   }
@@ -144,9 +174,9 @@ export const getUserFavorites = async (userUID) => {
 
 export const addProductToCart = async (userUID, product) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const cartItemsRef = collection(userRef, 'cartItems');
+    const cartItemsRef = collection(userRef, "cartItems");
 
     const productRef = doc(cartItemsRef, product.id);
     await runTransaction(db, async (transaction) => {
@@ -159,7 +189,7 @@ export const addProductToCart = async (userUID, product) => {
           quantity: increment(1),
           totalPrice: increment(product.price),
         });
-        console.log('update product quantity');
+        console.log("update product quantity");
       } else {
         // Product doesn't exist in the cart, add a new document
         const productWithTimestamp = {
@@ -168,7 +198,7 @@ export const addProductToCart = async (userUID, product) => {
         };
 
         transaction.set(productRef, productWithTimestamp);
-        console.log('add new product to cart items');
+        console.log("add new product to cart items");
       }
     });
   } catch (error) {
@@ -179,12 +209,12 @@ export const addProductToCart = async (userUID, product) => {
 export const removeProductFromTheCart = async (
   userUID,
   productId,
-  productPrice
+  productPrice,
 ) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const cartItemsRef = collection(userRef, 'cartItems');
+    const cartItemsRef = collection(userRef, "cartItems");
 
     const productRef = doc(cartItemsRef, productId);
     await runTransaction(db, async (transaction) => {
@@ -210,12 +240,12 @@ export const removeProductFromTheCart = async (
 
 export const removeProductPermanentlyFromTheCart = async (
   userUID,
-  productId
+  productId,
 ) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const cartItemsRef = collection(userRef, 'cartItems');
+    const cartItemsRef = collection(userRef, "cartItems");
 
     const productRef = doc(cartItemsRef, productId);
     await runTransaction(db, async (transaction) => {
@@ -227,9 +257,9 @@ export const removeProductPermanentlyFromTheCart = async (
 };
 
 export const getAllCartItems = async (userUID) => {
-  const userRef = doc(db, 'users', userUID);
+  const userRef = doc(db, "users", userUID);
 
-  const cartItemsRef = collection(userRef, 'cartItems');
+  const cartItemsRef = collection(userRef, "cartItems");
 
   const querySnapshot = await getDocs(cartItemsRef);
   const res = querySnapshot.docs.map((doc) => doc.data());
@@ -237,9 +267,9 @@ export const getAllCartItems = async (userUID) => {
 
 export const addProductToFavorites = async (userUID, product) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const favoritesRef = collection(userRef, 'favorites');
+    const favoritesRef = collection(userRef, "favorites");
 
     const productRef = doc(favoritesRef, product.id);
     await runTransaction(db, async (transaction) => {
@@ -249,7 +279,7 @@ export const addProductToFavorites = async (userUID, product) => {
         // Product exists in the cart, update its quantity
 
         transaction.delete(productRef);
-        console.log('remove product from favorites');
+        console.log("remove product from favorites");
       } else {
         // Product doesn't exist in the cart, add a new document
         const productWithTimestamp = {
@@ -259,7 +289,7 @@ export const addProductToFavorites = async (userUID, product) => {
         };
 
         transaction.set(productRef, productWithTimestamp);
-        console.log('add new product to favorites');
+        console.log("add new product to favorites");
       }
     });
   } catch (error) {
@@ -270,19 +300,19 @@ export const addProductToFavorites = async (userUID, product) => {
 export const updateNeededQuantity = async (
   userUID,
   productID,
-  neededQuantity
+  neededQuantity,
 ) => {
   try {
-    const userRef = doc(db, 'users', userUID);
+    const userRef = doc(db, "users", userUID);
 
-    const favoritesRef = collection(userRef, 'favorites');
+    const favoritesRef = collection(userRef, "favorites");
 
     const productRef = doc(favoritesRef, productID);
     await runTransaction(db, async (transaction) => {
       transaction.update(productRef, {
         neededQuantity,
       });
-      console.log('update needed quantity');
+      console.log("update needed quantity");
     });
   } catch (error) {
     console.log(error);

@@ -1,9 +1,9 @@
-import { HiMiniShoppingCart } from 'react-icons/hi2';
-import { Link } from 'react-router-dom';
-import { auth, db } from '../../Utils/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, doc, onSnapshot } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { HiMiniShoppingCart } from "react-icons/hi2";
+import { Link } from "react-router-dom";
+import { auth, db } from "../../Utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const CartIcon = ({ isInputOnFocus }) => {
   const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
@@ -12,33 +12,33 @@ const CartIcon = ({ isInputOnFocus }) => {
     if (!user) return;
 
     try {
-      const userRef = doc(db, 'users', user.uid);
+      const userRef = doc(db, "users", user.uid);
 
-      const cartItemsRef = collection(userRef, 'cartItems');
+      const cartItemsRef = collection(userRef, "cartItems");
 
       const unsubscribe = onSnapshot(cartItemsRef, (querySnapshot) => {
-        const cartItemsData = querySnapshot.docs.map((doc) => doc.data());
-        setCartQuantity(cartItemsData.length);
+        const cartItemsData = querySnapshot.docs.length;
+        setCartQuantity(cartItemsData);
       });
 
       return unsubscribe;
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   }, [user]);
 
   return (
     <Link
-      to={'cart'}
-      className={`hover:bg-after focus:bg-after px-4 py-1.5 rounded-full ${
-        isInputOnFocus && 'opacity-0 md:opacity-100'
+      to={"cart"}
+      className={`rounded-full px-4 py-1.5 hover:bg-after focus:bg-after ${
+        isInputOnFocus && "opacity-0 md:opacity-100"
       }`}
     >
-      <div className='relative'>
-        <HiMiniShoppingCart className='text-3xl text-white' />
+      <div className="relative">
+        <HiMiniShoppingCart className="text-3xl text-white" />
         <span
-          className='bg-secondary  p-0.5 text-dark w-5 h-5 flex items-center justify-center
-         rounded-full absolute -top-2 -right-2'
+          className="absolute  -right-2 -top-2 flex h-5 w-5 items-center justify-center
+         rounded-full bg-secondary p-0.5 text-dark"
         >
           {cartQuantity}
         </span>

@@ -1,19 +1,17 @@
-import { Link } from 'react-router-dom';
-import HomePageCard from '../../UI/HomePageCard';
-import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css/pagination';
+import { Link } from "react-router-dom";
+import HomePageCard from "../../UI/HomePageCard";
+import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css/pagination";
 
 const ProductsCarousel = ({ data }) => {
-  console.log(data);
-
   return (
-    <div className='flex justify-center items-center'>
+    <div className="flex items-center justify-center">
       <Swiper
         navigation={{
-          nextEl: '.next',
-          prevEl: '.prev',
+          nextEl: ".next",
+          prevEl: ".prev",
         }}
         breakpoints={{
           768: {
@@ -42,16 +40,16 @@ const ProductsCarousel = ({ data }) => {
           </SwiperSlide>
         ))}
 
-        <div className='hidden md:block'>
+        <div className="hidden md:block">
           <button
-            className='swiper-button-next after:text-sm next bg-white border 
-              border-black h-12 w-12 rounded-full text-black p-3 active:scale-75 transition'
+            className="swiper-button-next next h-12 w-12 rounded-full 
+              border border-black bg-white p-3 text-black transition after:text-sm active:scale-75"
           >
             <MdArrowForwardIos />
           </button>
           <button
-            className='swiper-button-prev after:text-sm prev bg-white border 
-              border-black h-12 w-12 rounded-full text-black p-3 active:scale-75 transition'
+            className="swiper-button-prev prev h-12 w-12 rounded-full 
+              border border-black bg-white p-3 text-black transition after:text-sm active:scale-75"
           >
             <MdArrowBackIosNew />
           </button>

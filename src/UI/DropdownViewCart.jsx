@@ -1,50 +1,53 @@
-import { motion } from 'framer-motion';
-import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 
 const DropdownViewCart = ({ hideDropdown, image, title, price }) => {
   return createPortal(
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         onClick={() => hideDropdown()}
-        className='fixed right-0 left-0 top-0 bottom-0 bg-overlay z-[1000]'
-      ></div>
+        className="fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-overlay"
+      ></motion.div>
 
       <motion.dialog
         open
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className='w-full max-w-[500px]  rounded-b-xl bg-white p-4 pb-6
-          fixed top-0  z-[1000]'
+        className="fixed top-0  z-[1000] w-full max-w-[500px] rounded-b-xl
+          bg-white p-4  pb-6"
       >
-        <div className='flex gap-4 flex-col'>
-          <div className='flex justify-between items-center gap-4'>
-            <div className='aspect-square w-20 h-20 flex justify-center items-center'>
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex aspect-square h-20 w-20 items-center justify-center">
               <img
                 src={image}
-                alt='product image'
-                className='max-h-full max-w-full object-contain'
+                alt="product image"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
-            <div className='font-medium'>
-              <p className='line-clamp-2 text-sm'>{title}</p>
-              <span className='text-emerald-600'>Added to cart</span>
+            <div className="font-medium">
+              <p className="line-clamp-2 text-sm">{title}</p>
+              <span className="text-emerald-600">Added to cart</span>
             </div>
-            <span className='font-bold text-lg'>${price}</span>
+            <span className="text-lg font-bold">${price}</span>
           </div>
 
-          <div className='flex justify-between gap-8 h-10 text-sm'>
+          <div className="flex h-10 justify-between gap-8 text-sm">
             <button
-              className='flex-1 px-4 py-2 bg-primary text-white font-semibold
-            rounded-md hover:bg-after transition'
+              className="flex-1 rounded-md bg-primary px-4 py-2 font-semibold
+            text-white transition hover:bg-after"
             >
-              <Link to={'/cart'}>Checkout</Link>
+              <Link to={"/cart"}>Checkout</Link>
             </button>
             <button
               onClick={() => hideDropdown()}
-              className='flex-1 px-4 py-2 text-fontColor border border-primary
-              rounded-md hover:bg-light transition'
+              className="flex-1 rounded-md border border-primary px-4 py-2
+              text-fontColor transition hover:bg-light"
             >
               Continue Shopping
             </button>
@@ -53,7 +56,7 @@ const DropdownViewCart = ({ hideDropdown, image, title, price }) => {
       </motion.dialog>
     </>,
 
-    document.getElementById('layout')
+    document.getElementById("modal"),
   );
 };
 

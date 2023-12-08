@@ -1,12 +1,12 @@
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import LoadingSpinner from '../../../UI/LoadingSpinner';
+import { FaPlus, FaMinus } from "react-icons/fa";
+import LoadingSpinner from "../../../UI/LoadingSpinner";
 
-import useCart from '../../../Hooks/useCart';
+import useCart from "../../../Hooks/useCartProduct";
 
-import { useState } from 'react';
-import DropdownViewCart from '../../../UI/DropDownViewCart';
-import { prodErrorMap } from 'firebase/auth';
-import { AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import DropdownViewCart from "../../../UI/DropDownViewCart";
+import { prodErrorMap } from "firebase/auth";
+import { AnimatePresence } from "framer-motion";
 const AddToCartBtn = ({ title, price, id, image }) => {
   const [isAdded, setIsAdded] = useState(false);
 
@@ -42,14 +42,14 @@ const AddToCartBtn = ({ title, price, id, image }) => {
         )}
       </AnimatePresence>
       <div
-        className={`w-36 p-1 bg-primary ${
-          quantity === 0 && 'active:bg-after hover:bg-after'
+        className={`w-36 bg-primary p-1 ${
+          quantity === 0 && "hover:bg-after active:bg-after"
         }
-    rounded-full flex justify-center items-center text-white transition`}
+    flex items-center justify-center rounded-full text-white transition`}
       >
         {quantity === 0 && !sendingProduct && (
-          <button onClick={addProductToCart} className='font-medium p-1'>
-            <span> {'Add to cart'} </span>
+          <button onClick={addProductToCart} className="p-1 font-medium">
+            <span> {"Add to cart"} </span>
           </button>
         )}
 
@@ -58,16 +58,16 @@ const AddToCartBtn = ({ title, price, id, image }) => {
         {quantity > 0 && (
           <>
             <button
-              className='hover:bg-medium focus:bg-medium p-2 rounded-full'
+              className="rounded-full p-2 hover:bg-medium focus:bg-medium"
               onClick={removeFromCart}
             >
               <FaMinus />
             </button>
-            <span className='font-medium flex-1 text-center'>
-              {quantity + ' added'}
+            <span className="flex-1 text-center font-medium">
+              {quantity + " added"}
             </span>
             <button
-              className='hover:bg-medium focus:bg-medium p-2 rounded-full'
+              className="rounded-full p-2 hover:bg-medium focus:bg-medium"
               onClick={addToCart}
               autoFocus
             >
