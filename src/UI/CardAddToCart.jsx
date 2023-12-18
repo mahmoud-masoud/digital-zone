@@ -31,7 +31,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
 
   return (
     <motion.div
-      className={`main-btn scale-[.8] overflow-hidden bg-primary md:scale-100 ${
+      className={`main-btn scale-90 overflow-hidden bg-primary md:scale-100 ${
         quantity > 0 ? "gap-6 p-1" : "w-fit hover:bg-after active:bg-after"
       } flex items-center justify-between rounded-full text-white`}
       onClick={(e) => e.preventDefault()}

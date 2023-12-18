@@ -1,15 +1,17 @@
 import Wrapper from "../../../UI/Wrapper";
 import GoogleLogo from "../../../UI/GoogleLogo";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, googlAuthProvider } from "../../../Utils/firebase";
+import { auth, db, googlAuthProvider } from "../../../Utils/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { useState } from "react";
+import { useId, useState } from "react";
 import FormInput from "../CreateAccount/FormInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginValidationSchema } from "../../../Utils/zod";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
 import InputError from "../../../UI/InputError";
+import { doc, getDoc, query, setDoc } from "firebase/firestore";
+import { AwardIcon } from "lucide-react";
 
 const SignInCard = () => {
   const [passwordError, setPasswordError] = useState(false);
@@ -49,18 +51,36 @@ const SignInCard = () => {
 
   const signUpWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googlAuthProvider);
-      navigate("/");
+      const response = await signInWithPopup(auth, googlAuthProvider);
+      const userId = response.user.uid;
+
+      const userDocRef = doc(db, "users", userId);
+
+      const userDocRes = await getDoc(userDocRef);
+
+      if (userDocRes.exists()) {
+        navigate("/");
+      } else {
+        const { displayName, email, uid, metadata } = response.user;
+        await setDoc(userDocRef, {
+          displayName,
+          email,
+          uid,
+          metadata: { ...metadata },
+          type: "permanent",
+        });
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <section className="h-screen bg-slate-50">
-      <Wrapper className="flex items-center justify-center px-4 pt-24">
+    <section className="h-screen bg-light">
+      <Wrapper className="max-w-md px-4 pt-24">
         <div className="rounded-xl bg-white p-8 shadow-lg md:min-w-[450px]">
-          <h3 className="mb-6 text-3xl font-bold text-fontColor">
+          <h3 className="mb-4 text-2xl font-bold text-fontColor md:text-3xl">
             Log in to your account
           </h3>
 

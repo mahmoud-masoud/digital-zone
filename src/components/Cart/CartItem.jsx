@@ -21,7 +21,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
     <>
       <Link to={`/ip/${id}`}>
         <div className="mb-6 flex gap-4">
-          <div className="img-box flex w-24 shrink-0 items-center justify-center">
+          <div className="img-box flex h-24 w-24 shrink-0 items-center justify-center">
             <img src={image} alt={title} className="max-h-full max-w-full" />
           </div>
 

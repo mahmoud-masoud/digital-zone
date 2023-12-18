@@ -24,12 +24,12 @@ const AddressWrapper = () => {
       userRef,
       (userDoc) => {
         if (userDoc.exists()) {
-          const fetchedUserAddress = userDoc.data().addressDetails;
-          if (fetchedUserAddress) {
-            setUserAddress(fetchedUserAddress);
+          const fetchedShippingInfo = userDoc.data().shippingInfo;
+          if (fetchedShippingInfo) {
+            setUserAddress(fetchedShippingInfo);
             setFormVisibility(false);
             dispatch(
-              userShippingInfoActions.addUserAddress(fetchedUserAddress),
+              userShippingInfoActions.addUserShippingInfo(fetchedShippingInfo),
             );
           } else setFormVisibility(true);
           setUserAddressLoading(false);
@@ -43,6 +43,8 @@ const AddressWrapper = () => {
 
     return () => unsubscribe();
   }, [user]);
+
+  console.log(userAddress);
 
   return userAddressLoading ? (
     <p>Loading...</p>

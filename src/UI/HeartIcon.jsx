@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
+import { auth } from "../Utils/firebase";
 
-function HeartIcon({ className, setBg }) {
+function HeartIcon({ className, isFavorite }) {
   const [color, setColor] = useState(false);
 
   useEffect(() => {
-    if (setBg) {
+    if (isFavorite) {
       setColor(true);
     }
-  }, [setBg]);
+  }, [isFavorite]);
+
+  const handleHeartBtnClick = () => {
+    if (auth.currentUser && !auth.currentUser?.isAnonymous) setColor(!color);
+  };
 
   return (
     <svg
@@ -18,7 +23,7 @@ function HeartIcon({ className, setBg }) {
       className={`h-7 w-7 ${
         color ? "stroke-medium" : "stroke-fontColor"
       } transition hover:scale-125 ${className} `}
-      onClick={() => setColor(!color)}
+      onClick={handleHeartBtnClick}
     >
       <path
         fill={color ? "#0071DC" : "#fff"}

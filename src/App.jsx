@@ -1,21 +1,45 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home';
-// import Root from './components/Root';
-// import Cart from './pages/Cart';
-// import ErrorPage from './UI/ErrorPage';
-// import Loading from './UI/Loading';
-// import { lazy, Suspense } from 'react';
-// import ProductPageSkeleton from './components/ProductPageComponents/ProductPageSkeleton';
-// import CategoryPage from './pages/CategoryPage';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { router } from './components/Routes/Routes';
+import { router } from "./components/Routes/Routes";
+// import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "./Utils/firebase";
+import { useEffect } from "react";
+import { signInAnonymously, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import randomUsername from "./Utils/randomUserName";
 
 function App() {
-  // const LazyProductPage = lazy(() => import('./pages/ProductPage'));
-  // const LazyFavoritesPage = lazy(() => import('./pages/Favorites'));
-  // const LazyLoginPage = lazy(() => import('./pages/Login'));
-  // const LazySignupPage = lazy(() => import('./pages/Signup'));
-  // const LazyAdminPage = lazy(() => import('./pages/Admin'));
+  const [user, loading, error] = useAuthState(auth);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const createAnonymousUser = async () => {
+      try {
+        const response = await signInAnonymously(auth);
+        const anonymousUser = response.user;
+        await updateProfile(anonymousUser, {
+          displayName: randomUsername(),
+        });
+        const { displayName, uid, metadata } = anonymousUser;
+        const userRef = doc(db, "users", uid);
+        await setDoc(userRef, {
+          displayName,
+          uid,
+          type: "anonymous",
+          metadata: { ...metadata },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user === null) {
+      console.log("we here again !!");
+      createAnonymousUser();
+    }
+  }, [user, loading]);
 
   return (
     <>

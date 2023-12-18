@@ -11,15 +11,16 @@ import MobileNavbar from "./NavBar/MobileNavbar";
 import { useSelector } from "react-redux";
 import CartIcon from "./CartIcon";
 import DropdownViewCart from "../../UI/DropDownViewCart";
+import AccountDropDown from "./NavBar/AccountDropDown";
 
 const Header = () => {
   const [isInputOnFocus, setInputOnFocus] = useState(false);
+  const [navbarIsOpen, setNavbar] = useState(false);
 
   const handleInputOnFocus = () => {
     setInputOnFocus(false);
   };
 
-  const [navbarIsOpen, setNavbar] = useState(false);
   const navHandler = () => {
     setNavbar(!navbarIsOpen);
   };
@@ -39,33 +40,39 @@ const Header = () => {
   // }, [navbarIsOpen]);
 
   return (
-    <header className="sticky top-0 z-[100] mb-8 bg-primary p-4">
-      <Wrapper
-        className={
-          "flex flex-wrap items-center gap-2 md:flex-row md:justify-between md:gap-4"
-        }
-      >
-        <button
-          className={`z-[10000] text-white ${isInputOnFocus && "opacity-0"}`}
-          onClick={navHandler}
+    <header className="sticky top-0 z-50 mb-8 bg-primary">
+      <div className="container relative mx-auto">
+        <div
+          className="flex flex-wrap items-center gap-2  
+            p-4 md:flex-row md:justify-between md:gap-4 md:p-0"
         >
-          {!navbarIsOpen && <HiMiniBars3 className="text-3xl md:hidden" />}
-        </button>
-        <Link to={"/"}>
-          <Logo />
-        </Link>
+          <button
+            className={`z-[10000] text-white ${isInputOnFocus && "opacity-0"}`}
+            onClick={navHandler}
+          >
+            {!navbarIsOpen && <HiMiniBars3 className="text-3xl md:hidden" />}
+          </button>
+          <Link to={"/"}>
+            <Logo />
+          </Link>
 
-        <SearchBox
-          isInputOnFocus={isInputOnFocus}
-          setInputOnFocus={setInputOnFocus}
-          handleInputOnFocus={handleInputOnFocus}
-        />
+          <SearchBox
+            isInputOnFocus={isInputOnFocus}
+            setInputOnFocus={setInputOnFocus}
+            handleInputOnFocus={handleInputOnFocus}
+          />
 
-        <MobileNavbar closeNavbar={closeNavbar} navbarIsOpen={navbarIsOpen} />
-        <Navbar />
+          {navbarIsOpen && (
+            <MobileNavbar
+              closeNavbar={closeNavbar}
+              navbarIsOpen={navbarIsOpen}
+            />
+          )}
+          <Navbar />
 
-        <CartIcon isInputOnFocus={isInputOnFocus} />
-      </Wrapper>
+          <CartIcon isInputOnFocus={isInputOnFocus} />
+        </div>
+      </div>
     </header>
   );
 };

@@ -1,4 +1,5 @@
+import HomeWrapper from "../../components/Admin/Home/HomeWrapper";
 const Home = () => {
-  return <div className='w-full h-screen bg-amber-400'>Home</div>;
+  return <HomeWrapper />;
 };
 export default Home;

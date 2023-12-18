@@ -4,6 +4,7 @@ import Wrapper from "../../../UI/Wrapper";
 import OrderDetails from "./OrderDetails";
 import UserInfo from "./UserInfo";
 import TopBox from "./TopBox";
+import Loading from "../../../UI/Loading";
 
 const Order = () => {
   const orderId = useParams().orderId;
@@ -17,10 +18,10 @@ const Order = () => {
   return (
     <section className="min-h-screen bg-gray-100">
       {isLoading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <Wrapper className="px-4 py-8">
-          <TopBox orderId={data.id} orderTimestamp={data.date} />
+          <TopBox orderId={data.id} orderTimestamp={data.timestamp} />
           <div className="flex flex-col gap-6 lg:flex-row">
             <OrderDetails data={data} />
             <UserInfo shippingInfo={data?.shippingInfo} />

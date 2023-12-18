@@ -9,38 +9,66 @@ import {
   updateProfile,
   signInWithPopup,
   signInWithRedirect,
+  linkWithCredential,
+  GoogleAuthProvider,
+  linkWithPopup,
+  deleteUser,
+  getAuth,
+  getIdToken,
 } from "firebase/auth";
 
 import SignupForm from "./SignupForm";
-
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import useAuthState from "../../../Hooks/firebase/useAuthState";
+import randomUsername from "../../../Utils/randomUserName";
+import useGoogleSignup from "../../../Hooks/firebase/useGoogleSignup";
+import RedirectPopup from "../../../UI/RedirectPopup";
+import { Turtle } from "lucide-react";
+import useEmailPassSignup from "../../../Hooks/firebase/useEmailPassSignup";
 
 const SignupComponents = () => {
-  const navigate = useNavigate();
+  const {
+    signUpWithGoogle,
+    signupError,
+    setSignupError,
+    userError,
+    userRedirect,
+  } = useGoogleSignup();
 
-  const signUpWithGoogle = async () => {
-    try {
-      const userCredential = await signInWithPopup(auth, googlAuthProvider);
-      const { displayName, email, uid } = userCredential.user;
-      const docRef = doc(db, "users", uid);
-      await setDoc(docRef, { displayName, email, uid });
-
-      console.log("Document written with ID: ", uid);
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {
+    onSubmit,
+    signupEmailPassError,
+    setEmailPassSignupError,
+    signupEmailPassRedirect,
+  } = useEmailPassSignup();
 
   return (
-    <section className="h-screen bg-slate-50">
-      <Wrapper className="flex items-center justify-center px-4 pt-24">
-        <div className="rounded-xl bg-white p-8 shadow-lg md:min-w-[450px]">
-          <h3 className="mb-4 text-3xl font-bold text-fontColor">
+    <section className="min-h-screen bg-light">
+      <Wrapper className="max-w-lg px-4 py-10">
+        {signupError ||
+          (signupEmailPassError && (
+            <div
+              className="mb-4 flex justify-between rounded-md bg-red-500 p-3 font-medium
+         text-white"
+            >
+              <p>{signupEmailPassError || signupError}</p>
+              <span
+                className="cursor-pointer text-2xl"
+                onClick={() => {
+                  setEmailPassSignupError(null);
+                  setSignupError(null);
+                }}
+              >
+                &times;
+              </span>
+            </div>
+          ))}
+        {userRedirect || (signupEmailPassRedirect && <RedirectPopup />)}
+        <div className="rounded-xl bg-white  p-8 shadow-lg">
+          <h3 className="mb-4 text-2xl font-bold text-fontColor md:text-3xl">
             Create your account
           </h3>
-          <p className="mb-8 text-gray-600">
+          <p className="mb-8 text-sm text-gray-600 sm:text-[1rem]">
             Sign up and shop on a whole new level.
           </p>
           <button
@@ -57,7 +85,7 @@ const SignupComponents = () => {
 
           <span className="mb-2 mt-4 block text-sm">Or with email</span>
 
-          <SignupForm />
+          <SignupForm onSubmit={onSubmit} />
 
           <p className="mt-2 text-gray-500">
             Already have an account?

@@ -16,8 +16,7 @@ const ProductsList = () => {
 
   useEffect(() => {
     const productsRef = collectionGroup(db, "products");
-    const q = query(productsRef);
-    // , orderBy("timestamp", "desc")
+    const q = query(productsRef, orderBy("timestamp", "desc"));
 
     const unSubscribe = onSnapshot(q, (querySnapshot) => {
       const allProducts = querySnapshot.docs.map((doc) => doc.data());
@@ -26,6 +25,8 @@ const ProductsList = () => {
 
     return unSubscribe;
   }, []);
+
+  console.log(products);
 
   return (
     <div className="mt-8 flex flex-col gap-4 rounded-xl bg-white">

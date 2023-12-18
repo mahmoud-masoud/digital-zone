@@ -3,17 +3,22 @@ import FormInput from "./FormInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupValidationSchema } from "../../../Utils/zod";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { createUser } from "../../../Utils/firebase-functions";
+import {
+  EmailAuthProvider,
+  createUserWithEmailAndPassword,
+  linkWithCredential,
+  updateProfile,
+} from "firebase/auth";
+import {
+  addingUserToUsersCollection,
+  createUser,
+} from "../../../Utils/firebase-functions";
 import { useState } from "react";
 import InputError from "../../../UI/InputError";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
+import { auth } from "../../../Utils/firebase";
 
-const SignupForm = () => {
-  const [emailIsExist, setEmailIsExist] = useState(false);
-
-  const navigate = useNavigate();
-
+const SignupForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -21,17 +26,6 @@ const SignupForm = () => {
   } = useForm({
     resolver: zodResolver(signupValidationSchema),
   });
-
-  const onSubmit = async (data) => {
-    const res = await createUser(data);
-    if (res === "auth/email-already-in-use") {
-      setEmailIsExist(true);
-      return;
-    }
-
-    setEmailIsExist(false);
-    navigate("/");
-  };
 
   return (
     <div>
@@ -43,7 +37,6 @@ const SignupForm = () => {
           placeholder={"Enter your username"}
           register={register("username")}
           errors={errors}
-          emailIsExist={emailIsExist}
         />
 
         <div>
@@ -55,9 +48,6 @@ const SignupForm = () => {
             register={register("email")}
             errors={errors}
           />
-          {emailIsExist && (
-            <InputError message={"Email is already exist login instead"} />
-          )}
         </div>
 
         <FormInput

@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "ct/:category/:productId",
+        path: "ct/:category/ip/:productId",
         element: (
           <Suspense fallback={<Loading />}>
             <LazyProductPage />

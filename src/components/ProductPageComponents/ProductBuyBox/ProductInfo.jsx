@@ -15,7 +15,7 @@ const ProductInfo = ({ title, price, id, image, quantity }) => {
       className="top-24 mb-4 w-full self-start bg-white md:sticky md:w-auto 
     md:rounded-lg md:p-4 md:shadow-card-shadow xl:w-[30%]"
     >
-      <div className="mb-6">
+      <div className="mb-6 flex justify-end">
         <AddToFavoritesBtn
           id={productID}
           price={price}

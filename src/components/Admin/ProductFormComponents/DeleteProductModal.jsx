@@ -59,7 +59,7 @@ const DeleteProductModal = ({ closeModal, productId }) => {
           transition={{ type: "spring", duration: 0.5 }}
           className="relative z-10 w-full sm:w-[500px]"
         >
-          <div className=" rounded p-2">
+          <div className="rounded p-2">
             <div className="rounded-md bg-white p-4">
               <h2 className="mb-4 text-lg font-bold">Modal Title</h2>
               <p>Modal content goes here.</p>

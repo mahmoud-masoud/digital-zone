@@ -1,13 +1,15 @@
+import { useMemo } from "react";
 import useCart from "../../Hooks/useCart";
 import OrderItem from "./OrderItem";
 
 const OrderItems = () => {
   const { items, isLoading, error } = useCart();
+  const localItems = useMemo(() => [...items], [isLoading]);
   return (
     <div className="bt-2">
       <p className="mb-10 text-2xl font-semibold">Items details</p>
       <div className="flex flex-wrap gap-4">
-        {items.map((item) => (
+        {localItems.map((item) => (
           <OrderItem
             image={item.image}
             title={item.title}

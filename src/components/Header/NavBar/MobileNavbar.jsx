@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
   const [accordion, setAccordion] = useState(false);
   const [user, loading, error] = useAuthState(auth);
+
   const variants = {
     visible: { opacity: 1, y: 0 },
     hidden: { opacity: 0, y: "-100%" },
@@ -63,7 +64,7 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
               } transition-all duration-300`}
             >
               <Link
-                to={"mobile-phones"}
+                to={"ct/mobile-phones"}
                 className="block w-full border-b border-[#f1f1f1] pb-2 hover:text-after hover:underline"
                 onClick={closeNavbar}
               >
@@ -71,7 +72,7 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
               </Link>
 
               <Link
-                to={"headphones"}
+                to={"ct/headphones"}
                 className="block w-full border-b border-[#f1f1f1] py-2
                  hover:text-after hover:underline"
                 onClick={closeNavbar}
@@ -80,7 +81,7 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
               </Link>
 
               <Link
-                to={"smart-watches"}
+                to={"ct/smart-watches"}
                 className="block w-full border-b border-[#f1f1f1] py-2
                  hover:text-after hover:underline"
                 onClick={closeNavbar}
@@ -89,7 +90,7 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
               </Link>
 
               <Link
-                to={"laptops"}
+                to={"ct/laptops"}
                 className="block w-full border-b border-[#f1f1f1] py-2
                  hover:text-after hover:underline"
                 onClick={closeNavbar}
@@ -99,26 +100,25 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
             </div>
           </li>
 
-          <li className="py-4 text-xl" onClick={closeNavbar}>
-            <Link to={"deals"}>Deals</Link>
-          </li>
-          <li className="py-4 text-xl" onClick={closeNavbar}>
+          {/* <li className="py-4 text-xl" onClick={closeNavbar}>
             <Link to={"contact"}>Contact</Link>
-          </li>
+          </li> */}
           <li
             className="flex items-center gap-1 py-4 text-xl"
             onClick={closeNavbar}
           >
             <Link to={"favorites"}>Favorites</Link>
           </li>
-          <li
-            className="flex items-center gap-1 py-4 text-xl"
-            onClick={closeNavbar}
-          >
-            <Link to={"/admin"}>Admin Dashboard</Link>
-          </li>
+          {user?.uid == import.meta.env.VITE_ADMIN_ID && (
+            <li
+              className="flex items-center gap-1 py-4 text-xl"
+              onClick={closeNavbar}
+            >
+              <Link to={"/admin"}>Admin Dashboard</Link>
+            </li>
+          )}
 
-          {user && (
+          {user && !user.isAnonymous && (
             <a
               href=""
               className="mt-auto hover:text-primary"

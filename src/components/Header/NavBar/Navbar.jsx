@@ -6,21 +6,22 @@ import { useEffect, useState } from "react";
 import AccountDropDown from "./AccountDropDown";
 import { auth } from "../../../Utils/firebase";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
-import { useAuthState } from "react-firebase-hooks/auth";
+
 import useNoScroll from "../../../Hooks/useNoScroll";
+import useAuthState from "../../../Hooks/firebase/useAuthState";
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const { user, isLoading, isError } = useAuthState(auth);
 
   const [dropDownMenu, setDropDownMenu] = useState(false);
-  const [isAccountDropDown, setIsAccountDropDown] = useState(false);
+  const [accountDropDown, setAccountDropDown] = useState(false);
 
-  useNoScroll(isAccountDropDown || dropDownMenu);
+  useNoScroll(accountDropDown || dropDownMenu);
 
   const closeAccountDropDown = () => {
-    setIsAccountDropDown(false);
+    setAccountDropDown(false);
   };
   const openAccountDropDown = () => {
-    setIsAccountDropDown(true);
+    setAccountDropDown(true);
   };
 
   const closeDropDownMenuHandler = () => {
@@ -49,9 +50,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className="hidden md:block 
-      md:h-auto md:w-auto md:bg-inherit md:p-0 md:pt-0 md:text-white
-      "
+      className="hidden 
+      h-full md:block md:h-auto md:w-auto md:bg-inherit md:p-4 md:text-white"
     >
       <ul
         className="flex items-center justify-center 
@@ -106,44 +106,35 @@ const Navbar = () => {
         </li>
 
         <li>
-          <button
-            className="account-drop-menu flex items-center gap-1 rounded-full
+          <div className="">
+            <button
+              className="account-drop-menu flex items-center gap-1 rounded-full
            px-4 py-1.5  text-[16px] font-normal hover:bg-after hover:text-white focus:bg-after focus:text-white"
-            onClick={() => setIsAccountDropDown(true)}
-          >
-            {loading && <LoadingSpinner />}
+              onClick={() => setAccountDropDown(true)}
+            >
+              {isLoading && <LoadingSpinner />}
 
-            {!user && !loading && (
-              <div className="flex flex-col items-center justify-center text-sm">
-                <BsPersonFill className="text-xl" />
-                Sign in
-              </div>
-            )}
-
-            {user && (
-              <div>
-                {user.photoURL ? (
-                  <div className="h-12 w-12 overflow-hidden  rounded-full">
-                    <img
-                      src={`${user.photoURL}`}
-                      alt="google account user image"
-                      className="max-w-full"
-                    />
+              {(auth.currentUser?.isAnonymous || auth.currentUser === null) &&
+                !isLoading && (
+                  <div className="flex flex-col items-center justify-center text-sm">
+                    <BsPersonFill className="text-xl" />
+                    Sign in
                   </div>
-                ) : (
-                  <p>Hi, {user.displayName}</p>
                 )}
-              </div>
-            )}
-          </button>
 
-          {isAccountDropDown && (
-            <AccountDropDown
-              isAccountDropdown={isAccountDropDown}
-              closeAccountDropDown={closeAccountDropDown}
-              openAccountDropDown={openAccountDropDown}
-            />
-          )}
+              {auth.currentUser && !auth.currentUser?.isAnonymous && (
+                <p>Hi, {auth.currentUser.displayName}</p>
+              )}
+            </button>
+
+            {accountDropDown && (
+              <AccountDropDown
+                accountDropdown={accountDropDown}
+                closeAccountDropDown={closeAccountDropDown}
+                openAccountDropDown={openAccountDropDown}
+              />
+            )}
+          </div>
         </li>
       </ul>
     </nav>

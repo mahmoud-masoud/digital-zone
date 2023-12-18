@@ -42,7 +42,7 @@ const AddToCartBtn = ({ title, price, id, image }) => {
         )}
       </AnimatePresence>
       <div
-        className={`w-36 bg-primary p-1 ${
+        className={`w-36 scale-90 bg-primary p-1 sm:scale-100 ${
           quantity === 0 && "hover:bg-after active:bg-after"
         }
     flex items-center justify-center rounded-full text-white transition`}

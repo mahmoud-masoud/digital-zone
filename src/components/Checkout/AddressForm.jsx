@@ -4,7 +4,9 @@ import Input from "../../UI/Input";
 import InputError from "../../UI/InputError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { shippingInfo } from "../../Utils/zod";
-import userShippingInfo from "../../store/userShippingInfo";
+import userShippingInfo, {
+  userShippingInfoActions,
+} from "../../store/userShippingInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, db } from "../../Utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -37,7 +39,7 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(userShippingInfo.addUserShippingInfo(data));
+    dispatch(userShippingInfoActions.addUserShippingInfo(data));
   };
 
   return (

@@ -1,8 +1,6 @@
 import React from "react";
-import formateTimestampToDate from "../../../Utils/formateTimestampToDate";
 import formatePrice from "../../../Utils/formatePrice";
-
-const usersColumns = [
+const productsColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -25,41 +23,34 @@ const usersColumns = [
       />
     ),
   },
-  {
-    accessorKey: "displayName",
-    header: "Name",
-    cell: (cellContent) => {
-      return cellContent.getValue() ? cellContent.getValue() : "N/A";
-    },
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-    cell: (cellContent) => {
-      return cellContent.getValue() ? cellContent.getValue() : "N/A";
-    },
-  },
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
-    accessorKey: "orders",
-    header: "Orders",
-    cell: (cellContent) => {
-      const value = cellContent.getValue();
 
-      return value ? <span>{value} orders</span> : <span>0 orders</span>;
+  {
+    accessorKey: "images",
+    header: "",
+    cell: (cellContent) => {
+      const img = cellContent.getValue()[0];
+      return (
+        <div
+          className="flex h-12 w-12 items-center justify-center 
+    rounded-md border border-gray-300 p-1"
+        >
+          <img src={img} alt={"product image"} className="max-h-full" />
+        </div>
+      );
     },
   },
   {
-    accessorKey: "amountSpent",
-    header: "Amount spent",
-    cell: (cellContent) => {
-      return cellContent.getValue()
-        ? formatePrice(cellContent.getValue())
-        : formatePrice(0);
-    },
+    accessorKey: "title",
+    header: "Product",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+    cell: (cellContent) => formatePrice(cellContent.getValue()),
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
   },
 ];
 
@@ -86,4 +77,4 @@ const IndeterminateCheckbox = ({ indeterminate, className = "", ...rest }) => {
   );
 };
 
-export default usersColumns;
+export default productsColumns;

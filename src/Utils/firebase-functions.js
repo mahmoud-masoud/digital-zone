@@ -15,6 +15,7 @@ import {
   serverTimestamp,
   runTransaction,
   increment,
+  deleteDoc,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
@@ -112,8 +113,7 @@ export const getProductsByCategory = async (category) => {
 export const addingUserToUsersCollection = async (userData, userUID) => {
   try {
     const docRef = doc(db, "users", userUID);
-    await setDoc(docRef, userData);
-    console.log("Document written with ID: ", userUID);
+    return await setDoc(docRef, userData);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -129,9 +129,12 @@ export const createUser = async ({ email: userEmail, password, username }) => {
 
     await updateProfile(userCredential.user, { displayName: username });
 
-    const { displayName, email, uid } = userCredential.user;
+    const { displayName, email, uid, metadata } = userCredential.user;
 
-    addingUserToUsersCollection({ displayName, email, uid }, uid);
+    await addingUserToUsersCollection(
+      { displayName, email, uid, type: "permanent", metadata: { ...metadata } },
+      uid,
+    );
   } catch (error) {
     return error.code;
   }
@@ -144,15 +147,19 @@ export const removeProductFromFavorites = async (userUID, productId) => {
     const favoritesRef = collection(userRef, "favorites");
 
     const productRef = doc(favoritesRef, productId);
-    await runTransaction(db, async (transaction) => {
-      const productDoc = await transaction.get(productRef);
 
-      if (productDoc.exists()) {
-        transaction.delete(productRef);
-      } else {
-        throw new Error("product not found");
-      }
-    });
+    await deleteDoc(productRef);
+
+    // await runTransaction(db, async (transaction) => {
+    //   const productDoc = await transaction.get(productRef);
+
+    //   if (productDoc.exists()) {
+    //     transaction.delete(productRef);
+    //     console.log(productDoc.data());
+    //   } else {
+    //     throw new Error("product not found");
+    //   }
+    // });
   } catch (error) {
     console.log(error);
   }

@@ -1,9 +1,25 @@
 import CartNote from "./CartNote";
 import isMobileOrTablet from "../../Utils/isMobileOrTablet";
 import MobileCheckout from "./MobileCheckout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import formatePrice from "../../Utils/formatePrice";
+import { auth } from "../../Utils/firebase";
+import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Turtle } from "lucide-react";
+import LoginPopup from "../../UI/LoginPopup";
 const CartCheckout = ({ cartItems }) => {
+  const [isPopup, setPopup] = useState(false);
+
+  const navigate = useNavigate();
+  const onCheckoutBtnClickHandler = () => {
+    if (auth.currentUser?.isAnonymous || !auth.currentUser) {
+      setPopup(true);
+      return;
+    }
+    navigate("/checkout");
+  };
+
   const cartQuantity = cartItems?.length;
   const cartTotalPrice = cartItems?.reduce((prev, curr) => {
     console.log(curr.totalPrice);
@@ -21,11 +37,13 @@ const CartCheckout = ({ cartItems }) => {
         <MobileCheckout cartTotalPrice={cartTotalPrice} />
       ) : (
         <div className="bb-2 flex flex-col gap-4 p-4">
-          <Link to="/checkout">
-            <button className="w-full rounded-full bg-primary px-4 py-2 font-bold text-white hover:bg-after">
-              Continue to checkout
-            </button>
-          </Link>
+          <button
+            onClick={onCheckoutBtnClickHandler}
+            className="w-full rounded-full bg-primary px-4 py-2 font-bold text-white hover:bg-after"
+          >
+            Continue to checkout
+          </button>
+
           <CartNote />
         </div>
       )}
@@ -48,6 +66,12 @@ const CartCheckout = ({ cartItems }) => {
           </span>
         </div>
       </div>
+
+      <AnimatePresence>
+        {(auth.currentUser?.isAnonymous || !auth.currentUser) && isPopup && (
+          <LoginPopup closePopup={() => setPopup(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

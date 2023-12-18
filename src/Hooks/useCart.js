@@ -21,6 +21,7 @@ const useCart = () => {
 
       const unsubscribe = onSnapshot(cartItemsRef, (querySnapshot) => {
         const cartItemsData = querySnapshot.docs.map((doc) => doc.data());
+
         dispatch(cartItemsActions.addCartItems(cartItemsData));
         setItems(cartItemsData);
         setIsLoading(false);

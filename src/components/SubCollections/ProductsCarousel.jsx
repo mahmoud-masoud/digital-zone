@@ -29,14 +29,12 @@ const ProductsCarousel = ({ data }) => {
       >
         {data.map((product) => (
           <SwiperSlide key={product.id}>
-            <Link to={`ip/${product.id}`}>
-              <HomePageCard
-                title={product.title}
-                img={product.images[0]}
-                price={product.price}
-                id={product.id}
-              />
-            </Link>
+            <HomePageCard
+              title={product.title}
+              img={product.images[0]}
+              price={product.price}
+              id={product.id}
+            />
           </SwiperSlide>
         ))}
 

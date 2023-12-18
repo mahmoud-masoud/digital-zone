@@ -1,42 +1,55 @@
-import { Link } from 'react-router-dom';
-import { auth } from '../../../Utils/firebase';
-import { signOut } from 'firebase/auth';
+import { Link } from "react-router-dom";
+import { auth } from "../../../Utils/firebase";
+import { signOut } from "firebase/auth";
+import { createPortal } from "react-dom";
+import { doc } from "firebase/firestore";
+import Backdrop from "../../../UI/Backdrop";
+import useAuthState from "../../../Hooks/firebase/useAuthState";
 
 const AccountDropDown = ({
-  isAccountDropdown,
+  accountDropdown,
   closeAccountDropDown,
   openAccountDropDown,
 }) => {
+  const { user, isLoading, isError } = useAuthState();
+
   return (
-    <div className=''>
+    <div className="">
       <div
-        className='absolute top-full bg-white text-fontColor -translate-x-1/2 shadow-lg
-         rounded-b-xl flex flex-col p-4 border-2 border-t-0
-        items-center justify-center z-[5]'
+        className="absolute right-0 top-full z-[100] flex w-72 -translate-x-1/4
+           flex-col items-center justify-center rounded-b-xl border-2 border-t-0
+          bg-white p-4 text-fontColor shadow-lg"
         onClick={closeAccountDropDown}
       >
-        <Link
-          to={'/signup'}
-          className='px-4 py-1.5 mb-2 bg-primary hover:bg-after rounded-full text-white text-sm font-medium'
-        >
-          Sign in or create account
-        </Link>
-
-        <a
-          href=''
-          onClick={() => {
-            closeAccountDropDown();
-            signOut(auth);
-          }}
-        >
-          Sign Out
-        </a>
-        <Link to={'admin'} onClick={closeAccountDropDown}>
-          Admin
-        </Link>
+        {auth.currentUser?.isAnonymous || auth.currentUser === null ? (
+          <button className="mb-2">
+            <Link
+              to={"/signup"}
+              className="rounded-full bg-primary px-4 py-1.5 text-sm
+               font-medium text-white hover:bg-after"
+            >
+              Sign in or create account
+            </Link>
+          </button>
+        ) : (
+          <a
+            href=""
+            onClick={() => {
+              closeAccountDropDown();
+              signOut(auth);
+            }}
+          >
+            Sign Out
+          </a>
+        )}
+        {user?.uid == import.meta.env.VITE_ADMIN_ID && (
+          <Link to={"admin"} onClick={closeAccountDropDown}>
+            Admin
+          </Link>
+        )}
       </div>
       <div
-        className='absolute w-screen h-screen right-0 top-full bg-[#0006] z-[4]'
+        className="fixed inset-0 z-10 h-screen w-screen bg-[#0006]"
         onClick={closeAccountDropDown}
       ></div>
     </div>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Wrapper from "../../UI/Wrapper";
 import Product from "../../components/Admin/Products/Product";
 import ProductsList from "../../components/Admin/Products/ProductsList";
+import ProductsTable from "../../components/Admin/Products/ProductsTable";
 
 const Products = () => {
   return (
@@ -19,7 +20,8 @@ const Products = () => {
             </div>
           </Link>
         </div>
-        <ProductsList />
+        {/* <ProductsList /> */}
+        <ProductsTable />
       </Wrapper>
     </section>
   );

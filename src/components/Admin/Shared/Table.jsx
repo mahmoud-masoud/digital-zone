@@ -75,7 +75,7 @@ const Table = ({ tableColumns, data, setData }) => {
         </table>
       </div>
       <div className="flex items-center justify-between gap-40 pt-4">
-        {table.getRowModel().rows.length > 10 && (
+        {data.length > 10 && (
           <div className="flex  gap-4 text-after">
             <button
               disabled={!table.getCanPreviousPage()}

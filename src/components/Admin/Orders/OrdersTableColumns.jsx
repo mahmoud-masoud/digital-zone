@@ -1,6 +1,6 @@
 import React from "react";
 import formateTimestampToDate from "../../../Utils/formateTimestampToDate";
-
+import formatePrice from "../../../Utils/formatePrice";
 const ordersColumns = [
   {
     id: "select",
@@ -44,12 +44,18 @@ const ordersColumns = [
     },
   },
   {
+    accessorKey: "totalAmount",
+    header: "Total",
+    cell: (cellContent) => formatePrice(cellContent.getValue()),
+  },
+  {
     accessorKey: "products",
     header: "Items",
     cell: (cellContent) => (
       <div>
-        <span className="font-medium">{cellContent.getValue().length}</span>
-        <span>item</span>
+        <span className="font-medium">
+          {cellContent.getValue().length} item
+        </span>
       </div>
     ),
   },
