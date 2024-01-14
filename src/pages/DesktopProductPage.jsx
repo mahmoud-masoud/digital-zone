@@ -1,24 +1,26 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import ProductImages from '../components/ProductPageComponents/ProductImages';
-import Wrapper from '../UI/Wrapper';
-import ProductInfo from '../components/ProductPageComponents/ProductBuyBox/ProductInfo';
-import ProductQuickHighlights from '../components/ProductPageComponents/ProductQuickHighlights';
-import ProductDetails from '../components/ProductPageComponents/ProductDetails';
+import ProductImages from "../components/ProductPageComponents/ProductImages";
+import Wrapper from "../UI/Wrapper";
+import ProductInfo from "../components/ProductPageComponents/ProductBuyBox/ProductInfo";
+import ProductQuickHighlights from "../components/ProductPageComponents/ProductQuickHighlights";
+import ProductDetails from "../components/ProductPageComponents/ProductDetails";
 
-import Loading from '../UI/Loading';
-import useProduct from '../Hooks/useProduct';
+import MainSpinner from "../UI/MainSpinner";
+import useProduct from "../Hooks/useProduct";
 
 const ProductPage = () => {
-  const { product, isLoading, hasError } = useProduct();
+  const { product, isLoading, isError } = useProduct();
 
-  return isLoading ? (
-    <Loading />
-  ) : product ? (
-    <Wrapper className={'px-3 mb-16 flex gap-4'}>
-      <div className='flex gap-8 flex-col w-[70%]'>
+  if (isLoading) return <MainSpinner />;
+  if (isError) return <p>Something went wrong refresh the page</p>;
+  if (!product && !isError && !isLoading) return <p>product not found</p>;
+  console.log(product.highlights.length);
+  return (
+    <Wrapper className={"mb-16 flex gap-4 px-3 pt-8"}>
+      <div className="flex w-2/3 flex-col gap-8">
         <ProductImages images={product?.images} />
-        {product?.highlights && (
+        {product.highlights?.length && (
           <ProductQuickHighlights highlights={product.highlights} />
         )}
         <ProductDetails
@@ -34,8 +36,6 @@ const ProductPage = () => {
         quantity={product?.quantity}
       />
     </Wrapper>
-  ) : (
-    <p>No Product Found !</p>
   );
 };
 export default ProductPage;

@@ -5,7 +5,7 @@ const formateTimestampToDate = (timestamp) => {
 
   const options = {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",

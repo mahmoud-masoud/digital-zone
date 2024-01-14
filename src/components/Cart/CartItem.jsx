@@ -1,14 +1,14 @@
-import { FaArrowRotateLeft, FaMinus, FaPlus } from "react-icons/fa6";
-
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import useCartProduct from "../../Hooks/useCartProduct";
 import formatePrice from "../../Utils/formatePrice";
+import { RotateCcw } from "lucide-react";
 
 const CartItem = ({ title, price, totalPrice, image, id }) => {
   const {
     quantity,
-    sendingProduct,
     addToCart,
+    isProductAdding,
     removeFromCart,
     removeProductPermanently,
     userLoading,
@@ -26,40 +26,43 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
           </div>
 
           <div className="item-name">
-            <h3 className="mb-2 line-clamp-2 text-sm md:line-clamp-none">
+            <h3 className="mb-2 line-clamp-2 text-sm sm:line-clamp-none">
               {title}
             </h3>
             <div className="flex items-center gap-2">
-              <FaArrowRotateLeft className=" h-5 w-5 rounded-full bg-primary p-1 text-white" />
+              <RotateCcw
+                className="rounded-full bg-primary p-1 text-white"
+                size={25}
+              />
+
               <span className="text-sm">Free 30-day returns</span>
             </div>
           </div>
 
           <div className="item-price ml-auto">
-            <span className="text-lg font-bold">{formattedPrice}</span>
+            <span className="font-semibold md:text-lg">{formattedPrice}</span>
           </div>
         </div>
       </Link>
 
-      <div className="cart-item-actions flex justify-between gap-4 md:justify-end  md:gap-10">
+      <div className="cart-item-actions flex justify-between gap-2 md:justify-end  md:gap-10">
         <button
           onClick={removeProductPermanently}
           className="text-sm underline"
         >
           Remove
         </button>
-        <button className="underline">Save for later</button>
 
         <div
           className="add-remove flex w-28 items-center
-        justify-between rounded-full border-[1px] border-gray-400 p-1 text-sm"
+        justify-between rounded-full border border-gray-400 p-1 text-sm"
         >
           <button
             onClick={addToCart}
             className="flex h-6 w-6 items-center justify-center
            rounded-full p-0.5 hover:bg-gray-500 hover:text-white focus:bg-gray-500 focus:text-white"
           >
-            <FaPlus />
+            <PlusIcon />
           </button>
           <span className="inline-block font-bold">{quantity}</span>
           <button
@@ -67,7 +70,7 @@ const CartItem = ({ title, price, totalPrice, image, id }) => {
             className="flex h-6 w-6 items-center justify-center
            rounded-full p-0.5 hover:bg-gray-500 hover:text-white focus:bg-gray-500 focus:text-white"
           >
-            <FaMinus />
+            <MinusIcon />
           </button>
         </div>
       </div>

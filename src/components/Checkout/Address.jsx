@@ -1,16 +1,16 @@
-import { FaLocationDot } from "react-icons/fa6";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
-const Address = ({ userAddress, setFormVisibility }) => {
+const Address = ({ userShippingInfo, setFormVisibility }) => {
   return (
     <div className="">
       <div className="flex items-center gap-4">
         <div>
-          <FaLocationDot className="text-xl" />
+          <MapPinIcon className="h-7 w-7" />
         </div>
         <div>
-          <p className="mb-2">{userAddress?.firstName}</p>
-          <p className="mb-2">{userAddress?.address}</p>
-          <span>{userAddress?.phoneNumber}</span>
+          <p className="mb-2">{userShippingInfo?.firstName}</p>
+          <p className="mb-2">{userShippingInfo?.address}</p>
+          <span>{userShippingInfo?.phoneNumber}</span>
         </div>
       </div>
 

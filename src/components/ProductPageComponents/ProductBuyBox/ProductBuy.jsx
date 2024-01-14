@@ -1,10 +1,10 @@
-import AddToCartBtn from './AddToCartBtn';
+import AddToCartBtn from "./AddToCartBtn";
 
 const ProductActions = () => {
   return (
     <div
-      className='p-4 bg-white shadow-box-shadow 
-      flex justify-between items-center font-semibold text-lg fixed  w-full bottom-0 '
+      className="shadow-box-shadow fixed bottom-0 
+      flex w-full items-center justify-between p-4  text-lg font-semibold "
     >
       <span>$500</span>
       <AddToCartBtn />

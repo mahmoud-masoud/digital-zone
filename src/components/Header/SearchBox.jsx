@@ -1,81 +1,78 @@
-import { useState, useEffect, createContext } from 'react';
-import { CiSearch } from 'react-icons/ci';
-import { FaX } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
-import ALL_PRODUCTS from '../../data';
+import { Search } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const SearchBox = ({ setInputOnFocus, isInputOnFocus, handleInputOnFocus }) => {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const closeSuggestions = (e) => {
-      if (!e.target.closest('.search-box')) {
+      if (!e.target.closest(".search-box")) {
         setInputOnFocus(false);
       }
     };
-    document.addEventListener('click', closeSuggestions);
+    document.addEventListener("click", closeSuggestions);
     return () => {
-      document.removeEventListener('click', closeSuggestions);
+      document.removeEventListener("click", closeSuggestions);
     };
   }, []);
 
   return (
     <>
       <form
-        className={`${isInputOnFocus && 'px-4 z-[100]'} md:p-0
-         flex gap-2 search-box w-full transition-all duration-300 flex-1 md:w-80 md:static
-    ${isInputOnFocus && 'absolute right-0'}`}
+        className={`${isInputOnFocus && "z-[100] px-4"} search-box
+         flex w-full max-w-lg flex-1 gap-2 transition-all duration-300 md:static md:w-80 md:p-0
+    ${isInputOnFocus && "absolute right-0"}`}
       >
-        <div className='relative flex-1 w-full'>
+        <div
+          className="relative flex w-full flex-1 rounded-full
+           bg-white"
+        >
           <input
-            type='text'
-            placeholder='Search'
+            type="text"
+            placeholder="Search"
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value);
             }}
-            className={`rounded-full w-full p-2 h-10 pl-4 pr-16 focus:transition
-          ${isInputOnFocus && 'rounded-none'}`}
+            // ${isInputOnFocus && "rounded-none"}
+            className={`block h-10 w-full rounded-full p-2
+              pl-4 pr-16  focus:transition 
+          `}
             onClick={() => setInputOnFocus(true)}
           />
-          <div className='absolute right-[5px] top-[5px] flex gap-2 bg-sky-'>
+          <div
+            className="absolute right-0 top-1/2 flex -translate-y-1/2
+           items-center justify-center gap-2 pr-1"
+          >
             <button
-              type='button'
-              className={`text-gray-600 text-[12px] ${
-                searchInput === '' && 'hidden'
+              type="button"
+              className={`text-xl text-gray-600 ${
+                searchInput === "" && "hidden"
               }`}
-              onClick={() => setSearchInput('')}
+              onClick={() => setSearchInput("")}
             >
-              <FaX />
+              &times;
             </button>
-            <button className='bg-secondary rounded-full'>
-              <CiSearch className=' h-[30px] w-[30px] font-thin p-1 text-black' />
+            <button className="rounded-full bg-secondary p-1">
+              <Search className="p-0.5 text-dark" strokeWidth={1.2} />
             </button>
           </div>
           {/* Suggestions Box */}
           {isInputOnFocus && (
             <div
-              className='w-full bg-white h-screen md:h-auto fixed left-0 top-[74px]
-            md:absolute md:top-[42px] shadow-lg p-4 transition'
+              className="fixed left-0 top-[74px] h-screen w-full rounded-md bg-white
+            p-4 shadow-lg transition md:absolute md:top-[42px] md:h-auto"
             >
-              <ul>
-                <li onClick={handleInputOnFocus}>
-                  <Link to={'laptops'}>go to home</Link>
-                </li>
-                <li onClick={handleInputOnFocus}>
-                  <Link to={'laptops'}>go to home</Link>
-                </li>
-                <li onClick={handleInputOnFocus}>
-                  <Link to={'laptops'}>go to home</Link>
-                </li>
-              </ul>
+              <p className="text-lg font-medium text-rose-400">
+                Searching is currently not working.
+              </p>
             </div>
           )}
         </div>
         {isInputOnFocus && (
           <button
-            type='button'
-            className='md:hidden text-white underline'
+            type="button"
+            className="text-white underline md:hidden"
             onClick={handleInputOnFocus}
           >
             Cancel

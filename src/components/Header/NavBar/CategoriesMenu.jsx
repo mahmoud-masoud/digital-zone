@@ -1,68 +1,93 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import useCategory from "../../../Hooks/useCategory";
+import {
+  Gamepad2Icon,
+  GamepadIcon,
+  Headphones,
+  Laptop,
+  Monitor,
+  Smartphone,
+  Watch,
+} from "lucide-react";
 
-const CategoriesMenu = ({ setDropDawnMenu, closeDropDownMenuHandler }) => {
+const CategoriesMenu = ({ closeCategoriesMenu }) => {
   return (
-    <ul
-      className='absolute text-fontColor bg-white shadow-card-shadow z-[1000] top-full left-1/2
-rounded-b-md p-4 flex flex-wrap justify-around gap-4 '
+    <motion.ul
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "230.50px" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.15, ease: "anticipate" }}
+      className="absolute left-1/2 top-full z-40 flex flex-wrap justify-around
+      gap-4 rounded-b-md border bg-white p-4 text-fontColor shadow"
     >
       <li
-        className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={closeDropDownMenuHandler}
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
       >
-        <Link to={'mobile-phones'}>
-          Mobile Phones
-          <img
-            src='../../../../public/images/Categories/phone.jpg'
-            alt=''
-            width={50}
-            height={50}
-          />
+        <Link to={"ct/mobile-phones"}>
+          <div className="flex gap-2">
+            <Smartphone className=" text-primary" size={25} />
+            <span>Mobile Phones</span>
+          </div>
         </Link>
       </li>
       <li
-        className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={closeDropDownMenuHandler}
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
       >
-        <Link to={'laptops'}>
-          Laptops
-          <img
-            src='../../../../public/images/Categories/laptop.png'
-            alt=''
-            width={50}
-            height={50}
-          />
+        <Link to={"ct/laptops"}>
+          <div className="flex gap-2">
+            <Laptop className=" text-primary" size={25} />
+            <span>Laptops</span>
+          </div>
         </Link>
       </li>
       <li
-        className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={closeDropDownMenuHandler}
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
       >
-        <Link to={'headphones'}>
-          Headphones
-          <img
-            src='../../../../public/images/Categories/headphone.jpg'
-            alt=''
-            width={50}
-            height={50}
-          />
+        <Link to={"ct/headphones"}>
+          <div className="flex gap-2">
+            <Headphones className=" text-primary" size={25} />
+            <span>Headphones</span>
+          </div>
         </Link>
       </li>
       <li
-        className='w-[45%] hover:bg-light p-2 rounded-sm'
-        onClick={closeDropDownMenuHandler}
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
       >
-        <Link to={'smart-watches'}>
-          Smart Watches
-          <img
-            src='../../../../public/images/Categories/smart-watch.png'
-            alt=''
-            width={70}
-            height={70}
-          />
+        <Link to={"ct/smart-watches"}>
+          <div className="flex gap-2">
+            <Watch className=" text-primary" size={25} />
+            <span>Smart watches</span>
+          </div>
         </Link>
       </li>
-    </ul>
+      <li
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
+      >
+        <Link to={"ct/gaming"}>
+          <div className="flex gap-2">
+            <Gamepad2Icon className=" text-primary" size={25} />
+            <span>Gaming</span>
+          </div>
+        </Link>
+      </li>
+      <li
+        className="w-[45%] rounded-sm p-2 hover:bg-light"
+        onClick={closeCategoriesMenu}
+      >
+        <Link to={"ct/gaming"}>
+          <div className="flex gap-2">
+            <Monitor className=" text-primary" size={25} />
+            <span>Monitors</span>
+          </div>
+        </Link>
+      </li>
+    </motion.ul>
   );
 };
 export default CategoriesMenu;

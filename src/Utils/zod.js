@@ -5,14 +5,14 @@ export const formSchema = z.object({
   description: z.string().min(1, "Description can't be empty"),
   price: z.number().min(1, "Price can't be empty or zero"),
   category: z.string().min(1, "Not a valid Category"),
-  highlights: z
-    .array(
+  highlights: z.optional(
+    z.array(
       z.object({
-        key: z.string().min(1, "Name can not be empty"),
-        value: z.string().min(1, "Value can not be empty"),
+        key: z.string(),
+        value: z.string(),
       }),
-    )
-    .min(3, "Highlights must be at least 3 items"),
+    ),
+  ),
   images: z
     .array(z.string())
     .min(4, "At least 4 images is required for the product."),
@@ -27,7 +27,7 @@ export const signupValidationSchema = z.object({
 
 export const loginValidationSchema = z.object({
   email: z.string().email("Email is required"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(8, "Password is required"),
 });
 
 const phoneRegex = new RegExp(
@@ -64,8 +64,8 @@ export const creditCardFormSchema = z.object({
 
   cvv: z
     .string()
-    .min(3, "Enter a 3 digit CVV code")
-    .max(3, "Enter a 3 digit CVV code")
+    .min(3, "CVV")
+    .max(3, "CVV")
     .refine(
       (value) => {
         if (value.length === 3) {

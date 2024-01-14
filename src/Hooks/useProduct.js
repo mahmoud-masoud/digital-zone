@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 const useProduct = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [product, setProduct] = useState();
   const productId = useParams().productId;
 
@@ -35,10 +35,10 @@ const useProduct = () => {
       return () => unsubscribe();
     } catch (error) {
       setIsLoading(false);
-      setHasError(true);
+      setIsError(true);
     }
   }, []);
 
-  return { product, isLoading, hasError };
+  return { product, isLoading, isError };
 };
 export default useProduct;

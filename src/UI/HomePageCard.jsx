@@ -7,19 +7,19 @@ const HomePageCard = ({ img, title, price, id }) => {
 
   return (
     <Link to={`ip/${id}`}>
-      <div className="max-w-40 relative flex flex-col justify-between rounded-lg">
+      <div className="relative flex flex-col justify-between rounded-lg">
         <AddToFavoritesBtn image={img} title={title} price={price} id={id} />
         <div className="relative mb-2 flex items-end">
           <div className="absolute bottom-0 translate-y-1/2 transform">
             <CardAddToCart image={img} title={title} price={price} id={id} />
           </div>
-          <div className="flex aspect-square w-40 items-center justify-center">
+          <div className="flex aspect-square h-36 w-36 items-center justify-center">
             <img
               src={img}
               alt={title}
               loading="lazy"
-              width="150"
-              height="150"
+              width="144"
+              height="144"
               className="max-h-full max-w-full object-contain"
             />
           </div>

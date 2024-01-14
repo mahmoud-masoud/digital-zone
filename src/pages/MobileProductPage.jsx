@@ -1,19 +1,19 @@
-import ProductImagesForMobile from '../components/ProductPageComponents/ProductImagesForMobile';
-import Wrapper from '../UI/Wrapper';
-import ProductInfo from '../components/ProductPageComponents/ProductBuyBox/ProductInfo';
-import ProductQuickHighlights from '../components/ProductPageComponents/ProductQuickHighlights';
-import ProductDetails from '../components/ProductPageComponents/ProductDetails';
-import useProduct from '../Hooks/useProduct';
-import Loading from '../UI/Loading';
+import ProductImagesForMobile from "../components/ProductPageComponents/ProductImagesForMobile";
+import Wrapper from "../UI/Wrapper";
+import ProductInfo from "../components/ProductPageComponents/ProductBuyBox/ProductInfo";
+import ProductQuickHighlights from "../components/ProductPageComponents/ProductQuickHighlights";
+import ProductDetails from "../components/ProductPageComponents/ProductDetails";
+import useProduct from "../Hooks/useProduct";
+import MainSpinner from "../UI/MainSpinner";
 
 const MobileProductPage = () => {
-  const { product, isLoading, hasError } = useProduct();
+  const { product, isLoading, isError } = useProduct();
   console.log(product);
   return isLoading ? (
-    <Loading />
+    <MainSpinner />
   ) : product ? (
     <>
-      <Wrapper className={'px-3 mb-16 flex flex-col gap-4 '}>
+      <Wrapper className={"mb-16 flex flex-col gap-4 px-3 "}>
         <ProductImagesForMobile images={product.images} />
         <ProductInfo
           title={product.title}
@@ -21,7 +21,9 @@ const MobileProductPage = () => {
           id={product.id}
           image={product.images[0]}
         />
-        <ProductQuickHighlights highlights={product.highlights} />
+        {/* {product.highlights?.length && (
+          <ProductQuickHighlights highlights={product.highlights} />
+        )} */}
         <ProductDetails
           description={product.description}
           features={product?.features}

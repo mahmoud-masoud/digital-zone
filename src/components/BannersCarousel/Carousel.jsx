@@ -1,35 +1,46 @@
-import img1 from '/images/Carousel/banner-1.png';
-import img2 from '/images/Carousel/banner-2.png';
-import img3 from '/images/Carousel/banner-3.png';
-import img4 from '/images/Carousel/banner-4.png';
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "./BannersCarousel.css";
+import { Link } from "react-router-dom";
 
-import { FaAngleRight, FaAngleLeft } from 'react-icons/fa6';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css';
-import './BannersCarousel.css';
-
-import { Pagination, Autoplay } from 'swiper/modules';
+const images = [
+  {
+    url: "/images/Carousel/iPhone-15-pro.webp",
+    smUrl: "/images/Carousel/small-images/iphone-15-pro-sm.webp",
+    link: "ip/bb7d45b3-b941-47bb-9ef4-5bfdd8ccdfe7",
+  },
+  {
+    url: "/images/Carousel/gaming.webp",
+    smUrl: "/images/Carousel/small-images/gaming-sm.webp",
+    link: "ct/gaming",
+  },
+  {
+    url: "/images/Carousel/laptops.webp",
+    smUrl: "/images/Carousel/small-images/laptops-sm.webp",
+    link: "ct/laptops",
+  },
+];
 
 const Carousel = () => {
-  const images = [img1, img2, img3, img4];
-
   return (
     <div
-      className='container relative mx-auto h-auto 
-    flex items-center justify-center px-3 md:p-0'
+      className="container relative mx-auto flex h-auto 
+    items-center justify-center px-3 pt-6 sm:px-0 sm:pt-8"
     >
-      <div className='rounded-xl overflow-hidden'>
+      <div className="overflow-hidden rounded-xl">
         <Swiper
-          className='w-full'
+          className="w-full"
           navigation={{
-            nextEl: '.next',
-            prevEl: '.prev',
+            nextEl: ".next",
+            prevEl: ".prev",
           }}
           pagination={{
             clickable: true,
-            type: 'bullets',
+            type: "bullets",
           }}
           loop={true}
           autoplay={{
@@ -39,47 +50,33 @@ const Carousel = () => {
           modules={[Pagination, Autoplay]}
         >
           {images.map((image, index) => (
-            <SwiperSlide key={image.toString()}>
-              <picture>
-                <source
-                  srcSet={`/images/Carousel/small-images/small-${
-                    index + 1
-                  }.png`}
-                  type='image/png'
-                  media='(max-width: 768px)'
-                  height='300'
-                  width='auto'
-                />
-                <img
-                  src={image}
-                  alt=''
-                  className='max-w-full'
-                  height='300'
-                  width='auto'
-                />
-              </picture>
+            <SwiperSlide key={index}>
+              <Link to={image.link}>
+                <picture>
+                  <source
+                    srcSet={image.smUrl}
+                    type="image/webp"
+                    media="(max-width: 770px)"
+                    height="300"
+                    width="800"
+                  />
+                  <img
+                    src={image.url}
+                    alt="Carousel banner image"
+                    type="image/webp"
+                    height="300"
+                    width="1440"
+                  />
+                </picture>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      {/* <button
-        className='hidden md:flex prev absolute items-center justify-end -left-[45px]
-       h-[70px] w-[70px] bg-white z-10 rounded-full text-3xl text-primary'
-      >
-        <FaAngleLeft />
-      </button>
-      <button
-        className='hidden md:flex next absolute  items-center justify-start -right-[45px]
-       h-[70px] w-[70px] bg-white z-10 rounded-full text-3xl text-primary'
-      >
-        <FaAngleRight />
-      </button> */}
     </div>
   );
 };
 export default Carousel;
-
-import React from 'react';
 
 // const ResponsiveImage = () => {
 //   return (

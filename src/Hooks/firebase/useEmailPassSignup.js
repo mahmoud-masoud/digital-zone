@@ -15,7 +15,7 @@ import { Turtle } from "lucide-react";
 const useEmailPassSignup = () => {
   const { user, isLoading, isError } = useAuthState();
   const [signupError, setSignupError] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+  const [userIsSigningUp, setUserIsSingingUp] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const useEmailPassSignup = () => {
 
         const linkedUser = await linkWithCredential(user, emailCredential);
 
-        setRedirect(true);
+        setUserIsSingingUp(true);
 
         await updateProfile(linkedUser.user, { displayName: data.username });
 
@@ -39,7 +39,7 @@ const useEmailPassSignup = () => {
           { displayName, email, uid, type: "permanent" },
           uid,
         );
-        setRedirect(false);
+        setUserIsSingingUp(false);
         navigate("/");
       } catch (error) {
         console.error("Error upgrading anonymous account:", error);
@@ -48,7 +48,7 @@ const useEmailPassSignup = () => {
     } else if (user && !user.isAnonymous) {
       try {
         await createUser(data);
-        setRedirect(false);
+        setUserIsSingingUp(false);
         navigate("/");
       } catch (error) {
         setSignupError(error.code);
@@ -57,9 +57,9 @@ const useEmailPassSignup = () => {
   };
   return {
     onSubmit,
+    userIsSigningUpWithEmailAndPassword: userIsSigningUp,
     signupEmailPassError: signupError,
     setEmailPassSignupError: setSignupError,
-    signupEmailPassRedirect: redirect,
   };
 };
 export default useEmailPassSignup;

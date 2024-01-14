@@ -1,14 +1,9 @@
 import typography from "@tailwindcss/typography";
 import forms from "@tailwindcss/forms";
-const { nextui } = require("@nextui-org/react");
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {},
 
@@ -16,7 +11,7 @@ export default {
       sm: "640px",
       // => @media (min-width: 640px) { ... }
 
-      md: "768px",
+      md: "770px",
       // => @media (min-width: 768px) { ... }
 
       lg: "1024px",
@@ -48,6 +43,7 @@ export default {
       keyframes: {},
       animation: {
         pulse: "pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "spin-fast": "spin .6s linear infinite",
       },
       typography: ({ theme }) => ({
         DEFAULT: {

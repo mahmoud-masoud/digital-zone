@@ -1,7 +1,5 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Routes from "./components/Routes/Routes";
 
-import { router } from "./components/Routes/Routes";
-// import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./Utils/firebase";
 import { useEffect } from "react";
 import { signInAnonymously, updateProfile } from "firebase/auth";
@@ -13,8 +11,6 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
-    if (loading) return;
-
     const createAnonymousUser = async () => {
       try {
         const response = await signInAnonymously(auth);
@@ -35,16 +31,12 @@ function App() {
       }
     };
 
-    if (user === null) {
-      console.log("we here again !!");
+    if (!user && !loading) {
       createAnonymousUser();
     }
   }, [user, loading]);
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  return <Routes />;
 }
+
 export default App;

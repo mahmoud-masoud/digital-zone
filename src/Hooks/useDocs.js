@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { db } from "../Utils/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  Timestamp,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const useDocs = (collectionName) => {
   const [data, setData] = useState(null);
@@ -10,7 +16,10 @@ const useDocs = (collectionName) => {
   useEffect(() => {
     try {
       const getDocsData = async () => {
-        const collectionRef = query(collection(db, collectionName));
+        const collectionRef = query(
+          collection(db, collectionName),
+          // orderBy("timestamp", "desc"),
+        );
 
         const documentSnapshots = await getDocs(collectionRef);
         if (documentSnapshots) {
@@ -26,7 +35,7 @@ const useDocs = (collectionName) => {
       setIsError(true);
       setIsLoading(false);
     }
-  }, [db]);
+  }, []);
 
   return {
     data,

@@ -1,34 +1,25 @@
 import AddToCartBtn from "../ProductPageComponents/ProductBuyBox/AddToCartBtn";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-import { useState } from "react";
-import { auth } from "../../Utils/firebase";
-import {
-  removeProductFromFavorites,
-  updateNeededQuantity,
-} from "../../Utils/firebase-functions";
+import { removeProductFromFavorites } from "../../Utils/firebase-functions";
 import { useAuthState } from "react-firebase-hooks/auth";
+import formatePrice from "../../Utils/formatePrice";
+import { auth } from "../../Utils/firebase";
 
-const FavItem = ({ title, image, price, id, fetchedNeededQuantity }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
-
-  const selectedValueHandler = (e) => {
-    const selectedNeededQuantity = +e.target.value;
-
-    updateNeededQuantity(user.uid, id, selectedNeededQuantity);
-  };
+const FavItem = ({ title, image, price, id }) => {
+  const [user] = useAuthState(auth);
 
   const removeItem = () => {
     removeProductFromFavorites(user.uid, id);
   };
 
+  const formattedPrice = formatePrice(price);
+
   return (
     <>
       <Link to={`/ip/${id}`}>
-        <div className="mb-4 flex justify-between">
+        <div className="mb-4 flex justify-between gap-2 ">
           <div className="flex justify-between gap-4 md:gap-6 lg:gap-10">
-            <div className="flex w-24 shrink-0 items-center justify-center">
+            <div className="h-24 w-24 flex-shrink-0">
               <img
                 src={image}
                 alt={title}
@@ -37,10 +28,13 @@ const FavItem = ({ title, image, price, id, fetchedNeededQuantity }) => {
                 className="max-h-full max-w-full"
               />
             </div>
-            <p className="line-clamp-2">{title}</p>
+            <div>
+              <p className="line-clamp-2 max-sm:text-sm">{title}</p>
+            </div>
+            <div>
+              <span className="font-bold sm:text-lg">{formattedPrice}</span>
+            </div>
           </div>
-
-          <span className="text-lg font-bold">{`$${price}`}</span>
         </div>
       </Link>
 
@@ -52,26 +46,6 @@ const FavItem = ({ title, image, price, id, fetchedNeededQuantity }) => {
           >
             Remove
           </button>
-          <div>
-            <label htmlFor="select">Need:</label>
-            <select
-              name="select"
-              id="select"
-              className="text-fontColor"
-              onChange={selectedValueHandler}
-              defaultValue={fetchedNeededQuantity ? fetchedNeededQuantity : 1}
-            >
-              {Array(10)
-                .fill(null)
-                .map((_, index) => {
-                  return (
-                    <option value={index + 1} key={index}>
-                      {index + 1}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
         </div>
         <AddToCartBtn title={title} id={id} image={image} price={price} />
       </div>

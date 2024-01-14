@@ -303,25 +303,3 @@ export const addProductToFavorites = async (userUID, product) => {
     console.log(error);
   }
 };
-
-export const updateNeededQuantity = async (
-  userUID,
-  productID,
-  neededQuantity,
-) => {
-  try {
-    const userRef = doc(db, "users", userUID);
-
-    const favoritesRef = collection(userRef, "favorites");
-
-    const productRef = doc(favoritesRef, productID);
-    await runTransaction(db, async (transaction) => {
-      transaction.update(productRef, {
-        neededQuantity,
-      });
-      console.log("update needed quantity");
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};

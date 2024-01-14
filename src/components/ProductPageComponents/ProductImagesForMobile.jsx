@@ -1,16 +1,15 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/scrollbar';
-import './CarouselStyles.css';
+import "swiper/css";
+import "swiper/css/scrollbar";
 
 // import required modules
-import { Scrollbar, Autoplay } from 'swiper/modules';
+import { Scrollbar, Autoplay } from "swiper/modules";
 
 const ProductImagesForMobile = ({ images }) => {
   return (
-    <>
+    <div className="pt-8">
       <Swiper
         scrollbar={true}
         autoplay={{
@@ -19,23 +18,23 @@ const ProductImagesForMobile = ({ images }) => {
         }}
         spaceBetween={20}
         modules={[Scrollbar, Autoplay]}
-        className='max-w-full h-full'
+        className="h-full max-w-full"
       >
         {images.map((imgSrc) => (
-          <SwiperSlide>
-            <div className='flex justify-center items-center aspect-square'>
+          <SwiperSlide key={imgSrc}>
+            <div className="flex aspect-square items-center justify-center">
               <img
                 src={imgSrc}
-                alt=''
-                height='366'
-                width='366'
-                className='max-w-full max-h-full object-contain'
+                alt=""
+                height="366"
+                width="366"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 export default ProductImagesForMobile;

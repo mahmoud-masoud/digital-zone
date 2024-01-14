@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { FaCreditCard } from "react-icons/fa6";
+import { useState } from "react";
+
+import { CreditCardIcon } from "@heroicons/react/24/solid";
 
 const SavedCard = ({ cardLastDigits }) => {
   const [CVV, setCVV] = useState("");
@@ -18,9 +19,9 @@ const SavedCard = ({ cardLastDigits }) => {
 
   return (
     <div className="pt-4">
-      <h3 className="mb-4 text-xl font-semibold">Saved Card</h3>
+      <h3 className="mb-4 font-semibold md:text-xl">Saved Card</h3>
       <div className="flex items-center gap-3 border-b pb-4">
-        <FaCreditCard className="text-3xl text-primary" />
+        <CreditCardIcon className="w-9 text-primary" />
         <p>
           Ending in <span className="font-semibold">{cardLastDigits}</span>
         </p>
@@ -29,7 +30,7 @@ const SavedCard = ({ cardLastDigits }) => {
           value={CVV}
           onChange={CVVHandler}
           placeholder="CVV"
-          className={`w-14 rounded-md  px-3 py-1.5 `}
+          className={`w-16 rounded-md  px-3 py-1.5 `}
         />
       </div>
     </div>

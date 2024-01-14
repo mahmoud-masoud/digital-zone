@@ -1,22 +1,22 @@
-import CartItem from './CartItem';
-
+import CartItem from "./CartItem";
+import { motion } from "framer-motion";
 const CartItems = ({ cartItems }) => {
   return (
-    <div className='flex-1'>
-      <h1 className='text-2xl mb-6'>
-        <span className='font-bold'>Cart</span> {cartItems?.length} Items
+    <div className="flex-1">
+      <h1 className="mb-6 text-lg md:text-2xl">
+        <span className="font-bold">Cart</span> {cartItems?.length} Items
       </h1>
-      <div className='shadow-card-shadow rounded-md'>
-        <div className='p-4 bg-light md:p-8'>
-          <h2 className='text-xl font-bold md:text-2xl text-fontColor'>
+      <div className="rounded-md shadow-card-shadow">
+        <div className="bg-light p-4 md:p-8">
+          <h2 className="font-semibold text-fontColor md:text-2xl">
             Free shipping, arrives tomorrow.
           </h2>
         </div>
 
-        <div className=' p-4 '>
+        <div className=" p-4 ">
           <ul>
             {cartItems?.map((item) => (
-              <li key={item.id} className='last:border-none bb-2 py-4'>
+              <li key={item.id} className="bb-2 py-4 last:border-none">
                 <CartItem
                   id={item.id}
                   title={item.title}

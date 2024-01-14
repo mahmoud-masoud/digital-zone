@@ -5,8 +5,8 @@ import Payment from "./Payment";
 
 const OrderDetails = () => {
   return (
-    <div className="flex-1 pb-20 ">
-      <div className="rounded-lg border p-6 shadow-md">
+    <div className="flex-1 sm:pb-20 ">
+      <div className="rounded-lg border p-4 shadow-md md:p-6">
         <AddressWrapper />
         <OrderItems />
       </div>

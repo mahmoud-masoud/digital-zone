@@ -3,33 +3,29 @@ import { creditCardFormSchema } from "../../Utils/zod";
 import { useForm } from "react-hook-form";
 import Label from "../../UI/Label";
 import Input from "../../UI/Input";
-import { FaCreditCard } from "react-icons/fa6";
-import { TiArrowSortedDown } from "react-icons/ti";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { CreditCardIcon } from "@heroicons/react/24/solid";
 import InputError from "../../UI/InputError";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSelect } from "@nextui-org/react";
+import { useDispatch } from "react-redux";
 import { userShippingInfoActions } from "../../store/userShippingInfo";
 import { auth, db } from "../../Utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, runTransaction } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const dispatch = useDispatch();
-  const creditCard = useSelector((state) => state.userShippingInfo.creditCard);
   const [saveCard, setSaveCard] = useState(true);
 
   const {
     register,
-    reset,
-    control,
-    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(creditCardFormSchema) });
 
+  // save credit card info to db
   const onSubmit = async (data) => {
     if (saveCard)
       try {
@@ -50,19 +46,19 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="">
+        <div>
           <div className="mb-6">
             <Label>Card number</Label>
             <div className="relative flex max-w-md">
               <span className="pointer-events-none absolute left-4  top-1/2 -translate-y-1/2">
-                <FaCreditCard className=" text-2xl text-slate-500" />
+                <CreditCardIcon className=" h-7 w-7 text-slate-500" />
               </span>
               <input
                 inputMode="numeric"
                 id="cc-number"
                 pattern="\d*"
                 autoComplete="cc-number"
-                {...register("cc-number", {})}
+                {...register("cc-number")}
                 placeholder="0000 0000 0000 0000"
                 maxLength={16}
                 className="flex w-full appearance-none rounded-sm border
@@ -76,19 +72,20 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
             )}
           </div>
 
-          <div className="flex flex-col gap-8 md:flex-row">
+          <div className="flex gap-4">
             <div>
-              <Label htmlFor={"cc-exp-moth"}>Expiration Month</Label>
+              <Label htmlFor={"cc-exp-moth"}>MM</Label>
+
               <select
                 name="cc-exp-month"
                 id="cc-exp-month"
                 autoComplete="cc-exp-month"
                 {...register("cc-exp-month", { valueAsNumber: true })}
-                className=" w-48 appearance-none rounded-sm
-                 border border-slate-400 p-3
+                className="w-24 appearance-none rounded-sm
+                 border border-slate-400 p-2
                   outline-0 duration-150 hover:border-slate-600 focus:shadow-input"
               >
-                <option value="Month">Month</option>
+                <option value="MM">MM</option>
                 {Array(12)
                   .fill(null)
                   .map((_, index) => {
@@ -108,18 +105,18 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
             </div>
 
             <div>
-              <Label htmlFor={"cc-exp-year"}>Expiration Year</Label>
-
+              <Label htmlFor={"cc-exp-year"}>YY</Label>
               <select
                 name="cc-exp-year"
                 id="cc-exp-year"
                 autoComplete="cc-exp-year"
                 {...register("cc-exp-year", { valueAsNumber: true })}
-                className="w-48 appearance-none gap-4 rounded-sm border
-                border-slate-400 p-3
+                className="w-24 appearance-none gap-4 rounded-sm border
+                border-slate-400 p-2
                   outline-0 duration-150 hover:border-slate-600 focus:shadow-input "
               >
-                <option value="Year">Year</option>
+                <option value="YY">YY</option>
+
                 {Array(10)
                   .fill(null)
                   .map((_, index) => {
@@ -139,24 +136,14 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
 
             <div>
               <Label>CVV</Label>
-              <div className="relative">
-                <Input
-                  type="password"
-                  inputMode="numeric"
-                  className={"rounded-sm p-3 pr-10"}
-                  register={register("cvv")}
-                />
 
-                <span className="group absolute right-3 top-1/2 -translate-y-1/2">
-                  <AiOutlineQuestionCircle className="text-lg" />
-                  <div
-                    className="absolute -right-5 -top-10 hidden w-32
-                  translate-x-full group-hover:block"
-                  >
-                    <img src="/images/Cards/CVV.svg" alt="" />
-                  </div>
-                </span>
-              </div>
+              <Input
+                type="password"
+                inputMode="numeric"
+                className={"w-28 rounded-sm p-2"}
+                register={register("cvv")}
+              />
+
               {errors["cvv"] && <InputError message={errors["cvv"].message} />}
             </div>
           </div>
@@ -173,24 +160,25 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
             />
             <span className="text-sm font-bold">Remember this card</span>
           </div>
-        </div>
-        <div className="mt-6 flex items-center gap-8">
-          <button
-            className="rounded-full bg-primary px-6 py-2 font-semibold
-           text-white duration-150  hover:bg-after "
-          >
-            Continue
-          </button>
-          {userCreditCard && (
+
+          <div className="mt-6 flex items-center gap-8">
             <button
-              type="button"
-              onClick={() => setFormVisibility(false)}
-              className=" rounded-full border
-            border-gray-600 px-4 py-2 hover:border-black"
+              className="w-24 rounded-full bg-primary p-2 font-semibold
+           text-white duration-150  hover:bg-after "
             >
-              Cancel
+              {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Save"}
             </button>
-          )}
+            {userCreditCard && (
+              <button
+                type="button"
+                onClick={() => setFormVisibility(false)}
+                className=" rounded-full border
+            border-gray-600 px-4 py-2 hover:border-black"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </div>
       </form>
     </div>

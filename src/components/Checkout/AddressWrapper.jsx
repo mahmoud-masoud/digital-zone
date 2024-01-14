@@ -3,15 +3,15 @@ import Address from "./Address";
 import AddressForm from "./AddressForm";
 import useUserInfo from "../../Hooks/useUserInfo";
 import { auth, db } from "../../Utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { userShippingInfoActions } from "../../store/userShippingInfo";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AddressWrapper = () => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
-  const [userAddress, setUserAddress] = useState(null);
-  const [userAddressLoading, setUserAddressLoading] = useState(true);
+  const [user, isLoading, isError] = useAuthState(auth);
+  const [userShippingInfo, setUserShippingInfo] = useState(null);
+  const [shippingInfoLIsLoading, setShippingInfoIsLoading] = useState(true);
   const [formIsVisible, setFormVisibility] = useState(true);
 
   const dispatch = useDispatch();
@@ -19,48 +19,46 @@ const AddressWrapper = () => {
   useEffect(() => {
     if (!user) return;
 
-    const userRef = doc(db, "users", user.uid);
-    const unsubscribe = onSnapshot(
-      userRef,
-      (userDoc) => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const unsubscribe = onSnapshot(userRef, (userDoc) => {
         if (userDoc.exists()) {
           const fetchedShippingInfo = userDoc.data().shippingInfo;
           if (fetchedShippingInfo) {
-            setUserAddress(fetchedShippingInfo);
+            setUserShippingInfo(fetchedShippingInfo);
             setFormVisibility(false);
             dispatch(
               userShippingInfoActions.addUserShippingInfo(fetchedShippingInfo),
             );
           } else setFormVisibility(true);
-          setUserAddressLoading(false);
+          setShippingInfoIsLoading(false);
         }
-      },
-      (error) => {
-        setUserAddressLoading(false);
-        console.error("Error getting user document:", error);
-      },
-    );
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    } catch (error) {
+      setShippingInfoIsLoading(false);
+      console.error("Error getting user document:", error);
+    }
   }, [user]);
 
-  console.log(userAddress);
-
-  return userAddressLoading ? (
+  return shippingInfoLIsLoading ? (
     <p>Loading...</p>
   ) : (
     <div>
-      <p className="mb-10 text-2xl font-semibold">Shipping address</p>
+      <p className="mb-4 text-lg font-semibold md:mb-10 md:text-2xl">
+        Shipping address
+      </p>
 
-      {userAddress && (
+      {userShippingInfo && (
         <Address
           setFormVisibility={setFormVisibility}
-          userAddress={userAddress}
+          userShippingInfo={userShippingInfo}
         />
       )}
       {formIsVisible && (
         <AddressForm
-          userAddress={userAddress}
+          userShippingInfo={userShippingInfo}
           setFormVisibility={setFormVisibility}
         />
       )}

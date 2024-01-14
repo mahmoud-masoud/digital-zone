@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Profiler, useEffect, useState } from "react";
 import {
   runTransaction,
   serverTimestamp,
@@ -8,24 +8,28 @@ import {
   onSnapshot,
   where,
   increment,
+  deleteDoc,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../Utils/firebase";
+
+import { db } from "../Utils/firebase";
+import useAuthState from "./firebase/useAuthState";
 import { removeProductFromTheCart } from "../Utils/firebase-functions";
+import { useResetProjection, useScroll } from "framer-motion";
 
 const useCartProduct = ({ title, price, id, image }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const { user, isLoading: userLoading, isError: userError } = useAuthState();
 
   const [quantity, setQuantity] = useState(0);
-  const [sendingProduct, setSendingProduct] = useState(false);
+  const [isProductAdding, setProductIsAdding] = useState(false);
   const [productError, setProductError] = useState(false);
 
   const productId = id;
   const userUid = user?.uid;
 
   const addToCart = async () => {
+    if (!user) return;
     if (quantity >= 1) setQuantity((prev) => (prev += 1));
-    setSendingProduct(true);
+    setProductIsAdding(true);
     try {
       const userRef = doc(db, "users", userUid);
       const cartItemsRef = collection(userRef, "cartItems");
@@ -39,7 +43,7 @@ const useCartProduct = ({ title, price, id, image }) => {
             quantity: increment(1),
             totalPrice: increment(price),
           });
-          setSendingProduct(false);
+          setProductIsAdding(false);
         } else {
           const productWithTimestamp = {
             title,
@@ -52,36 +56,32 @@ const useCartProduct = ({ title, price, id, image }) => {
           };
 
           transaction.set(productRef, productWithTimestamp);
-          setSendingProduct(false);
+          setProductIsAdding(false);
         }
-      }).catch((error) => {
-        setProductError(true);
-        setSendingProduct(false);
-        console.log("Firestore transaction error:", error);
       });
     } catch (error) {
       setProductError(true);
-      setSendingProduct(false);
+      setProductIsAdding(false);
       console.log("Error outside Firestore transaction:", error);
     }
   };
 
   const removeFromCart = () => {
+    if (!user) return;
     setQuantity((prev) => (prev -= 1));
     removeProductFromTheCart(userUid, productId, price);
   };
 
   const removeProductPermanently = () => {
-    const removeProductPermanentlyFromTheCart = async (userUID, productId) => {
+    if (!user) return;
+    const removeProductPermanentlyFromTheCart = async () => {
       try {
         const userRef = doc(db, "users", userUid);
 
         const cartItemsRef = collection(userRef, "cartItems");
 
         const productRef = doc(cartItemsRef, productId);
-        await runTransaction(db, async (transaction) => {
-          transaction.delete(productRef);
-        });
+        await deleteDoc(productRef);
       } catch (error) {
         console.log(error);
       }
@@ -90,30 +90,29 @@ const useCartProduct = ({ title, price, id, image }) => {
   };
 
   useEffect(() => {
-    if (!user) return;
+    if (user)
+      try {
+        const userRef = doc(db, "users", userUid);
+        const cartItemsRef = collection(userRef, "cartItems");
+        const q = query(cartItemsRef, where("id", "==", productId));
 
-    try {
-      const userRef = doc(db, "users", userUid);
-      const cartItemsRef = collection(userRef, "cartItems");
-      const q = query(cartItemsRef, where("id", "==", productId));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const item = querySnapshot.docs[0].data();
+            const itemQuantity = item.quantity;
+            setQuantity(itemQuantity);
+          }
+        });
 
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        if (!querySnapshot.empty) {
-          const item = querySnapshot.docs[0].data();
-          const itemQuantity = item.quantity;
-          setQuantity(itemQuantity);
-        }
-      });
-
-      return unsubscribe;
-    } catch (error) {
-      console.log("error from catch", error);
-    }
-  }, []);
+        return unsubscribe;
+      } catch (error) {
+        console.log("error from catch", error);
+      }
+  }, [userLoading]);
 
   return {
     quantity,
-    sendingProduct,
+    isProductAdding,
     productError,
     addToCart,
     removeFromCart,

@@ -1,34 +1,34 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { auth, db } from "../../Utils/firebase";
 import {
-  FieldValue,
   addDoc,
   collection,
+  collectionGroup,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   increment,
+  query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+
 import { useState } from "react";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import formatePrice from "../../Utils/formatePrice";
-import { CarIcon } from "lucide-react";
-import useDocs from "../../Hooks/useDocs";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const OrderSummery = () => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [orderIsCreating, setOrderIsCreating] = useState(false);
   const { shippingInfo, creditCard } = useSelector(
     (state) => state.userShippingInfo,
   );
   const cartItems = useSelector((state) => state.cartItems.cartItems);
-  console.log(cartItems);
+
   const cartTotalPrice = cartItems?.reduce((prev, curr) => {
     return (prev += curr.totalPrice);
   }, 0);
@@ -40,7 +40,10 @@ const OrderSummery = () => {
   const createOrder = async (userId, products) => {
     try {
       setOrderIsCreating(true);
-      const orderRef = await addDoc(collection(db, "orders"), {
+
+      // create an order
+      const ordersColRef = collection(db, "orders");
+      const orderRef = await addDoc(ordersColRef, {
         products,
         shippingInfo,
         userId,
@@ -53,8 +56,21 @@ const OrderSummery = () => {
         id: orderId,
       });
 
-      const userRef = doc(db, "users", user.uid);
+      // update product sold quantity
+      products.forEach(async (product) => {
+        const q = query(
+          collectionGroup(db, "products"),
+          where("id", "==", product.id),
+        );
 
+        const productDocRef = (await getDocs(q)).docs[0].ref;
+        await updateDoc(productDocRef, {
+          quantitySold: increment(product.quantity),
+        });
+      });
+
+      // update user total amount spent
+      const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         amountSpent: increment(cartTotalPrice),
         orders: increment(1),
@@ -64,7 +80,7 @@ const OrderSummery = () => {
       const cartItemsColRef = collection(db, `users/${user.uid}/cartItems`);
       const cartItemsSnapshot = await getDocs(cartItemsColRef);
       for (const doc of cartItemsSnapshot.docs) {
-        await deleteDoc(doc.ref);
+        deleteDoc(doc.ref);
       }
 
       setOrderIsCreating(false);
@@ -76,7 +92,10 @@ const OrderSummery = () => {
   };
 
   return (
-    <div className="top-[80px] h-fit w-[340px]  rounded-lg border shadow-sm  md:sticky">
+    <div
+      className="h-fit rounded-lg border bg-white shadow-sm sm:sticky
+     sm:top-[80px] md:w-[320px]"
+    >
       <p className="p-4 text-lg font-bold">Order Summary</p>
       <div className="border-t p-4">
         <div className="flex justify-between ">
@@ -93,15 +112,15 @@ const OrderSummery = () => {
         </div>
       </div>
       {shippingInfo && creditCard && cartItems.length > 0 && (
-        <div className="px-4 pb-4">
+        <div className="p-4">
           <button
             onClick={() => {
               createOrder(user.uid, cartItems);
             }}
-            className="w-full rounded-full  bg-primary px-6 py-2.5 font-semibold
+            className="w-full rounded-full  bg-primary px-6 py-2  font-semibold
          text-white duration-200 hover:bg-after"
           >
-            {orderIsCreating ? <LoadingSpinner /> : "Place Order"}
+            {orderIsCreating ? <LoadingSpinner h={7} w={7} /> : "Place Order"}
           </button>
         </div>
       )}

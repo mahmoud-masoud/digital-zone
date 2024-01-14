@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { cartActions } from '../../store/cartItems';
+import { useState } from "react";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { cartActions } from "../../store/cartItems";
 const AddToCartBtn = ({ title, price, id, image }) => {
   const [btnState, setBtnState] = useState({
     clicked: false,
-    content: 'Add to cart',
+    content: "Add to cart",
   });
   const [quantity, setQuantity] = useState(0);
 
   const dispatch = useDispatch();
 
   const itemQuantity = useSelector(
-    (state) => state.cartItems.items.find((item) => item?.id === id)?.quantity
+    (state) => state.cartItems.items.find((item) => item?.id === id)?.quantity,
   );
 
   useEffect(() => {
     if (itemQuantity) {
       setBtnState(() => {
-        return { clicked: true, content: ' added' };
+        return { clicked: true, content: " added" };
       });
       setQuantity(itemQuantity);
     }
@@ -27,7 +27,7 @@ const AddToCartBtn = ({ title, price, id, image }) => {
 
   const addToCartFirstTimeHandler = () => {
     setBtnState(() => {
-      return { clicked: true, content: ' added' };
+      return { clicked: true, content: " added" };
     });
     setQuantity((prev) => prev + 1);
     dispatch(cartActions.addItem({ title, price, id, image }));
@@ -42,20 +42,20 @@ const AddToCartBtn = ({ title, price, id, image }) => {
     dispatch(cartActions.removeItem(id));
     setQuantity((prev) => prev - 1);
     if (quantity === 1) {
-      setBtnState({ clicked: false, content: 'Add to cart' });
+      setBtnState({ clicked: false, content: "Add to cart" });
     }
   };
 
   return (
     <div
       className={`bg-primary 
-    ${btnState.clicked ? 'w-40 p-1' : 'w-fit active:bg-after hover:bg-after'}
-    rounded-full flex justify-between  items-center text-white`}
+    ${btnState.clicked ? "w-40 p-1" : "w-fit hover:bg-after active:bg-after"}
+    flex items-center justify-between  rounded-full text-white`}
     >
       {!btnState.clicked && (
         <button
           onClick={addToCartFirstTimeHandler}
-          className='font-medium py-2 px-6'
+          className="px-6 py-2 font-medium"
         >
           <span> {btnState.content} </span>
         </button>
@@ -64,19 +64,19 @@ const AddToCartBtn = ({ title, price, id, image }) => {
       {btnState.clicked && (
         <>
           <button
-            className='hover:bg-medium p-2 rounded-full'
+            className="rounded-full p-2 hover:bg-medium"
             onClick={removeFromCart}
           >
-            <FaMinus />
+            <MinusIcon />
           </button>
-          <span className='font-medium flex-1 text-center'>
-            {quantity + btnState.content}{' '}
+          <span className="flex-1 text-center font-medium">
+            {quantity + btnState.content}{" "}
           </span>
           <button
-            className='hover:bg-medium p-2 rounded-full'
+            className="rounded-full p-2 hover:bg-medium"
             onClick={addToCart}
           >
-            <FaPlus />
+            <PlusIcon />
           </button>
         </>
       )}

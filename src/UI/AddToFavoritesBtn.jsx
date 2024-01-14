@@ -2,33 +2,32 @@ import HeartIcon from "./HeartIcon";
 import { useEffect, useState } from "react";
 import { addProductToFavorites } from "../Utils/firebase-functions";
 import { auth, db } from "../Utils/firebase";
-import { useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import LoginPopup from "./LoginPopup";
 import { AnimatePresence } from "framer-motion";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AddToFavoritesBtn = ({ title, price, id, image }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isPopup, setPopup] = useState(false);
+  const [isLoginPopup, setLoginPopup] = useState(false);
 
   const closePopup = () => {
-    setPopup(false);
+    setLoginPopup(false);
   };
 
   const addItemToFavList = (e) => {
     e.preventDefault();
 
-    if (auth.currentUser?.isAnonymous || !auth.currentUser) {
-      setPopup(true);
+    if (user?.isAnonymous || !user) {
+      setLoginPopup(true);
       return;
     }
     addProductToFavorites(user.uid, { title, price, image, id });
   };
 
   useEffect(() => {
-    if (auth.currentUser?.isAnonymous || !auth.currentUser) return;
+    if (user?.isAnonymous || !user) return;
 
     try {
       const userRef = doc(db, "users", user.uid);
@@ -59,7 +58,7 @@ const AddToFavoritesBtn = ({ title, price, id, image }) => {
       </button>
 
       <AnimatePresence>
-        {(auth.currentUser?.isAnonymous || !auth.currentUser) && isPopup && (
+        {(user?.isAnonymous || !user) && isLoginPopup && (
           <LoginPopup closePopup={closePopup} />
         )}
       </AnimatePresence>

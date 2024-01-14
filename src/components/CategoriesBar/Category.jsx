@@ -1,16 +1,24 @@
 const Category = ({ img, title }) => {
   return (
     <div
-      className="flex flex-1 flex-col
-     items-center justify-between rounded-xl bg-light p-2"
+      className="flex flex-col items-center
+       justify-center text-dark
+        "
     >
       <div
-        className=" flex h-[100px] w-[100px] items-center
-       justify-center overflow-hidden rounded-lg p-2 md:h-[150px] md:w-[150px]"
+        className="flex aspect-square h-28 w-28 items-center justify-center overflow-hidden
+      rounded-full bg-light p-4 sm:h-32 sm:w-32"
       >
-        <img src={img} alt={title} className="max-w-full" />
+        <div className="p-2">
+          <img
+            src={img}
+            alt={title}
+            height={"auto"}
+            className="max-w-full object-fill"
+          />
+        </div>
       </div>
-      <p className="pt-2 text-lg font-medium text-dark">{title}</p>
+      <p className="pt-2 text-center font-medium">{title}</p>
     </div>
   );
 };

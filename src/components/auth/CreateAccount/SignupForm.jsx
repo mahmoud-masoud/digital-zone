@@ -1,22 +1,11 @@
 import { useForm } from "react-hook-form";
-import FormInput from "./FormInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupValidationSchema } from "../../../Utils/zod";
-import { useNavigate } from "react-router-dom";
-import {
-  EmailAuthProvider,
-  createUserWithEmailAndPassword,
-  linkWithCredential,
-  updateProfile,
-} from "firebase/auth";
-import {
-  addingUserToUsersCollection,
-  createUser,
-} from "../../../Utils/firebase-functions";
-import { useState } from "react";
-import InputError from "../../../UI/InputError";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
-import { auth } from "../../../Utils/firebase";
+import Label from "../../../UI/Label";
+import Input from "../../../UI/Input";
+import PasswordInput from "../../../UI/PasswordInput";
+import InputError from "../../../UI/InputError";
 
 const SignupForm = ({ onSubmit }) => {
   const {
@@ -30,34 +19,46 @@ const SignupForm = ({ onSubmit }) => {
   return (
     <div>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          inputType={"text"}
-          label={"name"}
-          name={"username"}
-          placeholder={"Enter your username"}
-          register={register("username")}
-          errors={errors}
-        />
-
         <div>
-          <FormInput
-            inputType={"email"}
-            label={"email address"}
-            name={"email"}
-            placeholder={"Enter your email address"}
-            register={register("email")}
-            errors={errors}
+          <Label htmlFor={"username"} className={"text-primary"}>
+            name
+          </Label>
+          <Input
+            type="text"
+            name="username"
+            register={register("username")}
+            placeholder="Enter your username"
+            className={"w-full py-3"}
           />
+          {errors.username && <InputError message={errors.username?.message} />}
         </div>
 
-        <FormInput
-          inputType={"Password"}
-          label={"password"}
-          name={"password"}
-          placeholder={"Enter a password"}
-          register={register("password")}
-          errors={errors}
-        />
+        <div>
+          <Label htmlFor={"email"} className={"text-primary"}>
+            email address
+          </Label>
+          <Input
+            type="email"
+            name="email"
+            register={register("email")}
+            placeholder="Enter your email address"
+            className={"w-full py-3"}
+          />
+          {errors.email && <InputError message={errors.email?.message} />}
+        </div>
+
+        <div>
+          <Label htmlFor={"password"} className={"text-primary"}>
+            password
+          </Label>
+          <PasswordInput
+            name="password"
+            register={register("password")}
+            placeholder="password"
+            className={"w-full py-3"}
+          />
+          {errors.password && <InputError message={errors.password?.message} />}
+        </div>
 
         <button
           className="mt-2 h-12  rounded-lg  border border-gray-400 bg-primary p-1 font-semibold 

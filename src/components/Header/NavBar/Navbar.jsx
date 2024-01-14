@@ -1,52 +1,39 @@
 import { Link } from "react-router-dom";
-import { FaRegHeart, FaAngleDown } from "react-icons/fa6";
-import { BsPersonFill } from "react-icons/bs";
+import { UserIcon } from "@heroicons/react/24/solid";
 import CategoriesMenu from "./CategoriesMenu";
 import { useEffect, useState } from "react";
 import AccountDropDown from "./AccountDropDown";
 import { auth } from "../../../Utils/firebase";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
-
 import useNoScroll from "../../../Hooks/useNoScroll";
-import useAuthState from "../../../Hooks/firebase/useAuthState";
+import { AnimatePresence } from "framer-motion";
+import useMenu from "../../../Hooks/useMenu";
+import { HeartIcon, ChevronDown } from "lucide-react";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 const Navbar = () => {
-  const { user, isLoading, isError } = useAuthState(auth);
+  const [user, isLoading, isError] = useAuthState(auth);
 
-  const [dropDownMenu, setDropDownMenu] = useState(false);
-  const [accountDropDown, setAccountDropDown] = useState(false);
+  const {
+    elementRef: categoriesMenuRef,
+    isMenu: categoriesMenu,
+    setMenu: setCategoriesMenu,
+  } = useMenu();
 
-  useNoScroll(accountDropDown || dropDownMenu);
+  const {
+    elementRef: accountDropdownRef,
+    isMenu: isAccountDropdown,
+    setMenu: setAccountDropdown,
+  } = useMenu();
 
   const closeAccountDropDown = () => {
-    setAccountDropDown(false);
+    setAccountDropdown(false);
   };
-  const openAccountDropDown = () => {
-    setAccountDropDown(true);
-  };
-
-  const closeDropDownMenuHandler = () => {
-    setDropDownMenu(false);
+  const closeCategoriesMenu = () => {
+    setCategoriesMenu(false);
   };
 
-  useEffect(() => {
-    const closeDroPDownMenuClickOutSide = (e) => {
-      if (!e.target.closest(".drop-menu")) setDropDownMenu(false);
-    };
-    document.addEventListener("click", closeDroPDownMenuClickOutSide);
-    return () => {
-      document.removeEventListener("click", closeDroPDownMenuClickOutSide);
-    };
-  }, []);
-
-  useEffect(() => {
-    const closeDroPDownMenuClickOutSide = (e) => {
-      if (!e.target.closest(".account-drop-menu")) closeAccountDropDown();
-    };
-    document.addEventListener("click", closeDroPDownMenuClickOutSide);
-    return () => {
-      document.removeEventListener("click", closeDroPDownMenuClickOutSide);
-    };
-  }, []);
+  useNoScroll(isAccountDropdown);
 
   return (
     <nav
@@ -57,39 +44,22 @@ const Navbar = () => {
         className="flex items-center justify-center 
       gap-2 px-0"
       >
-        <li tabIndex={0} className="drop-menu">
+        <li tabIndex={0} className="drop-menu" ref={categoriesMenuRef}>
           <button
             className="flex items-end gap-0.5 rounded-full px-4 py-1.5 text-[16px]
            font-normal hover:bg-after  hover:text-white focus:bg-after  focus:text-white"
-            onClick={() => setDropDownMenu(!dropDownMenu)}
+            onClick={() => setCategoriesMenu(!categoriesMenu)}
           >
-            <span>Categories</span> <FaAngleDown />
+            <div className="flex items-center gap-1">
+              <span>Categories</span> <ChevronDown />
+            </div>
           </button>
 
-          {dropDownMenu && (
-            <CategoriesMenu
-              setDropDownMenu={setDropDownMenu}
-              closeDropDownMenuHandler={closeDropDownMenuHandler}
-            />
-          )}
-        </li>
-
-        <li
-          className="
-          rounded-full px-4 py-1.5 text-[16px] font-normal
-           hover:bg-after hover:text-white focus:bg-after focus:text-white"
-        >
-          <Link to={"deals"} className="">
-            Deals
-          </Link>
-        </li>
-
-        <li
-          className="
-          rounded-full px-4 py-1.5 text-[16px] font-normal
-           hover:bg-after  hover:text-white focus:bg-after focus:text-white"
-        >
-          <Link to={"contact"}>Contact</Link>
+          <AnimatePresence>
+            {categoriesMenu && (
+              <CategoriesMenu closeCategoriesMenu={closeCategoriesMenu} />
+            )}
+          </AnimatePresence>
         </li>
 
         <li
@@ -99,25 +69,28 @@ const Navbar = () => {
         >
           <Link to={"favorites"}>
             <div className="flex items-center justify-center gap-2">
-              <FaRegHeart />
+              <HeartIcon size={20} />
               List
             </div>
           </Link>
         </li>
 
         <li>
-          <div className="">
+          <div
+            ref={accountDropdownRef}
+            className="flex h-[52px] min-w-[76px] items-center justify-center"
+          >
             <button
-              className="account-drop-menu flex items-center gap-1 rounded-full
+              className=" flex items-center gap-1 rounded-full
            px-4 py-1.5  text-[16px] font-normal hover:bg-after hover:text-white focus:bg-after focus:text-white"
-              onClick={() => setAccountDropDown(true)}
+              onClick={() => setAccountDropdown(true)}
             >
               {isLoading && <LoadingSpinner />}
 
               {(auth.currentUser?.isAnonymous || auth.currentUser === null) &&
                 !isLoading && (
                   <div className="flex flex-col items-center justify-center text-sm">
-                    <BsPersonFill className="text-xl" />
+                    <UserIcon className="w-5" />
                     Sign in
                   </div>
                 )}
@@ -127,12 +100,8 @@ const Navbar = () => {
               )}
             </button>
 
-            {accountDropDown && (
-              <AccountDropDown
-                accountDropdown={accountDropDown}
-                closeAccountDropDown={closeAccountDropDown}
-                openAccountDropDown={openAccountDropDown}
-              />
+            {isAccountDropdown && (
+              <AccountDropDown closeAccountDropDown={closeAccountDropDown} />
             )}
           </div>
         </li>

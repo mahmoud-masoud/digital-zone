@@ -8,8 +8,8 @@ import ProductsSkeleton from "./ProductsSkeleton";
 
 const Gaming = () => {
   const [products, setProducts] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, seIstLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const categoryRef = doc(db, "categories", "gaming");
@@ -22,16 +22,16 @@ const Gaming = () => {
       (querySnapshot) => {
         const updatedProducts = querySnapshot.docs.map((doc) => doc.data());
         if (!updatedProducts.length) {
-          setError(true);
+          setIsError(true);
           return;
         }
-        setLoading(false);
+        seIstLoading(false);
         setProducts(updatedProducts);
       },
       (error) => {
         console.error("Firestore Error:", error);
-        setLoading(false);
-        setError(true);
+        seIstLoading(false);
+        setIsError(true);
       },
     );
 
@@ -40,11 +40,7 @@ const Gaming = () => {
 
   return (
     <section className=" text-fontColor ">
-      <Wrapper
-        className={
-          "flex flex-col border-b-2 border-gray-100 px-4 py-8 md:py-12"
-        }
-      >
+      <Wrapper className={"border-b-2 border-gray-100 px-4 py-8 md:py-12"}>
         <Link to={"ct/gaming"}>
           <div className="mb-12 overflow-hidden rounded-lg md:rounded-xl">
             <img src="/images/new/gaming-banner.png" alt="" />
@@ -53,18 +49,16 @@ const Gaming = () => {
 
         {products && (
           <div className="flex justify-between">
-            <h3 className="mb-8 text-lg font-bold text-fontColor md:text-xl">
+            <h3 className="mb-8 font-semibold text-fontColor md:text-xl">
               All Gaming
             </h3>
 
-            <span>
-              <Link
-                to={"ct/gaming"}
-                className="font-medium underline hover:text-primary hover:no-underline"
-              >
-                Show All
-              </Link>
-            </span>
+            <Link
+              to={"ct/gaming"}
+              className="font-medium underline hover:text-primary hover:no-underline"
+            >
+              Show All
+            </Link>
           </div>
         )}
         {products ? <ProductsCarousel data={products} /> : <ProductsSkeleton />}

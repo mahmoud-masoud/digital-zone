@@ -1,24 +1,24 @@
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import LoadingSpinner from "../../../UI/LoadingSpinner";
 
-import useCart from "../../../Hooks/useCartProduct";
+import useCartProduct from "../../../Hooks/useCartProduct";
 
 import { useState } from "react";
 import DropdownViewCart from "../../../UI/DropDownViewCart";
-import { prodErrorMap } from "firebase/auth";
 import { AnimatePresence } from "framer-motion";
+import { Minus, Plus } from "lucide-react";
 const AddToCartBtn = ({ title, price, id, image }) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const {
     quantity,
-    sendingProduct,
+    isProductAdding,
     productError,
     addToCart,
     removeFromCart,
     userLoading,
     userError,
-  } = useCart({ title, price, id, image });
+  } = useCartProduct({ title, price, id, image });
 
   const addProductToCart = () => {
     addToCart();
@@ -32,7 +32,7 @@ const AddToCartBtn = ({ title, price, id, image }) => {
   return (
     <>
       <AnimatePresence>
-        {isAdded && !sendingProduct && !productError && (
+        {isAdded && !isProductAdding && !productError && (
           <DropdownViewCart
             title={title}
             price={price}
@@ -47,31 +47,31 @@ const AddToCartBtn = ({ title, price, id, image }) => {
         }
     flex items-center justify-center rounded-full text-white transition`}
       >
-        {quantity === 0 && !sendingProduct && (
+        {quantity === 0 && !isProductAdding && (
           <button onClick={addProductToCart} className="p-1 font-medium">
             <span> {"Add to cart"} </span>
           </button>
         )}
 
-        {sendingProduct && quantity === 0 && <LoadingSpinner />}
+        {isProductAdding && quantity === 0 && <LoadingSpinner />}
 
         {quantity > 0 && (
           <>
             <button
-              className="rounded-full p-2 hover:bg-medium focus:bg-medium"
+              className="rounded-full p-1.5 hover:bg-medium focus:bg-medium"
               onClick={removeFromCart}
             >
-              <FaMinus />
+              <Minus size={20} strokeWidth={3} />
             </button>
             <span className="flex-1 text-center font-medium">
               {quantity + " added"}
             </span>
             <button
-              className="rounded-full p-2 hover:bg-medium focus:bg-medium"
+              className="rounded-full p-1.5 hover:bg-medium focus:bg-medium"
               onClick={addToCart}
               autoFocus
             >
-              <FaPlus />
+              <Plus size={20} strokeWidth={3} />
             </button>
           </>
         )}

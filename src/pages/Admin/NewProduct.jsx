@@ -1,4 +1,6 @@
+import NewProductForm from "../../components/Admin/NewProduct/NewProductForm";
+
 const NewProduct = () => {
-  return <div>NewProduct</div>;
+  return <NewProductForm />;
 };
 export default NewProduct;

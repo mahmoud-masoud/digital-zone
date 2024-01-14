@@ -1,21 +1,19 @@
 import Navbar from "./NavBar/Navbar";
-import Wrapper from "../../UI/Wrapper";
 import SearchBox from "./SearchBox";
-import { HiMiniShoppingCart } from "react-icons/hi2";
-import { HiMiniBars3 } from "react-icons/hi2";
-import { useEffect, useState } from "react";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import Logo from "../../UI/Logo";
 import MobileNavbar from "./NavBar/MobileNavbar";
-import { useSelector } from "react-redux";
 import CartIcon from "./CartIcon";
-import DropdownViewCart from "../../UI/DropDownViewCart";
-import AccountDropDown from "./NavBar/AccountDropDown";
+import { AnimatePresence } from "framer-motion";
+import useNoScroll from "../../Hooks/useNoScroll";
 
 const Header = () => {
   const [isInputOnFocus, setInputOnFocus] = useState(false);
   const [navbarIsOpen, setNavbar] = useState(false);
+
+  useNoScroll(navbarIsOpen);
 
   const handleInputOnFocus = () => {
     setInputOnFocus(false);
@@ -29,28 +27,20 @@ const Header = () => {
     setNavbar(false);
   };
 
-  // useEffect(() => {
-  //   if (navbarIsOpen) {
-  //     document.documentElement.style.overflowY = 'hidden';
-  //   } else {
-  //     document.documentElement.style.overflowY = 'auto';
-  //   }
-
-  //   return () => (document.documentElement.style.overflowY = 'auto');
-  // }, [navbarIsOpen]);
-
   return (
-    <header className="sticky top-0 z-50 mb-8 bg-primary">
+    <header className="sticky top-0 z-50 bg-primary max-md:p-4 md:h-[84px]">
       <div className="container relative mx-auto">
         <div
           className="flex flex-wrap items-center gap-2  
-            p-4 md:flex-row md:justify-between md:gap-4 md:p-0"
+            md:flex-row md:justify-between md:gap-4 "
         >
           <button
-            className={`z-[10000] text-white ${isInputOnFocus && "opacity-0"}`}
+            className={`z-[1000] text-white sm:hidden ${
+              isInputOnFocus && "opacity-0"
+            }`}
             onClick={navHandler}
           >
-            {!navbarIsOpen && <HiMiniBars3 className="text-3xl md:hidden" />}
+            {!navbarIsOpen && <Bars3Icon className="w-8 stroke-2" />}
           </button>
           <Link to={"/"}>
             <Logo />
@@ -62,12 +52,15 @@ const Header = () => {
             handleInputOnFocus={handleInputOnFocus}
           />
 
-          {navbarIsOpen && (
-            <MobileNavbar
-              closeNavbar={closeNavbar}
-              navbarIsOpen={navbarIsOpen}
-            />
-          )}
+          <AnimatePresence>
+            {navbarIsOpen && (
+              <MobileNavbar
+                closeNavbar={closeNavbar}
+                navbarIsOpen={navbarIsOpen}
+              />
+            )}
+          </AnimatePresence>
+
           <Navbar />
 
           <CartIcon isInputOnFocus={isInputOnFocus} />

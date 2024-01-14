@@ -1,28 +1,27 @@
 import { useForm } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { shippingInfo } from "../../Utils/zod";
+import { userShippingInfoActions } from "../../store/userShippingInfo";
+import { useDispatch } from "react-redux";
+import { auth, db } from "../../Utils/firebase";
+import { doc, runTransaction } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import Label from "../../UI/Label";
 import Input from "../../UI/Input";
 import InputError from "../../UI/InputError";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { shippingInfo } from "../../Utils/zod";
-import userShippingInfo, {
-  userShippingInfoActions,
-} from "../../store/userShippingInfo";
-import { useDispatch, useSelector } from "react-redux";
-import { auth, db } from "../../Utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { doc, getDoc, runTransaction } from "firebase/firestore";
-
-const AddressForm = ({ userAddress, setFormVisibility }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+import LoadingSpinner from "../../UI/LoadingSpinner";
+const AddressForm = ({ userShippingInfo, setFormVisibility }) => {
+  const [user] = useAuthState(auth);
   const dispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm({
-    defaultValues: userAddress,
+    defaultValues: userShippingInfo,
     resolver: zodResolver(shippingInfo),
   });
 
@@ -46,8 +45,8 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
     <div className="">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4">
-          <div className="flex gap-6">
-            <div className="flex w-1/2 flex-col">
+          <div className="flex flex-col gap-6 md:flex-row">
+            <div className="flex flex-1 flex-col">
               <Label htmlFor={"firstName"}>First Name</Label>
               <Input
                 type="text"
@@ -60,7 +59,7 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
                 <InputError message={errors.firstName.message} />
               )}
             </div>
-            <div className="flex w-1/2 flex-col">
+            <div className="flex flex-1 flex-col">
               <Label htmlFor={"lastName"}>Last name</Label>
               <Input
                 id="lastName"
@@ -74,8 +73,8 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
               )}
             </div>
           </div>
-          <div className="flex  gap-6">
-            <div className="flex w-1/2 flex-col">
+          <div className="flex flex-col gap-6 md:flex-row">
+            <div className="flex flex-1 flex-col">
               <Label htmlFor={"address"}>Address</Label>
               <Input
                 type="text"
@@ -88,7 +87,7 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
                 <InputError message={errors.address.message} />
               )}
             </div>
-            <div className="flex w-1/2 flex-col">
+            <div className="flex flex-1 flex-col">
               <Label htmlFor={"phoneNumber"}>Phone Number</Label>
               <Input
                 id="phoneNumber"
@@ -103,7 +102,7 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
             </div>
           </div>
           <div>
-            <div className="flex w-full flex-col">
+            <div className="flex w-full flex-1 flex-col">
               <Label htmlFor={"deliveryNotes"}>Delivery notes</Label>
               <textarea
                 id="deliveryNotes"
@@ -121,7 +120,7 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
           </div>
         </div>
         <div className="mt-6 flex items-center justify-end gap-8">
-          {userAddress && (
+          {userShippingInfo && (
             <button
               type="button"
               onClick={() => setFormVisibility(false)}
@@ -132,10 +131,11 @@ const AddressForm = ({ userAddress, setFormVisibility }) => {
             </button>
           )}
           <button
-            className="rounded-full border border-primary bg-primary px-6  py-2
+            className="flex w-24 items-center
+             justify-center rounded-full border border-primary  bg-primary p-2
         text-white transition duration-150 hover:bg-after"
           >
-            {isSubmitting ? "Submitting..." : "Save"}
+            {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Save"}
           </button>
         </div>
       </form>

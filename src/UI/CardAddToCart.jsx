@@ -1,13 +1,14 @@
-import { FaPlus, FaMinus } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import useCartProduct from "../Hooks/useCartProduct";
 import LoadingSpinner from "./LoadingSpinner";
+
 import { motion } from "framer-motion";
+import { Minus, Plus } from "lucide-react";
 const CardAddToCart = ({ title, price, id, image }) => {
   const [isClickOutside, setIsClickOutside] = useState(true);
   const {
     quantity,
-    sendingProduct,
+    isProductAdding,
     addToCart,
     removeFromCart,
     userLoading,
@@ -30,9 +31,9 @@ const CardAddToCart = ({ title, price, id, image }) => {
   }, []);
 
   return (
-    <motion.div
-      className={`main-btn scale-90 overflow-hidden bg-primary md:scale-100 ${
-        quantity > 0 ? "gap-6 p-1" : "w-fit hover:bg-after active:bg-after"
+    <div
+      className={`main-btn w-fit scale-90 overflow-hidden bg-primary md:scale-100 ${
+        quantity > 0 ? "gap-4 p-1" : "w-fit hover:bg-after active:bg-after"
       } flex items-center justify-between rounded-full text-white`}
       onClick={(e) => e.preventDefault()}
       ref={buttonRef}
@@ -41,10 +42,10 @@ const CardAddToCart = ({ title, price, id, image }) => {
         <button
           className={`${
             (isClickOutside || quantity === 0) && "hidden"
-          } rounded-full  p-2 hover:bg-medium focus:bg-medium`}
+          } rounded-full  p-1 hover:bg-medium focus:bg-medium`}
           onClick={removeFromCart}
         >
-          <FaMinus />
+          <Minus />
         </button>
         <span
           className={`${
@@ -56,32 +57,32 @@ const CardAddToCart = ({ title, price, id, image }) => {
         <button
           className={`${
             (isClickOutside || quantity === 0) && "hidden"
-          } rounded-full  p-2 hover:bg-medium focus:bg-medium `}
+          } rounded-full  p-1 hover:bg-medium focus:bg-medium `}
           onClick={addToCart}
           autoFocus
         >
-          <FaPlus />
+          <Plus />
         </button>
       </>
 
       <button
         onClick={addToCart}
         className={`${
-          quantity === 0 && !sendingProduct ? "block" : "hidden"
+          quantity === 0 && !isProductAdding ? "block" : "hidden"
         } px-5 py-2 font-medium `}
       >
-        <div className="flex items-center gap-1">
-          <FaPlus className="text-sm" />
-          <span>Add</span>
-        </div>
+        <span className="flex items-center gap-1">
+          <Plus />
+          Add
+        </span>
       </button>
 
-      {sendingProduct && quantity === 0 && (
+      {isProductAdding && quantity === 0 && (
         <div className="flex w-24 items-center justify-center py-1 ">
           <LoadingSpinner />
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

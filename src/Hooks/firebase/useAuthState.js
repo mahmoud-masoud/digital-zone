@@ -12,22 +12,19 @@ const useAuthState = () => {
       try {
         if (currentUser) {
           setUser(currentUser);
+          setIsLoading(false);
         } else {
           // console.log("user is not logged in");
         }
       } catch (error) {
         setIsError(true);
-        console.log("error");
-      } finally {
         setIsLoading(false);
+        console.log("error");
       }
     });
 
-    return () => {
-      // Clean up the subscription when the component unmounts
-      unsubscribe();
-    };
-  }, []); // Empty dependency array to run only once during mount
+    return () => unsubscribe();
+  }, []);
 
   return { user, isLoading, isError };
 };
