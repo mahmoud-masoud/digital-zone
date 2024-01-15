@@ -6,6 +6,7 @@ import FilterProductsSelect from "./FilterProductsSelect";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import MainSpinner from "../../UI/MainSpinner";
+import NotFoundPage from "../../UI/NotFoundPage";
 
 const Category = () => {
   const {
@@ -21,6 +22,7 @@ const Category = () => {
   const [sortedProducts, setSortedProducts] = useState([]);
 
   useEffect(() => {
+    if (!products) return;
     setSortedProducts([...products]);
   }, [products]);
 
@@ -43,42 +45,42 @@ const Category = () => {
   };
 
   if (loading) return <MainSpinner />;
-  if (error) return <p>Something went wrong, refresh the page</p>;
+  if (error === 404) return <NotFoundPage />;
+  if (error && error !== 404)
+    return <p>Something went wrong refresh the page</p>;
 
   return (
-    <>
-      <section className="min-h-screen py-8 pb-20">
-        <Wrapper className={"p-2"}>
-          <FilterProductsSelect getFilterValue={getFilterValue} />
-          <div
-            className="grid grid-cols-2 gap-10 bg-white p-4 md:grid-cols-3 
+    <section className="min-h-screen py-8 pb-20">
+      <Wrapper className={"p-2"}>
+        <FilterProductsSelect getFilterValue={getFilterValue} />
+        <div
+          className="grid grid-cols-2 gap-10 bg-white p-4 md:grid-cols-3 
           lg:grid-cols-4"
-          >
-            {sortedProducts?.map((product) => (
-              <div key={product.id}>
-                <HomePageCard
-                  id={product.id}
-                  img={product.images[0]}
-                  price={product.price}
-                  title={product.title}
-                />
-              </div>
-            ))}
-          </div>
-          {!atTheEnd && (
-            <div className="flex justify-center">
-              <button
-                onClick={() => fetchMoreProducts()}
-                className="mt-20 min-w-[112px] rounded-full bg-slate-600 px-4 py-1.5
-            text-white duration-100 hover:bg-slate-700"
-              >
-                {loadingNextProducts ? <LoadingSpinner /> : "Load more"}
-              </button>
+        >
+          {sortedProducts?.map((product) => (
+            <div key={product.id}>
+              <HomePageCard
+                id={product.id}
+                img={product.images[0]}
+                price={product.price}
+                title={product.title}
+              />
             </div>
-          )}
-        </Wrapper>
-      </section>
-    </>
+          ))}
+        </div>
+        {!atTheEnd && (
+          <div className="flex justify-center">
+            <button
+              onClick={() => fetchMoreProducts()}
+              className="mt-20 min-w-[112px] rounded-full bg-slate-600 px-4 py-1.5
+            text-white duration-100 hover:bg-slate-700"
+            >
+              {loadingNextProducts ? <LoadingSpinner /> : "Load more"}
+            </button>
+          </div>
+        )}
+      </Wrapper>
+    </section>
   );
 };
 export default Category;

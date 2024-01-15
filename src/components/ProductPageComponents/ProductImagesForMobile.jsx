@@ -1,10 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
-
-// import required modules
 import { Scrollbar, Autoplay } from "swiper/modules";
 
 const ProductImagesForMobile = ({ images }) => {

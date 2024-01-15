@@ -27,6 +27,7 @@
     "@tiptap/starter-kit": "^2.1.12",
     "firebase": "^10.3.0",
     "framer-motion": "^10.16.2",
+    "lottie-react": "^2.4.0",
     "lucide-react": "^0.288.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

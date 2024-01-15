@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <nav
       className="hidden 
-      h-full md:block md:h-auto md:w-auto md:bg-inherit md:p-4 md:text-white"
+      h-full md:block md:h-auto md:w-auto md:bg-inherit md:p-2 md:text-white"
     >
       <ul
         className="flex items-center justify-center 

@@ -16,7 +16,7 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
         onClick={closeAccountDropDown}
       >
         <div className="flex flex-col gap-3">
-          {user?.isAnonymous || !user ? (
+          {(user?.isAnonymous || !user) && (
             <Link
               to={"/signup"}
               className="mb-2 block rounded-full bg-primary px-4 py-1.5 text-sm
@@ -24,17 +24,6 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
             >
               Sign in or create account
             </Link>
-          ) : (
-            <a
-              href=""
-              className="flex items-center gap-2 underline-offset-4 hover:underline"
-              onClick={() => {
-                closeAccountDropDown();
-                signOut(auth);
-              }}
-            >
-              <span>Logout</span> <LogOutIcon size={20} />
-            </a>
           )}
 
           {user && !user.isAnonymous && (
@@ -51,6 +40,19 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
             >
               Admin
             </Link>
+          )}
+
+          {user && !user.isAnonymous && (
+            <a
+              href=""
+              className="flex items-center gap-2 underline-offset-4 hover:underline"
+              onClick={() => {
+                closeAccountDropDown();
+                signOut(auth);
+              }}
+            >
+              <span>Logout</span> <LogOutIcon size={17} />
+            </a>
           )}
         </div>
       </div>

@@ -39,7 +39,7 @@ const LoginPopup = ({ closePopup }) => {
                 Sign up
               </button>
               <button
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/signin")}
                 className="w-full rounded-md border border-gray-400 px-6
                py-2 font-semibold duration-150 hover:bg-light"
               >

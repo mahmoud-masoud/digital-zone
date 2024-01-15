@@ -6,11 +6,8 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./CarouselStyles.css";
 
-// import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
-// import CarouselBtns from './ProductBuyBox/CarouselBtns';
 
 const ProductImages = ({ images, title }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -38,7 +35,6 @@ const ProductImages = ({ images, title }) => {
                 className="flex items-center justify-center rounded-md 
                 border-2 border-gray-200 p-1"
               >
-                {/* <ProductImg url={url} /> */}
                 <img
                   src={imgObj}
                   alt=""
@@ -66,7 +62,7 @@ const ProductImages = ({ images, title }) => {
       </div>
 
       <Swiper
-        spaceBetween={10}
+        spaceBetween={20}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}

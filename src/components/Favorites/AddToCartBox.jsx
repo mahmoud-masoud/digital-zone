@@ -28,16 +28,14 @@ const AddToCartBox = ({ data }) => {
       const userRef = doc(db, "users", user.uid);
       const cartItemsRef = collection(userRef, "cartItems");
 
-      // Create a batched write object
+      // Create a batch so i can make multiple operations at the same time
       const batch = writeBatch(db);
 
-      // Use forEach to add each product to the batch
       await Promise.all(
         data.map(async (product) => {
           const { id, title, price, image } = product;
           const productRef = doc(cartItemsRef, id);
 
-          // Check if the product exists and update it, or add it if it doesn't
           const productDoc = await getDoc(productRef);
 
           if (productDoc.exists()) {
@@ -45,7 +43,6 @@ const AddToCartBox = ({ data }) => {
               quantity: increment(product.neededQuantity),
               totalPrice: increment(price * product.neededQuantity),
             });
-            console.log(`Update quantity for product with ID ${id}`);
           } else {
             const productWithTimestamp = {
               title,

@@ -22,6 +22,7 @@ import formatePrice from "../../Utils/formatePrice";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const OrderSummery = () => {
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [orderIsCreating, setOrderIsCreating] = useState(false);
   const { shippingInfo, creditCard } = useSelector(
@@ -34,8 +35,6 @@ const OrderSummery = () => {
   }, 0);
 
   const formattedTotalPrice = formatePrice(cartTotalPrice);
-
-  const navigate = useNavigate();
 
   const createOrder = async (userId, products) => {
     try {
@@ -117,10 +116,15 @@ const OrderSummery = () => {
             onClick={() => {
               createOrder(user.uid, cartItems);
             }}
-            className="w-full rounded-full  bg-primary px-6 py-2  font-semibold
+            className="flex w-full  items-center justify-center rounded-full
+             bg-primary px-6 py-2 font-semibold
          text-white duration-200 hover:bg-after"
           >
-            {orderIsCreating ? <LoadingSpinner h={7} w={7} /> : "Place Order"}
+            {orderIsCreating ? (
+              <LoadingSpinner className={"h-7 w-7"} />
+            ) : (
+              "Place Order"
+            )}
           </button>
         </div>
       )}

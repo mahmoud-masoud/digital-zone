@@ -6,13 +6,13 @@ import { lazy, Suspense } from "react";
 import Home from "../../pages/Home";
 import HomeRoot from "../../components/HomeRoot";
 import Root from "../../components/Root";
-
 import PaymentSuccess from "../../pages/PaymentSuccess";
+import AdminRoot from "../Admin/Root";
+import AuthRoot from "../auth/AuthRoot";
 import ErrorPage from "../../UI/ErrorPage";
 import MainSpinner from "../../UI/MainSpinner";
-import AdminRoot from "../Admin/Root";
 import { AnimatePresence } from "framer-motion";
-import AuthRoot from "../auth/AuthRoot";
+import NotFoundPage from "../../UI/NotFoundPage";
 
 const LazyProductPage = lazy(() => import("../../pages/ProductPage"));
 const LazyFavoritesPage = lazy(() => import("../../pages/FavoritesPage"));
@@ -54,6 +54,7 @@ const Routes = () => {
 
   // routes
   const router = useRoutes([
+    { path: "*", element: <NotFoundPage /> },
     {
       path: "/",
       element: <Root />,
@@ -224,6 +225,7 @@ const Routes = () => {
     },
   ]);
 
+  if (!router) return <NotFoundPage />;
   return (
     <AnimatePresence mode="wait">
       {React.cloneElement(router, { key: location.pathname })}

@@ -8,14 +8,15 @@ import ProductDetails from "../components/ProductPageComponents/ProductDetails";
 
 import MainSpinner from "../UI/MainSpinner";
 import useProduct from "../Hooks/useProduct";
+import NotFoundPage from "../UI/NotFoundPage";
 
 const ProductPage = () => {
-  const { product, isLoading, isError } = useProduct();
+  const { product, isLoading, error } = useProduct();
 
   if (isLoading) return <MainSpinner />;
-  if (isError) return <p>Something went wrong refresh the page</p>;
-  if (!product && !isError && !isLoading) return <p>product not found</p>;
-  console.log(product.highlights.length);
+  if (error === 404) return <NotFoundPage />;
+  if (error) return <p>Something went wrong refresh the page</p>;
+
   return (
     <Wrapper className={"mb-16 flex gap-4 px-3 pt-8"}>
       <div className="flex w-2/3 flex-col gap-8">

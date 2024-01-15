@@ -12,13 +12,15 @@ import {
 import { useParams } from "react-router-dom";
 
 const useCategory = () => {
-  const [products, setProducts] = useState([]);
+  // category name form url
+  const { category } = useParams();
+
+  const [products, setProducts] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingNextProducts, setLoadingNextProducts] = useState(false);
   const [lastDocVisible, setLastDocVisible] = useState(null);
   const [atTheEnd, setAtTheEnd] = useState(false);
-  const { category } = useParams();
 
   const fetchProducts = async (lastVisible = null) => {
     setLoadingNextProducts(true);
@@ -39,17 +41,19 @@ const useCategory = () => {
       }
 
       const querySnapshot = await getDocs(q);
-      const fetchedProducts = querySnapshot.docs.map((doc) => doc.data());
-
-      if (fetchedProducts.length === 0) {
-        setAtTheEnd(true);
-      } else {
+      if (!querySnapshot.empty) {
+        const fetchedProducts = querySnapshot.docs.map((doc) => doc.data());
         setProducts((prevProducts) =>
           lastVisible ? [...prevProducts, ...fetchedProducts] : fetchedProducts,
         );
         const lastVisibleDoc =
           querySnapshot.docs[querySnapshot.docs.length - 1];
         setLastDocVisible(lastVisibleDoc);
+      } else {
+        setAtTheEnd(true);
+        if (!products) {
+          setError(404);
+        }
       }
 
       setLoading(false);
