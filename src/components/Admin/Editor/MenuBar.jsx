@@ -16,8 +16,8 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <div className="flex justify-between bg-gray-100 p-2">
-      <div className=" flex gap-4">
+    <div className="flex justify-between gap-2 bg-gray-100 p-2">
+      <div className="flex snap-x gap-4 overflow-x-auto">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -98,7 +98,7 @@ const MenuBar = ({ editor }) => {
         </button>
       </div>
 
-      <div className="flex items-center justify-center gap-4 pr-4">
+      <div className="flex items-center justify-between md:justify-center md:gap-4 md:pr-4">
         <button
           type="button"
           onClick={() => editor.chain().focus().undo().run()}

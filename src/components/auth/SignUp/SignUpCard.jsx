@@ -52,7 +52,7 @@ const SignUpCard = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="rounded-xl bg-white p-8 shadow-lg"
+          className="rounded-md bg-white p-6 shadow-lg md:rounded-xl md:p-8"
         >
           <h3 className="mb-4 text-xl font-bold text-fontColor md:text-3xl">
             Create your account
@@ -77,7 +77,7 @@ const SignUpCard = () => {
 
           <SignupForm onSubmit={onSubmit} />
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 max-sm:text-sm">
             Already have an account?
             <Link
               to={"/signin"}

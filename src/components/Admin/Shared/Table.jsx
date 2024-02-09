@@ -5,13 +5,12 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Turtle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Table = ({ tableColumns, data, setData }) => {
+const Table = ({ tableColumns, data }) => {
   const navigate = useNavigate();
-
   const [searchWord, setSearchWord] = useState("");
 
   const table = useReactTable({
@@ -21,13 +20,6 @@ const Table = ({ tableColumns, data, setData }) => {
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     enableRowSelection: true,
-    meta: {
-      removeSelectedRows: (selectedRows) => {
-        const setFilter = (old) =>
-          old.filter((_, index) => !selectedRows.includes(index));
-        setData(setFilter);
-      },
-    },
     state: {
       globalFilter: searchWord,
     },
@@ -36,7 +28,7 @@ const Table = ({ tableColumns, data, setData }) => {
 
   return (
     <div className="relative p-4 pb-20 md:p-6">
-      <div className="flex max-w-md flex-col">
+      <div className="flex max-w-xs flex-col">
         <label className="mb-2 text-lg">Search</label>
         <input
           type="text"
@@ -118,30 +110,9 @@ const Table = ({ tableColumns, data, setData }) => {
             </button>
           </div>
         )}
-
-        {table.getSelectedRowModel().rows.length > 0 && (
-          <div className="flex w-1/2 justify-start">
-            <div>
-              <button
-                className="rounded-lg bg-zinc-300 p-1.5 px-3 font-medium duration-150
-                 hover:bg-zinc-400"
-                onClick={() => removeRows(table)}
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
 };
-export default Table;
 
-const removeRows = (table) => {
-  const meta = table.options.meta;
-  meta.removeSelectedRows(
-    table.getSelectedRowModel().rows.map((row) => row.index),
-  );
-  table.resetRowSelection();
-};
+export default Table;

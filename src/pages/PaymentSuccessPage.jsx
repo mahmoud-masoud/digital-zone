@@ -4,7 +4,7 @@ import success from "../Assets/Lottie/success.json";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const PaymentSuccess = () => {
+const PaymentSuccessPage = () => {
   const navigate = useNavigate();
   const textVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -39,12 +39,12 @@ const PaymentSuccess = () => {
         animate="visible"
         variants={buttonVariants}
         onClick={() => navigate("/")}
-        className="mt-8 rounded-lg  bg-primary px-6 py-2
-       text-lg font-bold text-white duration-150 hover:bg-after"
+        className="mt-8 rounded-lg  bg-blue-500 px-6 py-2
+       text-lg font-bold text-white duration-150 hover:bg-blue-600"
       >
-        Home page
+        Back to home
       </motion.button>
     </Wrapper>
   );
 };
-export default PaymentSuccess;
+export default PaymentSuccessPage;

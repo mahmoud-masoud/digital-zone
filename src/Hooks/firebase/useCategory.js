@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../Utils/firebase";
+import { db } from "../../Utils/firebase";
 import {
   collection,
   doc,
@@ -8,6 +8,8 @@ import {
   orderBy,
   limit,
   startAfter,
+  collectionGroup,
+  where,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 
@@ -26,6 +28,13 @@ const useCategory = () => {
     setLoadingNextProducts(true);
 
     try {
+      // let categoryQuery = query(
+      //   collectionGroup(db, "products"),
+      //   where("category", "==", category),
+      //   orderBy("title"),
+      //   limit(20),
+      // );
+
       const categoryRef = doc(db, "categories", category);
       const productsCollectionRef = collection(categoryRef, "products");
 
@@ -39,6 +48,15 @@ const useCategory = () => {
           startAfter(lastVisible),
         );
       }
+      // if (lastVisible) {
+      //   categoryQuery = query(
+      //     collectionGroup(db, "products"),
+      //     where("category", "==", category),
+      //     orderBy("title"),
+      //     limit(20),
+      //     startAfter(lastDocVisible),
+      //   );
+      // }
 
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {

@@ -1,11 +1,11 @@
 import { auth } from "../../../Utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
+import LightSpinner from "../../../UI/LightSpinner";
 import { Link } from "react-router-dom";
 
 const MobileAccountAvatar = () => {
   const [user, loading, error] = useAuthState(auth);
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LightSpinner />;
   return (
     <div className="mb-6">
       {user && !user.isAnonymous && (

@@ -19,7 +19,7 @@ const useFavorites = () => {
 
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const docsData = querySnapshot.docs.map((doc) => doc.data());
-        console.log("test");
+
         setData(docsData);
         setLoading(false);
       });

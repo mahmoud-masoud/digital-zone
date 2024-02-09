@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Wrapper from "../../UI/Wrapper";
-import MainSpinner from "../../UI/MainSpinner";
-import NotLoggedIn from "../../UI/NotLoggedIn";
+import PageSpinner from "../../UI/PageSpinner";
+import NotLoggedInPage from "../../Pages/NotLoggedInPage";
 import Order from "./Order";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
@@ -45,9 +45,9 @@ const OrdersList = () => {
     getUserOrders();
   }, [user]);
 
-  if (isLoading || userIsLoading) return <MainSpinner />;
+  if (isLoading || userIsLoading) return <PageSpinner />;
   if (userError || isError) return <p>Something went wrong!</p>;
-  if (!user || user.isAnonymous) return <NotLoggedIn />;
+  if (!user || user.isAnonymous) return <NotLoggedInPage />;
   if (user && !user.isAnonymous && !orders) return <EmptyOrders />;
 
   return (

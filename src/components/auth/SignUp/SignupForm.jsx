@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupValidationSchema } from "../../../Utils/zod";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
+import LightSpinner from "../../../UI/LightSpinner";
 import Label from "../../../UI/Label";
 import Input from "../../../UI/Input";
 import PasswordInput from "../../../UI/PasswordInput";
@@ -65,7 +65,7 @@ const SignupForm = ({ onSubmit }) => {
               text-white transition-all duration-300 hover:text-white hover:opacity-80"
           disabled={isSubmitting}
         >
-          {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Sign up"}
+          {isSubmitting ? <LightSpinner h={7} w={7} /> : "Sign up"}
         </button>
       </form>
     </div>

@@ -1,9 +1,9 @@
-import HeartIcon from "./HeartIcon";
+import HeartIcon from "../../UI/HeartIcon";
 import { useEffect, useState } from "react";
-import { addProductToFavorites } from "../Utils/firebase-functions";
-import { auth, db } from "../Utils/firebase";
+import { addProductToFavorites } from "../../Utils/firebase-functions";
+import { auth, db } from "../../Utils/firebase";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
-import LoginPopup from "./LoginPopup";
+import LoginPopup from "../../UI/LoginPopup";
 import { AnimatePresence } from "framer-motion";
 import { useAuthState } from "react-firebase-hooks/auth";
 

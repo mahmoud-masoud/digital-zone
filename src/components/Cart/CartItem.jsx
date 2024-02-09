@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import useCartProduct from "../../Hooks/useCartProduct";
+import useCartProduct from "../../Hooks/firebase/useCartProduct";
 import formatePrice from "../../Utils/formatePrice";
 import { RotateCcw } from "lucide-react";
 

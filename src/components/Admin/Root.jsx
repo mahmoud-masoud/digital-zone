@@ -1,6 +1,4 @@
 import { Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
-import NavbarPanel from "./NavbarPanel/NavbarPanel";
-import TopBar from "./TopBar";
 import NavbarTopBarWrapper from "./NavbarTopBarWrapper";
 
 import useAuthState from "../../Hooks/firebase/useAuthState";

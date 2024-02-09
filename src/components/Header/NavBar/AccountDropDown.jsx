@@ -7,6 +7,12 @@ import { LogOutIcon } from "lucide-react";
 const AccountDropDown = ({ closeAccountDropDown }) => {
   const [user] = useAuthState(auth);
 
+  const logout = () => {
+    closeAccountDropDown();
+    signOut(auth);
+    window.location.reload();
+  };
+
   return (
     <div>
       <div
@@ -38,21 +44,17 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
               onClick={closeAccountDropDown}
               className="underline-offset-4 hover:underline"
             >
-              Admin
+              Dashboard
             </Link>
           )}
 
           {user && !user.isAnonymous && (
-            <a
-              href=""
-              className="flex items-center gap-2 underline-offset-4 hover:underline"
-              onClick={() => {
-                closeAccountDropDown();
-                signOut(auth);
-              }}
+            <div
+              className="flex cursor-pointer items-center gap-2 underline-offset-4 hover:underline"
+              onClick={logout}
             >
               <span>Logout</span> <LogOutIcon size={17} />
-            </a>
+            </div>
           )}
         </div>
       </div>

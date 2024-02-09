@@ -1,5 +1,5 @@
 import Wrapper from "../UI/Wrapper";
-import Loading from "../UI/MainSpinner";
+import PageSpinner from "../UI/PageSpinner";
 import AddToCartBox from "../components/Favorites/AddToCartBox";
 import FavItems from "../components/Favorites/FavItems";
 import EmptyFavorites from "../components/Favorites/EmptyFavorites";
@@ -7,7 +7,7 @@ import EmptyFavorites from "../components/Favorites/EmptyFavorites";
 import { auth } from "../Utils/firebase";
 import useFavorites from "../Hooks/firebase/useFavorites";
 import { useAuthState } from "react-firebase-hooks/auth";
-import NotLoggedIn from "../UI/NotLoggedIn";
+import NotLoggedInPage from "../Pages/NotLoggedInPage";
 
 const FavoritesPage = () => {
   const [user, { isLoading: userIsLoading, isError: userError }] =
@@ -15,8 +15,8 @@ const FavoritesPage = () => {
 
   const { data, loading, error } = useFavorites();
 
-  if (loading || userIsLoading) return <Loading />;
-  if (user?.isAnonymous || !user) return <NotLoggedIn />;
+  if (loading || userIsLoading) return <PageSpinner />;
+  if (user?.isAnonymous || !user) return <NotLoggedInPage />;
   if (user && !data?.length && !loading) return <EmptyFavorites />;
   if (error || userError) return <p>Something went wrong</p>;
 

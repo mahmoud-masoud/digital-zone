@@ -47,7 +47,7 @@ const CartCheckout = ({ cartItems }) => {
       <div className="px-4">
         <div className="bb-2 flex items-center justify-between py-4">
           <span className="font-semibold">Total items {cartQuantity}</span>
-          <span className="text-lg">{formattedTotalPrice}</span>
+          <span className="md:text-lg">{formattedTotalPrice}</span>
         </div>
 
         <div className="bb-2 flex items-center justify-between py-4">

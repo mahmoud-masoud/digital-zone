@@ -3,7 +3,9 @@ import InputError from "../../../UI/InputError";
 const ProductTitle = ({ control, errors }) => {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="title">Title</label>
+      <label htmlFor="title" className="md:text-lg">
+        Title
+      </label>
       <Controller
         name="title"
         defaultValue={""}

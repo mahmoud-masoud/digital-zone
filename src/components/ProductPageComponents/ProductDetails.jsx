@@ -1,6 +1,6 @@
 const ProductDetails = ({ description, features }) => {
   return (
-    <div className="">
+    <div className="max-sm:mb-16">
       <h3 className="mb-5 text-xl font-bold">About this item</h3>
 
       <div

@@ -1,38 +1,21 @@
 import { auth, db, storage } from "./firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
-  getDocs,
-  addDoc,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  deleteObject,
+} from "firebase/storage";
+import {
   collection,
-  getDoc,
   doc,
-  getDocFromServer,
   setDoc,
-  getDocsFromCache,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
   serverTimestamp,
   runTransaction,
   increment,
   deleteDoc,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-
-export async function getCurrentUserUID() {
-  try {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user);
-        return user.uid;
-      } else {
-        throw new Error("Un auth user");
-      }
-    });
-  } catch (e) {
-    console.log(e);
-  }
-}
 
 export const uploadImages = async (urls, category, productId) => {
   const imagesUrls = [];
@@ -70,44 +53,19 @@ export const uploadImages = async (urls, category, productId) => {
   return imagesUrls;
 };
 
-export const addProduct = async (category, props) => {
+export const deleteProductImages = async (path) => {
+  const productImagesFolderRef = ref(storage, path);
   try {
-    const docRef = await addDoc(collection(db, category), {
-      ...props,
-    });
+    const images = await listAll(productImagesFolderRef);
 
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-};
-
-export const getProduct = async (category, docId) => {
-  const docRef = doc(db, category, docId);
-  const docSnap = await getDocFromServer(docRef);
-
-  if (docSnap.exists()) {
-    // console.log('Document data:', docSnap.data());
-    return docSnap.data();
-  } else {
-    // docSnap.data() will be undefined in this case
-    console.log("No such document!");
-  }
-};
-
-export const getProductsByCategory = async (category) => {
-  const docs = [];
-  try {
-    const querySnapshot = await getDocs(collection(db, category));
-
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id });
-    });
+    return await Promise.all(
+      images.items.map(async (imageRef) => {
+        await deleteObject(imageRef);
+      }),
+    );
   } catch (error) {
     console.log(error);
   }
-
-  return docs;
 };
 
 export const addingUserToUsersCollection = async (userData, userUID) => {
@@ -149,65 +107,6 @@ export const removeProductFromFavorites = async (userUID, productId) => {
     const productRef = doc(favoritesRef, productId);
 
     await deleteDoc(productRef);
-
-    // await runTransaction(db, async (transaction) => {
-    //   const productDoc = await transaction.get(productRef);
-
-    //   if (productDoc.exists()) {
-    //     transaction.delete(productRef);
-    //     console.log(productDoc.data());
-    //   } else {
-    //     throw new Error("product not found");
-    //   }
-    // });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getUserFavorites = async (userUID) => {
-  try {
-    const userRef = doc(db, "users", userUID);
-    const userSnapshot = await getDoc(userRef);
-
-    if (userSnapshot.exists()) {
-      const userFavorites = userSnapshot.data().favorites;
-      return userFavorites;
-    } else throw new Error("you must be logged in");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const addProductToCart = async (userUID, product) => {
-  try {
-    const userRef = doc(db, "users", userUID);
-
-    const cartItemsRef = collection(userRef, "cartItems");
-
-    const productRef = doc(cartItemsRef, product.id);
-    await runTransaction(db, async (transaction) => {
-      const productDoc = await transaction.get(productRef);
-
-      if (productDoc.exists()) {
-        // Product exists in the cart, update its quantity
-
-        transaction.update(productRef, {
-          quantity: increment(1),
-          totalPrice: increment(product.price),
-        });
-        console.log("update product quantity");
-      } else {
-        // Product doesn't exist in the cart, add a new document
-        const productWithTimestamp = {
-          ...product,
-          timestamp: serverTimestamp(),
-        };
-
-        transaction.set(productRef, productWithTimestamp);
-        console.log("add new product to cart items");
-      }
-    });
   } catch (error) {
     console.log(error);
   }
@@ -243,33 +142,6 @@ export const removeProductFromTheCart = async (
   } catch (error) {
     console.log(error);
   }
-};
-
-export const removeProductPermanentlyFromTheCart = async (
-  userUID,
-  productId,
-) => {
-  try {
-    const userRef = doc(db, "users", userUID);
-
-    const cartItemsRef = collection(userRef, "cartItems");
-
-    const productRef = doc(cartItemsRef, productId);
-    await runTransaction(db, async (transaction) => {
-      transaction.delete(productRef);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getAllCartItems = async (userUID) => {
-  const userRef = doc(db, "users", userUID);
-
-  const cartItemsRef = collection(userRef, "cartItems");
-
-  const querySnapshot = await getDocs(cartItemsRef);
-  const res = querySnapshot.docs.map((doc) => doc.data());
 };
 
 export const addProductToFavorites = async (userUID, product) => {

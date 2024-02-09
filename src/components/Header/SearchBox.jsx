@@ -63,8 +63,8 @@ const SearchBox = ({ setInputOnFocus, isInputOnFocus, handleInputOnFocus }) => {
               className="fixed left-0 top-[74px] h-screen w-full rounded-md bg-white
             p-4 shadow-lg transition md:absolute md:top-[42px] md:h-auto"
             >
-              <p className="text-lg font-medium text-rose-400">
-                Searching is currently not working.
+              <p className="text font-medium text-emerald-600">
+                available soon.
               </p>
             </div>
           )}

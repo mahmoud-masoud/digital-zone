@@ -11,10 +11,9 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import { db } from "../Utils/firebase";
-import useAuthState from "./firebase/useAuthState";
-import { removeProductFromTheCart } from "../Utils/firebase-functions";
-import { useResetProjection, useScroll } from "framer-motion";
+import { db } from "../../Utils/firebase";
+import useAuthState from "./useAuthState";
+import { removeProductFromTheCart } from "../../Utils/firebase-functions";
 
 const useCartProduct = ({ title, price, id, image }) => {
   const { user, isLoading: userLoading, isError: userError } = useAuthState();

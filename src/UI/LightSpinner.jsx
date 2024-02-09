@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-const WhiteSpinner = ({ className }) => {
+const LightSpinner = ({ className }) => {
   return (
     <div className="flex items-center justify-center">
       <span
@@ -12,4 +12,4 @@ const WhiteSpinner = ({ className }) => {
     </div>
   );
 };
-export default WhiteSpinner;
+export default LightSpinner;

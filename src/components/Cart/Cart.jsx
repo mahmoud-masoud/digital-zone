@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import useCart from "../../Hooks/useCart";
+import useCart from "../../Hooks/firebase/useCart";
 import Wrapper from "../../UI/Wrapper";
 import CartCheckout from "./CartCheckout";
 import CartItems from "./CartItems";

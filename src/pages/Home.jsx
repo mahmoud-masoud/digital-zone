@@ -5,6 +5,7 @@ import BestSellers from "../components/SubCollections/BestSellers";
 import Gaming from "../components/SubCollections/Gaming";
 import NewArrivals from "../components/SubCollections/NewArrivals";
 import Monitors from "../components/SubCollections/Monitors";
+import Tablets from "../components/SubCollections/Tablets";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <NewArrivals />
       <Gaming />
       <Monitors />
+      <Tablets />
       <Footer />
     </>
   );

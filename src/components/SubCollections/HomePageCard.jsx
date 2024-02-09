@@ -1,6 +1,6 @@
 import AddToFavoritesBtn from "./AddToFavoritesBtn";
 import CardAddToCart from "./CardAddToCart";
-import formatePrice from "../Utils/formatePrice";
+import formatePrice from "../../Utils/formatePrice";
 import { Link } from "react-router-dom";
 const HomePageCard = ({ img, title, price, id }) => {
   const formattedPrice = formatePrice(price);
@@ -13,7 +13,7 @@ const HomePageCard = ({ img, title, price, id }) => {
           <div className="absolute bottom-0 translate-y-1/2 transform">
             <CardAddToCart image={img} title={title} price={price} id={id} />
           </div>
-          <div className="flex aspect-square h-36 w-36 items-center justify-center">
+          <div className="flex aspect-square h-28 w-28 items-center justify-center md:h-36 md:w-36">
             <img
               src={img}
               alt={title}

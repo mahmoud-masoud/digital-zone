@@ -5,9 +5,9 @@ import InputError from "../../../UI/InputError";
 const Description = ({ errors, control, description }) => {
   return (
     <div>
-      <div className="mb-4 text-lg">
-        <label htmlFor="description">Description</label>
-      </div>
+      <label htmlFor="description" className="mb-4 inline-flex md:text-lg">
+        Description
+      </label>
       <Controller
         name="description"
         defaultValue={description}
@@ -22,4 +22,5 @@ const Description = ({ errors, control, description }) => {
     </div>
   );
 };
+
 export default Description;

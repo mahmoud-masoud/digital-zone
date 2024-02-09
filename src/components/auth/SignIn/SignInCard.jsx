@@ -14,7 +14,7 @@ const SignInCard = () => {
 
   return (
     <section className="h-screen bg-light">
-      <Wrapper className="max-w-md px-4 pt-24">
+      <Wrapper className="max-w-md px-4 py-10">
         {isSigningIn && <RedirectPopup />}
         {error && <ErrorPopup message={error} setIsVisible={setError} />}
 
@@ -22,7 +22,7 @@ const SignInCard = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="rounded-xl bg-white p-8 shadow-lg md:min-w-[450px]"
+          className="rounded-md bg-white p-6 shadow-lg md:min-w-[450px] md:rounded-xl md:p-8"
         >
           <h3 className="mb-4 text-xl font-bold text-fontColor md:text-3xl">
             Login to your account
@@ -42,7 +42,7 @@ const SignInCard = () => {
             Sign In with Google
           </button>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 max-sm:text-sm">
             Don't have an account?
             <Link
               to={"/signup"}

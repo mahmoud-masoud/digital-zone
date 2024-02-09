@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Wrapper from "./Wrapper";
+import Wrapper from "../UI/Wrapper";
 
-const NotLoggedIn = () => {
+const NotLoggedInPage = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -37,4 +37,4 @@ const NotLoggedIn = () => {
     </Wrapper>
   );
 };
-export default NotLoggedIn;
+export default NotLoggedInPage;

@@ -22,7 +22,7 @@ const CartNote = () => {
         </p>
 
         <span
-          className="shrink-0 cursor-pointer text-lg"
+          className="shrink-0 cursor-pointer text-2xl"
           onClick={() => {
             setIsShown(false);
           }}

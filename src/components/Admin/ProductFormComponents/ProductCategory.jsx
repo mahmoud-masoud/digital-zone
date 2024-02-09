@@ -6,6 +6,7 @@ const ProductCategory = ({ register, errors }) => {
       <label htmlFor="category" className="mr-2">
         Category
       </label>
+
       <select
         name="category"
         id="category"
@@ -18,6 +19,8 @@ const ProductCategory = ({ register, errors }) => {
         <option value="smart-watches">Smart Watches</option>
         <option value="mobile-phones">Mobile Phones</option>
         <option value="gaming">Gaming</option>
+        <option value="monitors">Monitors</option>
+        <option value="tablets">Tablets</option>
       </select>
 
       {errors && errors.category && (

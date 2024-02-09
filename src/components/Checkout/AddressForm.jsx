@@ -11,7 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Label from "../../UI/Label";
 import Input from "../../UI/Input";
 import InputError from "../../UI/InputError";
-import LoadingSpinner from "../../UI/LoadingSpinner";
+import LightSpinner from "../../UI/LightSpinner";
 const AddressForm = ({ userShippingInfo, setFormVisibility }) => {
   const [user] = useAuthState(auth);
   const dispatch = useDispatch();
@@ -32,7 +32,6 @@ const AddressForm = ({ userShippingInfo, setFormVisibility }) => {
         transaction.update(userRef, {
           shippingInfo: data,
         });
-        console.log("update user address");
       });
       setFormVisibility(false);
     } catch (error) {
@@ -135,7 +134,7 @@ const AddressForm = ({ userShippingInfo, setFormVisibility }) => {
              justify-center rounded-full border border-primary  bg-primary p-2
         text-white transition duration-150 hover:bg-after"
           >
-            {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Save"}
+            {isSubmitting ? <LightSpinner h={7} w={7} /> : "Save"}
           </button>
         </div>
       </form>

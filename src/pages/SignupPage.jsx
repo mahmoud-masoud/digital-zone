@@ -1,11 +1,5 @@
-import SignUpCard from "../components/auth/CreateAccount/SignUpCard";
-import TopBar from "../components/auth/Topbar";
-
+import SignUpCard from "../components/auth/SignUp/SignUpCard";
 const SignUp = () => {
-  return (
-    <div>
-      <SignUpCard />
-    </div>
-  );
+  return <SignUpCard />;
 };
 export default SignUp;

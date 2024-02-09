@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import useCartProduct from "../Hooks/useCartProduct";
-import LoadingSpinner from "./LoadingSpinner";
+import useCartProduct from "../../Hooks/firebase/useCartProduct";
+import LightSpinner from "../../UI/LightSpinner";
 
-import { motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 const CardAddToCart = ({ title, price, id, image }) => {
   const [isClickOutside, setIsClickOutside] = useState(true);
@@ -79,7 +78,7 @@ const CardAddToCart = ({ title, price, id, image }) => {
 
       {isProductAdding && quantity === 0 && (
         <div className="flex w-24 items-center justify-center py-1 ">
-          <LoadingSpinner />
+          <LightSpinner />
         </div>
       )}
     </div>

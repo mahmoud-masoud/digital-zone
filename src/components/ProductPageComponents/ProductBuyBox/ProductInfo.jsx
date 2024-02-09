@@ -1,18 +1,20 @@
 import { TruckIcon } from "@heroicons/react/24/solid";
-import AddToCartBtn from "./AddToCartBtn";
-import AddToFavoritesBtn from "../../../UI/AddToFavoritesBtn";
-import { useParams } from "react-router-dom";
 import { RotateCcw, Zap } from "lucide-react";
-
+import AddToCartBtn from "./AddToCartBtn";
+import AddToFavoritesBtn from "../../SubCollections/AddToFavoritesBtn";
+import { useParams } from "react-router-dom";
+import formatePrice from "../../../Utils/formatePrice";
 const ProductInfo = ({ title, price, id, image, quantity }) => {
   const productID = useParams().productId;
+
+  const formattedPrice = formatePrice(price);
 
   return (
     <div
       className="top-24 mb-4 w-full self-start bg-white md:sticky md:w-1/3 
     md:rounded-lg md:p-4 md:shadow-card-shadow"
     >
-      <div className="mb-6 flex justify-end">
+      <div className="mb-2 flex justify-end">
         <AddToFavoritesBtn
           id={productID}
           price={price}
@@ -27,7 +29,7 @@ const ProductInfo = ({ title, price, id, image, quantity }) => {
        items-center justify-between bg-white p-4 shadow-card-shadow
         md:static md:block md:p-0 md:py-4 md:shadow-[0] "
       >
-        <span className="mb-2 block text-xl font-bold">{`$${price}`}</span>
+        <span className="mb-2 block text-xl font-bold">{`${formattedPrice}`}</span>
         <AddToCartBtn title={title} price={price} id={id} image={image} />
       </div>
 
@@ -46,7 +48,6 @@ const ProductInfo = ({ title, price, id, image, quantity }) => {
         </div>
 
         <div className="returning flex items-center gap-3 text-gray-700 ">
-          {/* <FaArrowRotateLeft className="h-5 w-5 rounded-full bg-primary p-1 text-white" /> */}
           <RotateCcw
             className="rounded-full bg-primary p-1 text-white"
             size={24}

@@ -19,7 +19,7 @@ const FavItem = ({ title, image, price, id }) => {
       <Link to={`/ip/${id}`}>
         <div className="mb-4 flex justify-between gap-2 ">
           <div className="flex justify-between gap-4 md:gap-6 lg:gap-10">
-            <div className="h-24 w-24 flex-shrink-0">
+            <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center">
               <img
                 src={image}
                 alt={title}

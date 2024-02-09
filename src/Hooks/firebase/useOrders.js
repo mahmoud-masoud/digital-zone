@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../Utils/firebase";
+import { db } from "../../Utils/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 const useOrders = () => {
@@ -36,26 +36,3 @@ const useOrders = () => {
   };
 };
 export default useOrders;
-
-// const nextPage = () => {
-//   if (!orders) return;
-
-//   const fetchNextPageOrders = async () => {
-//     const lastVisible = orders[orders.length - 1];
-//     console.log(lastVisible);
-//     const next = query(
-//       collection(db, "orders"),
-//       orderBy("date", "desc"),
-//       limit(10),
-//       startAfter(lastVisible.date),
-//     );
-
-//     const documentSnapshots = await getDocs(next);
-//     const nextPageOrders = documentSnapshots.docs.map((doc) => doc.data());
-
-//     setData([...nextPageOrders]);
-//     console.log(nextPageOrders);
-//   };
-
-//   fetchNextPageOrders();
-// };

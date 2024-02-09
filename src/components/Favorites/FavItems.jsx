@@ -9,13 +9,7 @@ const FavItems = ({ data }) => {
       </div>
       <ul>
         {data?.map((item) => (
-          <li
-            key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="bb-2 py-5 last:border-none"
-          >
+          <li key={item.id} className="bb-2 py-5 last:border-none">
             <FavItem
               title={item.title}
               image={item.image}

@@ -18,9 +18,7 @@ const useDeleteDoc = (collectionName) => {
 
       if (docSnap.exists()) {
         await deleteDoc(docRef);
-        console.log(
-          `Product with ID ${docId} deleted from specific collection.`,
-        );
+
         return;
       }
 
@@ -34,9 +32,6 @@ const useDeleteDoc = (collectionName) => {
         const deletePromises = querySnapshot.docs.map(async (doc) => {
           try {
             await deleteDoc(doc.ref);
-            console.log(
-              `Product with ID ${docId} deleted from collection group.`,
-            );
           } catch (deleteError) {
             console.error(
               `Error deleting product with ID ${docId}:`,
@@ -48,8 +43,6 @@ const useDeleteDoc = (collectionName) => {
         await Promise.all(deletePromises);
         return;
       }
-
-      console.log(`Product with ID ${docId} not found.`);
     } catch (error) {
       console.error("Error deleting product:", error);
     }

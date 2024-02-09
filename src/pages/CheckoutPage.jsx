@@ -1,10 +1,10 @@
 import NotLoggedIn from "../components/Checkout/NotLoggedIn";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import useCart from "../Hooks/useCart";
+import useCart from "../Hooks/firebase/useCart";
 import EmptyCart from "../components/Checkout/EmptyCart";
 import Checkout from "../components/Checkout/Checkout";
-import MainSpinner from "../UI/MainSpinner";
+import PageSpinner from "../UI/PageSpinner";
 import { auth } from "../Utils/firebase";
 
 const CheckoutPage = () => {
@@ -15,7 +15,7 @@ const CheckoutPage = () => {
   const isUserLoggedIn = user && !user.isAnonymous;
   const isCartEmpty = user && !user.isAnonymous && !items.length;
 
-  if (isDataLoading) return <MainSpinner />;
+  if (isDataLoading) return <PageSpinner />;
   if (isUserLoggedIn && isCartEmpty) return <EmptyCart />;
   if (!isUserLoggedIn) return <NotLoggedIn />;
 

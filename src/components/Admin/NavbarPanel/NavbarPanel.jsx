@@ -105,7 +105,7 @@ const NavbarPanel = ({ navIsOpen }) => {
                   ) : (
                     <UsersIcon className="h-7 w-7 fill-slate-700" />
                   )}
-                  <span className="text font-medium">Home</span>
+                  <span className="text font-medium">Users</span>
                 </div>
               )}
             </NavLink>

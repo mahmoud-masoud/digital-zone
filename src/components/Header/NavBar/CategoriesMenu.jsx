@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import useCategory from "../../../Hooks/useCategory";
+import useCategory from "../../../Hooks/firebase/useCategory";
 import {
   Gamepad2Icon,
   GamepadIcon,

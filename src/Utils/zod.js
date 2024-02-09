@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const productFormSchema = z.object({
   title: z.string().min(1, "Title can't be empty"),
   description: z.string().min(1, "Description can't be empty"),
   price: z.number().min(1, "Price can't be empty or zero"),

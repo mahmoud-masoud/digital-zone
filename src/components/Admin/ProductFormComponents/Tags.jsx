@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import InputError from "../../../UI/InputError";
+import { Plus } from "lucide-react";
 
 const Tags = ({ setValue, serverTags, errors }) => {
   const [tags, setTags] = useState(serverTags || []);
@@ -28,13 +29,13 @@ const Tags = ({ setValue, serverTags, errors }) => {
 
   return (
     <div>
-      <div className="flex justify-between rounded-lg border border-black p-2">
+      <div className="relative">
         <input
           type="text"
           name="tags"
           placeholder="Add a tag"
           value={tagInput}
-          className="w-full outline-none"
+          className="w-full rounded py-2"
           onChange={handleInputChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -45,9 +46,11 @@ const Tags = ({ setValue, serverTags, errors }) => {
         />
         <button
           type="button"
-          className="rounded-md bg-gray-500 px-6 py-2 font-medium text-white"
+          className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded
+           bg-slate-800 p-2 font-medium text-white duration-150 hover:opacity-80"
           onClick={handleTagAdd}
         >
+          <Plus size={22} />
           Add
         </button>
       </div>
@@ -61,7 +64,7 @@ const Tags = ({ setValue, serverTags, errors }) => {
             <span>{tag}</span>
             <button
               type="button"
-              className="flex w-4 items-center justify-center
+              className="flex items-center justify-center
                rounded-lg p-1 hover:bg-gray-300"
               onClick={() => handleTagRemove(index)}
             >

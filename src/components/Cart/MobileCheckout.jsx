@@ -27,7 +27,7 @@ const MobileCheckout = ({ cartTotalPrice }) => {
       <div className="bb-2 flex flex-col gap-4 p-4">
         <div className="flex items-center justify-between">
           <span className="font-bold">Estimated total</span>
-          <span className="font-bold text-green-700">{`$${cartTotalPrice}`}</span>
+          <span className="font-bold text-green-700">{`${cartTotalPrice}`}</span>
         </div>
         <button
           onClick={onCheckoutBtnClickHandler}

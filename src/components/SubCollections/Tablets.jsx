@@ -6,20 +6,19 @@ import { db } from "../../Utils/firebase";
 import { useEffect, useState } from "react";
 import ProductsSkeleton from "./ProductsSkeleton";
 
-const Gaming = () => {
+const Tablets = () => {
   const [products, setProducts] = useState(null);
   const [isLoading, seIstLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const categoryRef = doc(db, "categories", "gaming");
+    const categoryRef = doc(db, "categories", "tablets");
     const productsCollectionRef = collection(categoryRef, "products");
 
     const q = query(productsCollectionRef, limit(10));
 
-    const unsubscribe = onSnapshot(
-      q,
-      (querySnapshot) => {
+    try {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const updatedProducts = querySnapshot.docs.map((doc) => doc.data());
         if (!updatedProducts.length) {
           setIsError(true);
@@ -27,49 +26,27 @@ const Gaming = () => {
         }
         seIstLoading(false);
         setProducts(updatedProducts);
-      },
-      (error) => {
-        console.error("Firestore Error:", error);
-        seIstLoading(false);
-        setIsError(true);
-      },
-    );
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Firestore Error:", error);
+      seIstLoading(false);
+      setIsError(true);
+    }
   }, []);
 
   return (
     <section className=" text-fontColor ">
       <Wrapper className={"border-b-2 border-gray-100 px-4 py-8 md:py-12"}>
-        <Link to={"ct/gaming"}>
-          <div className="mb-12 overflow-hidden rounded-lg md:rounded-xl">
-            <picture>
-              <source
-                srcSet="/images/illustration/gaming-sm.webp"
-                type="image/webp"
-                media="(max-width: 770px)"
-                height="300"
-                width="800"
-              />
-              <img
-                src="/images/illustration/gaming.webp"
-                alt="Carousel banner image"
-                type="image/webp"
-                height="350"
-                width="1400"
-              />
-            </picture>
-          </div>
-        </Link>
-
         {products && (
           <div className="flex justify-between">
             <h3 className="mb-8 font-semibold text-fontColor md:text-xl">
-              All Gaming
+              Tablets
             </h3>
 
             <Link
-              to={"ct/gaming"}
+              to={"ct/monitors"}
               className="font-medium underline hover:text-primary hover:no-underline"
             >
               Show All
@@ -81,4 +58,4 @@ const Gaming = () => {
     </section>
   );
 };
-export default Gaming;
+export default Tablets;

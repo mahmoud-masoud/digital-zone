@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { db } from "../Utils/firebase";
+import { db } from "../../Utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const useDoc = (docId) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
-  console.log(data, "from useDoc");
 
   useEffect(() => {
     const getOrder = async () => {
@@ -18,10 +16,9 @@ const useDoc = (docId) => {
         if (docItem.exists()) {
           setData(docItem.data());
         }
+        setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsError(true);
-      } finally {
         setIsLoading(false);
       }
     };

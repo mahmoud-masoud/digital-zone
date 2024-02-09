@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { UserIcon } from "@heroicons/react/24/solid";
 import CategoriesMenu from "./CategoriesMenu";
-import { useEffect, useState } from "react";
 import AccountDropDown from "./AccountDropDown";
 import { auth } from "../../../Utils/firebase";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
+import LightSpinner from "../../../UI/LightSpinner";
 import useNoScroll from "../../../Hooks/useNoScroll";
 import { AnimatePresence } from "framer-motion";
 import useMenu from "../../../Hooks/useMenu";
@@ -85,19 +84,16 @@ const Navbar = () => {
            px-4 py-1.5  text-[16px] font-normal hover:bg-after hover:text-white focus:bg-after focus:text-white"
               onClick={() => setAccountDropdown(true)}
             >
-              {isLoading && <LoadingSpinner />}
+              {isLoading && <LightSpinner />}
 
-              {(auth.currentUser?.isAnonymous || auth.currentUser === null) &&
-                !isLoading && (
-                  <div className="flex flex-col items-center justify-center text-sm">
-                    <UserIcon className="w-5" />
-                    Sign in
-                  </div>
-                )}
-
-              {auth.currentUser && !auth.currentUser?.isAnonymous && (
-                <p>Hi, {auth.currentUser.displayName}</p>
+              {(user?.isAnonymous || !user) && !isLoading && (
+                <div className="flex flex-col items-center justify-center text-sm">
+                  <UserIcon className="w-5" />
+                  Sign in
+                </div>
               )}
+
+              {user && !user?.isAnonymous && <p>Hi, {user.displayName}</p>}
             </button>
 
             {isAccountDropdown && (

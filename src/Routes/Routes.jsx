@@ -3,41 +3,37 @@ import React, { useEffect } from "react";
 import { useLocation, useRoutes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-import Home from "../../pages/Home";
-import HomeRoot from "../../components/HomeRoot";
-import Root from "../../components/Root";
-import PaymentSuccess from "../../pages/PaymentSuccess";
-import AdminRoot from "../Admin/Root";
-import AuthRoot from "../auth/AuthRoot";
-import ErrorPage from "../../UI/ErrorPage";
-import MainSpinner from "../../UI/MainSpinner";
+import Home from "../pages/Home";
+import HomeRoot from "../components/HomeRoot";
+import Root from "../components/Root";
+import PaymentSuccessPage from "../pages/PaymentSuccessPage";
+import AdminRoot from "../components/Admin/Root";
+import AuthRoot from "../components/auth/AuthRoot";
+import ErrorPage from "../Pages/ErrorPage";
+import NotFoundPage from "../Pages/NotFoundPage";
+import PageSpinner from "../UI/PageSpinner";
 import { AnimatePresence } from "framer-motion";
-import NotFoundPage from "../../UI/NotFoundPage";
 
-const LazyProductPage = lazy(() => import("../../pages/ProductPage"));
-const LazyFavoritesPage = lazy(() => import("../../pages/FavoritesPage"));
-const LazyCartPage = lazy(() => import("../../pages/CartPage"));
-const LazyCheckoutPage = lazy(() => import("../../pages/CheckoutPage"));
-const LazyUserOrdersPage = lazy(() => import("../../pages/UserOrdersPage"));
-const LazyCategoryPage = lazy(() => import("../../pages/CategoryPage"));
-const LazySignInPage = lazy(() => import("../../pages/SignIn"));
-const LazySignupPage = lazy(() => import("../../pages/SignupPage"));
+const LazyProductPage = lazy(() => import("../pages/ProductPage"));
+const LazyFavoritesPage = lazy(() => import("../pages/FavoritesPage"));
+const LazyCartPage = lazy(() => import("../pages/CartPage"));
+const LazyCheckoutPage = lazy(() => import("../pages/CheckoutPage"));
+const LazyUserOrdersPage = lazy(() => import("../pages/UserOrdersPage"));
+const LazyCategoryPage = lazy(() => import("../pages/CategoryPage"));
+const LazySignInPage = lazy(() => import("../pages/SignIn"));
+const LazySignupPage = lazy(() => import("../pages/SignupPage"));
 
 // Admin pages
 
-const LazyAdminHomePage = lazy(() => import("../../pages/Admin/Home"));
-const LazyAdminProductsPage = lazy(() => import("../../pages/Admin/Products"));
-const LazyAdminProductPage = lazy(() =>
-  import("../../pages/Admin/ProductPage"),
-);
-const LazyAdminNewProductPage = lazy(() =>
-  import("../../pages/Admin/NewProduct"),
-);
-const LazyAdminUsersPage = lazy(() => import("../../pages/Admin/Users"));
-const LazyAdminNewUserPage = lazy(() => import("../../pages/Admin/NewUser"));
-const LazyAdminOrdersPage = lazy(() => import("../../pages/Admin/Orders"));
+const LazyAdminHomePage = lazy(() => import("../pages/Admin/Home"));
+const LazyAdminProductsPage = lazy(() => import("../pages/Admin/Products"));
+const LazyAdminProductPage = lazy(() => import("../pages/Admin/ProductPage"));
+const LazyAdminNewProductPage = lazy(() => import("../pages/Admin/NewProduct"));
+const LazyAdminUsersPage = lazy(() => import("../pages/Admin/Users"));
+const LazyAdminNewUserPage = lazy(() => import("../pages/Admin/NewUser"));
+const LazyAdminOrdersPage = lazy(() => import("../pages/Admin/Orders"));
 const LazyAdminOrderDetailsPage = lazy(() =>
-  import("../../pages/Admin/OrderDetails"),
+  import("../pages/Admin/OrderDetails"),
 );
 
 const Routes = () => {
@@ -69,7 +65,7 @@ const Routes = () => {
             {
               path: "cart",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyCartPage />
                 </Suspense>
               ),
@@ -77,7 +73,7 @@ const Routes = () => {
             {
               path: "favorites",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyFavoritesPage />
                 </Suspense>
               ),
@@ -85,7 +81,7 @@ const Routes = () => {
             {
               path: "orders",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyUserOrdersPage />
                 </Suspense>
               ),
@@ -94,7 +90,7 @@ const Routes = () => {
             {
               path: "ct/:category",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyCategoryPage />
                 </Suspense>
               ),
@@ -103,7 +99,7 @@ const Routes = () => {
             {
               path: "ip/:productId",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyProductPage />
                 </Suspense>
               ),
@@ -112,7 +108,7 @@ const Routes = () => {
             {
               path: "ct/:category/ip/:productId",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyProductPage />
                 </Suspense>
               ),
@@ -122,12 +118,12 @@ const Routes = () => {
         {
           path: "checkout",
           element: (
-            <Suspense fallback={<MainSpinner />}>
+            <Suspense fallback={<PageSpinner />}>
               <LazyCheckoutPage />
             </Suspense>
           ),
         },
-        { path: "checkout/success", element: <PaymentSuccess /> },
+        { path: "checkout/success", element: <PaymentSuccessPage /> },
         {
           path: "/",
           element: <AuthRoot />,
@@ -135,7 +131,7 @@ const Routes = () => {
             {
               path: "signin",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazySignInPage />
                 </Suspense>
               ),
@@ -143,7 +139,7 @@ const Routes = () => {
             {
               path: "signup",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazySignupPage />
                 </Suspense>
               ),
@@ -157,7 +153,7 @@ const Routes = () => {
             {
               index: true,
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminHomePage />
                 </Suspense>
               ),
@@ -166,7 +162,7 @@ const Routes = () => {
             {
               path: "orders",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminOrdersPage />
                 </Suspense>
               ),
@@ -174,7 +170,7 @@ const Routes = () => {
             {
               path: "orders/:orderId",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminOrderDetailsPage />
                 </Suspense>
               ),
@@ -182,7 +178,7 @@ const Routes = () => {
             {
               path: "products",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminProductsPage />
                 </Suspense>
               ),
@@ -190,7 +186,7 @@ const Routes = () => {
             {
               path: "products/new",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminNewProductPage />
                 </Suspense>
               ),
@@ -198,7 +194,7 @@ const Routes = () => {
             {
               path: "products/:productId",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminProductPage />
                 </Suspense>
               ),
@@ -206,7 +202,7 @@ const Routes = () => {
             {
               path: "users",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminUsersPage />
                 </Suspense>
               ),
@@ -214,7 +210,7 @@ const Routes = () => {
             {
               path: "users/new",
               element: (
-                <Suspense fallback={<MainSpinner />}>
+                <Suspense fallback={<PageSpinner />}>
                   <LazyAdminNewUserPage />
                 </Suspense>
               ),

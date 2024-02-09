@@ -11,7 +11,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import formatePrice from "../../Utils/formatePrice";
-import LoadingSpinner from "../../UI/LoadingSpinner";
+import LightSpinner from "../../UI/LightSpinner";
 
 const AddToCartBox = ({ data }) => {
   const [user] = useAuthState(auth);
@@ -55,7 +55,6 @@ const AddToCartBox = ({ data }) => {
             };
 
             batch.set(productRef, productWithTimestamp);
-            console.log(`Add product with ID ${id} to cart items`);
           }
         }),
       );
@@ -87,7 +86,7 @@ const AddToCartBox = ({ data }) => {
         onClick={() => addFavoritesToCart()}
       >
         <div className="flex items-center justify-center gap-3">
-          {addingProducts && <LoadingSpinner className={"h-6 w-6"} />}
+          {addingProducts && <LightSpinner className={"h-6 w-6"} />}
           <span>Add all to cart</span>
         </div>
       </button>

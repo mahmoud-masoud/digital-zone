@@ -40,7 +40,7 @@ export default {
         "card-shadow": "0 0 4px 0px rgb(0, 0, 0,.2)",
         input: "0 0 0 3px rgba(57,145,230,0.5)",
       },
-      keyframes: {},
+
       animation: {
         pulse: "pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "spin-fast": "spin .6s linear infinite",

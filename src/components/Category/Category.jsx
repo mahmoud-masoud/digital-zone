@@ -1,12 +1,11 @@
 import Wrapper from "../../UI/Wrapper";
-import { Link, useParams } from "react-router-dom";
-import HomePageCard from "../../UI/HomePageCard";
-import useCategory from "../../Hooks/useCategory";
+import useCategory from "../../Hooks/firebase/useCategory";
 import FilterProductsSelect from "./FilterProductsSelect";
 import { useEffect, useState } from "react";
-import LoadingSpinner from "../../UI/LoadingSpinner";
-import MainSpinner from "../../UI/MainSpinner";
-import NotFoundPage from "../../UI/NotFoundPage";
+import LightSpinner from "../../UI/LightSpinner";
+import PageSpinner from "../../UI/PageSpinner";
+import NotFoundPage from "../../Pages/NotFoundPage";
+import ProductCard from "./ProductCard";
 
 const Category = () => {
   const {
@@ -44,7 +43,7 @@ const Category = () => {
     }
   };
 
-  if (loading) return <MainSpinner />;
+  if (loading) return <PageSpinner />;
   if (error === 404) return <NotFoundPage />;
   if (error && error !== 404)
     return <p>Something went wrong refresh the page</p>;
@@ -59,7 +58,7 @@ const Category = () => {
         >
           {sortedProducts?.map((product) => (
             <div key={product.id}>
-              <HomePageCard
+              <ProductCard
                 id={product.id}
                 img={product.images[0]}
                 price={product.price}
@@ -75,7 +74,7 @@ const Category = () => {
               className="mt-20 min-w-[112px] rounded-full bg-slate-600 px-4 py-1.5
             text-white duration-100 hover:bg-slate-700"
             >
-              {loadingNextProducts ? <LoadingSpinner /> : "Load more"}
+              {loadingNextProducts ? <LightSpinner /> : "Load more"}
             </button>
           </div>
         )}

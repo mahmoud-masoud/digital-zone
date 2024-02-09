@@ -1,8 +1,5 @@
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
-
-import useCartProduct from "../../../Hooks/useCartProduct";
-
+import LightSpinner from "../../../UI/LightSpinner";
+import useCartProduct from "../../../Hooks/firebase/useCartProduct";
 import { useState } from "react";
 import DropdownViewCart from "../../../UI/DropDownViewCart";
 import { AnimatePresence } from "framer-motion";
@@ -53,7 +50,7 @@ const AddToCartBtn = ({ title, price, id, image }) => {
           </button>
         )}
 
-        {isProductAdding && quantity === 0 && <LoadingSpinner />}
+        {isProductAdding && quantity === 0 && <LightSpinner />}
 
         {quantity > 0 && (
           <>
@@ -70,7 +67,7 @@ const AddToCartBtn = ({ title, price, id, image }) => {
               className="rounded-full p-1.5 hover:bg-medium focus:bg-medium"
               onClick={addToCart}
               autoFocus
-            >
+            > 
               <Plus size={20} strokeWidth={3} />
             </button>
           </>

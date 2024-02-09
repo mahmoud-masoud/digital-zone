@@ -1,16 +1,16 @@
 import Lottie from "lottie-react";
-import Wrapper from "./Wrapper";
+import Wrapper from "../UI/Wrapper";
 import NotFoundAnimation from "../Assets/Lottie/not-found-page.json";
 import { useNavigate } from "react-router-dom";
 const NotFoundPage = () => {
   const navigate = useNavigate();
   return (
-    <section className="">
+    <section>
       <Wrapper className={"flex flex-col items-center justify-center"}>
         <div className="max-w-lg p-4 pt-32 md:pt-10">
           <Lottie animationData={NotFoundAnimation} />
         </div>
-        <div className="max-w-lg pt-10  text-center">
+        <div className="max-w-lg pt-5 text-center  md:pt-10">
           <h1 className=" text-2xl font-semibold text-fontColor">
             Page Not Found!
           </h1>

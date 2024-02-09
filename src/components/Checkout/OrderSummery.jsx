@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 
 import { useState } from "react";
-import LoadingSpinner from "../../UI/LoadingSpinner";
+import LightSpinner from "../../UI/LightSpinner";
 import formatePrice from "../../Utils/formatePrice";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -121,7 +121,7 @@ const OrderSummery = () => {
          text-white duration-200 hover:bg-after"
           >
             {orderIsCreating ? (
-              <LoadingSpinner className={"h-7 w-7"} />
+              <LightSpinner className={"h-7 w-7"} />
             ) : (
               "Place Order"
             )}

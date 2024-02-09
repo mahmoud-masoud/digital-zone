@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../../Utils/firebase";
+import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { motion } from "framer-motion";
 import MobileAccountAvatar from "./MobileAccountAvatar";
@@ -15,6 +16,13 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
       setAccordion(false);
     }, 100);
   };
+
+  const logout = () => {
+    closeNavbar();
+    signOut(auth);
+    window.location.reload();
+  };
+
   return (
     <nav className="fixed bottom-0 left-0 top-0 z-10 h-screen w-screen sm:hidden">
       <motion.div
@@ -58,76 +66,98 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
                 />
               </div>
             </button>
-            <div
+            <ul
               className={`h-0 overflow-hidden pl-3 text-lg ${
-                accordion && "mb-2 h-[180px]"
+                accordion && "mb-2 h-[262px]"
               } transition-all duration-300`}
             >
-              <Link
-                to={"ct/mobile-phones"}
-                className="block w-full border-b border-[#f1f1f1] pb-2 hover:text-after
+              <li>
+                <Link
+                  to={"ct/mobile-phones"}
+                  className="block w-full border-b border-[#f1f1f1] pb-2 hover:text-after
                  hover:underline"
-                onClick={closeNavbar}
-              >
-                Mobile Phones
-              </Link>
+                  onClick={closeNavbar}
+                >
+                  Mobile Phones
+                </Link>
+              </li>
 
-              <Link
-                to={"ct/headphones"}
-                className="block w-full border-b border-[#f1f1f1] py-2
-                 hover:text-after hover:underline"
-                onClick={closeNavbar}
-              >
-                Headphones
-              </Link>
+              <li>
+                <Link
+                  to={"ct/headphones"}
+                  className="block w-full border-b border-[#f1f1f1]
+                 py-2 hover:text-after hover:underline"
+                  onClick={closeNavbar}
+                >
+                  Headphones
+                </Link>
+              </li>
 
-              <Link
-                to={"ct/smart-watches"}
-                className="block w-full border-b border-[#f1f1f1] py-2
-                 hover:text-after hover:underline"
-                onClick={closeNavbar}
-              >
-                Smart Watches
-              </Link>
+              <li>
+                <Link
+                  to={"ct/smart-watches"}
+                  className="block w-full border-b border-[#f1f1f1]
+                 py-2 hover:text-after hover:underline"
+                  onClick={closeNavbar}
+                >
+                  Smart Watches
+                </Link>
+              </li>
 
-              <Link
-                to={"ct/laptops"}
-                className="block w-full border-b border-[#f1f1f1] py-2
+              <li>
+                <Link
+                  to={"ct/laptops"}
+                  className="block w-full border-b border-[#f1f1f1] py-2
                  hover:text-after hover:underline"
-                onClick={closeNavbar}
-              >
-                Laptops
-              </Link>
-            </div>
+                  onClick={closeNavbar}
+                >
+                  Laptops
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to={"ct/monitors"}
+                  className="block w-full border-b border-[#f1f1f1] py-2
+                 hover:text-after hover:underline"
+                  onClick={closeNavbar}
+                >
+                  Monitors
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"ct/tablets"}
+                  className="block w-full border-b border-[#f1f1f1] py-2
+                 hover:text-after hover:underline"
+                  onClick={closeNavbar}
+                >
+                  Tablets
+                </Link>
+              </li>
+            </ul>
           </li>
 
-          <li
-            className="flex items-center gap-1 py-4 text-xl"
-            onClick={closeNavbar}
-          >
-            <Link to={"favorites"}>Favorites</Link>
+          <li className="flex items-center gap-1 py-4 text-xl">
+            <Link to={"favorites"} onClick={closeNavbar}>
+              Favorites
+            </Link>
           </li>
           {user?.uid == import.meta.env.VITE_ADMIN_ID && (
-            <li
-              className="flex items-center gap-1 py-4 text-xl"
-              onClick={closeNavbar}
-            >
-              <Link to={"/admin"}>Admin Dashboard</Link>
+            <li className="flex items-center gap-1 py-4 text-xl">
+              <Link to={"/admin"} onClick={closeNavbar}>
+                Admin Dashboard
+              </Link>
             </li>
           )}
 
           {user && !user.isAnonymous && (
             <li className="mt-20 hover:text-primary">
-              <a
-                href=""
-                onClick={() => {
-                  auth.signOut();
-                }}
-              >
+              <div onClick={logout} className="w-fit">
                 <div className=" flex items-center gap-2">
                   <span>Logout</span> <LogOutIcon size={20} />
                 </div>
-              </a>
+              </div>
             </li>
           )}
         </ul>

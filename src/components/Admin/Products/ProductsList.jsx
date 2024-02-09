@@ -26,8 +26,6 @@ const ProductsList = () => {
     return unSubscribe;
   }, []);
 
-  console.log(products);
-
   return (
     <div className="mt-8 flex flex-col gap-4 rounded-xl bg-white">
       <ul>

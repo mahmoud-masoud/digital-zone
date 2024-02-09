@@ -12,7 +12,7 @@ import { auth, db } from "../../Utils/firebase";
 import { doc, runTransaction } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import LoadingSpinner from "../../UI/LoadingSpinner";
+import LightSpinner from "../../UI/LightSpinner";
 
 const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
   const [user] = useAuthState(auth);
@@ -34,7 +34,6 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
           transaction.update(userRef, {
             creditCard: data,
           });
-          console.log("update user credit card");
         });
       } catch (error) {
         console.log(error);
@@ -166,7 +165,7 @@ const CreditCardFrom = ({ setFormVisibility, userCreditCard }) => {
               className="w-24 rounded-full bg-primary p-2 font-semibold
            text-white duration-150  hover:bg-after "
             >
-              {isSubmitting ? <LoadingSpinner h={7} w={7} /> : "Save"}
+              {isSubmitting ? <LightSpinner h={7} w={7} /> : "Save"}
             </button>
             {userCreditCard && (
               <button

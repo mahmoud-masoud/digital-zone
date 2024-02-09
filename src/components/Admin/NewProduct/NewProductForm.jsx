@@ -10,13 +10,20 @@ import { v4 } from "uuid";
 import { db } from "../../../Utils/firebase";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { uploadImages } from "../../../Utils/firebase-functions";
-import { formSchema } from "../../../Utils/zod";
+import { productFormSchema } from "../../../Utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Description from "../ProductFormComponents/Description";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
+import LightSpinner from "../../../UI/LightSpinner";
+import { useState } from "react";
+// import Toast from "../../../UI/Toast";
+// import { AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const NewProductForm = () => {
+  // const [created, setCreated] = useState(false);
+  const navigate = useNavigate();
+
   const defaultValues = {
     title: "",
     highlights: [{ highlightName: "", highlightValue: "" }],
@@ -29,9 +36,9 @@ const NewProductForm = () => {
     register,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(productFormSchema),
     defaultValues,
   });
 
@@ -41,7 +48,6 @@ const NewProductForm = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     const productId = v4();
     try {
       const imagesUrls = await uploadImages(
@@ -49,8 +55,6 @@ const NewProductForm = () => {
         data.category,
         productId,
       );
-
-      console.log("upload images successfully");
 
       const productData = {
         ...data,
@@ -68,17 +72,26 @@ const NewProductForm = () => {
       const productDocRef = doc(productsCollectionRef, productId);
 
       await setDoc(productDocRef, productData);
-      console.log("done added product");
+      // setCreated(true);
+      navigate("/admin/products/" + productId);
     } catch (error) {
       console.log("error happend");
     }
   };
 
   return (
-    <div className="p-6">
-      <Wrapper className={"w-full max-w-[900px]"}>
+    <>
+      {/* <AnimatePresence>
+        {created && (
+          <Toast setToastVisibility={setCreated}>
+            Product created successfully
+          </Toast>
+        )}
+      </AnimatePresence> */}
+
+      <Wrapper className={"w-full max-w-[900px] py-10"}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-8 rounded-lg border bg-white p-6 shadow-lg">
+          <div className="flex flex-col gap-8 rounded-lg border bg-white p-4 shadow-lg md:p-6">
             <ProductTitle control={control} errors={errors} />
 
             <ProductHighlights
@@ -103,7 +116,7 @@ const NewProductForm = () => {
             <Tags setValue={setValue} control={control} errors={errors} />
           </div>
 
-          <div className=" my-10 flex justify-end p-2">
+          <div className="mt-6 flex justify-end p-2">
             <button
               type="submit"
               disabled={isSubmitting}
@@ -119,13 +132,13 @@ const NewProductForm = () => {
               `}
             >
               <span className="flex gap-4 font-semibold">
-                {isSubmitting ? <LoadingSpinner /> : "Save"}
+                {isSubmitting ? <LightSpinner /> : "Save"}
               </span>
             </button>
           </div>
         </form>
       </Wrapper>
-    </div>
+    </>
   );
 };
 export default NewProductForm;
