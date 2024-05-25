@@ -14,7 +14,6 @@ const PasswordInput = ({ className, register, ...props }) => {
           className,
         )}
         type={isVisible ? "text" : "password"}
-        autoComplete="true"
         {...props}
         {...register}
       ></input>

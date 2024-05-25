@@ -1,5 +1,5 @@
 import CartItem from "./CartItem";
-import { motion } from "framer-motion";
+
 const CartItems = ({ cartItems }) => {
   return (
     <div className="flex-1">

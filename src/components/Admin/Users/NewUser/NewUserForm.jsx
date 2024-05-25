@@ -9,10 +9,9 @@ import useCreateNewUser from "../../../../Hooks/firebase/useCreateNewUser";
 import { createUserValidationSchema } from "../../../../Utils/zod";
 import InputError from "../../../../UI/InputError";
 import Toast from "../../../../UI/Toast";
-import { useState } from "react";
 
 const NewUserForm = () => {
-  const { onSubmit, isError, isCreating } = useCreateNewUser();
+  const { onSubmit, isError } = useCreateNewUser();
 
   console.log(isError);
 
@@ -53,6 +52,7 @@ const NewUserForm = () => {
           <div>
             <Label className="text-sm">User Password</Label>
             <PasswordInput
+              autoComplete="new-password"
               placeholder="password"
               register={register("password")}
             />
