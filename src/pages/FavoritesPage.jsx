@@ -4,7 +4,7 @@ import AddToCartBox from "../components/Favorites/AddToCartBox";
 import FavItems from "../components/Favorites/FavItems";
 import EmptyFavorites from "../components/Favorites/EmptyFavorites";
 
-import { auth } from "../Utils/firebase";
+import { auth } from "../Utils/firebaseConfig";
 import useFavorites from "../Hooks/firebase/useFavorites";
 import { useAuthState } from "react-firebase-hooks/auth";
 import NotLoggedInPage from "../Pages/NotLoggedInPage";

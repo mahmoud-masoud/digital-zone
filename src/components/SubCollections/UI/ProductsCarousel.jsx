@@ -1,7 +1,6 @@
-import HomePageCard from "../../components/SubCollections/HomePageCard";
+import HomePageCard from "./HomePageCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";

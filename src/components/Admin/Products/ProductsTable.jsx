@@ -60,7 +60,7 @@ const ProductsTable = () => {
           />
         )}
       </AnimatePresence>
-      <div className="relative p-4 pb-20 md:p-6">
+      <div className="relative pb-20">
         <div className="flex max-w-xs flex-col">
           <label className="mb-2 text-lg">Search</label>
           <input

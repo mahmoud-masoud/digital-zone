@@ -69,6 +69,7 @@ const ProductImages = ({ setValue, serverImages, errors }) => {
                 <div className="group relative">
                   <SortablePhoto url={url} index={index} />
                   <button
+                    type="button"
                     className="absolute right-0 top-0 hidden
                      h-10 w-10 items-center justify-center rounded-md p-2
                       text-2xl font-medium transition group-hover:flex"

@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../../Utils/firebase";
+import { db } from "../../Utils/firebaseConfig";
 
 const useDeleteDoc = (collectionName) => {
   const deleteDocHandler = async (docId) => {

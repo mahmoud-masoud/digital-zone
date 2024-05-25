@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import useCartProduct from "../../Hooks/firebase/useCartProduct";
-import LightSpinner from "../../UI/LightSpinner";
+import useCartProduct from "../../../Hooks/firebase/useCartProduct";
+import LightSpinner from "../../../UI/LightSpinner";
 
 import { Minus, Plus } from "lucide-react";
 const CardAddToCart = ({ title, price, id, image }) => {

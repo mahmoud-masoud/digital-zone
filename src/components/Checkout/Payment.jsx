@@ -2,16 +2,15 @@ import { WalletIcon } from "@heroicons/react/24/solid";
 import CreditCardFrom from "./CreditCardForm";
 import SavedCard from "./SavedCard";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { userShippingInfoActions } from "../../store/userShippingInfo";
 
 const Payment = () => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [userCreditCard, setUserCreditCard] = useState(null);
-  const [userCreditCardLoading, setUserCreditCardLoading] = useState(true);
   const [formIsVisible, setFormVisibility] = useState(true);
 
   const dispatch = useDispatch();
@@ -35,17 +34,15 @@ const Payment = () => {
           } else {
             setFormVisibility(true);
           }
-          setUserCreditCardLoading(false);
         }
       },
       (error) => {
-        setUserCreditCardLoading(false);
         console.error("Error getting user document:", error);
       },
     );
 
     return () => unsubscribe();
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <section className="mt-10 rounded-lg border shadow-md">

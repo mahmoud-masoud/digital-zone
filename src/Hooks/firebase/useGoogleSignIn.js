@@ -1,5 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
-import { auth, db, googlAuthProvider } from "../../Utils/firebase";
+import { auth, db, googlAuthProvider } from "../../Utils/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -26,7 +26,7 @@ const useGoogleSignIn = () => {
           email,
           uid,
           metadata: { ...metadata },
-          type: "permanent",
+          type: "regular",
         });
         setIsSigningIn(false);
         navigate("/");

@@ -25,6 +25,10 @@ export const signupValidationSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+export const updateProfileInfoSchema = signupValidationSchema.omit({
+  password: true,
+});
+
 export const loginValidationSchema = z.object({
   email: z.string().email("Email is required"),
   password: z.string().min(8, "Password is required"),
@@ -78,4 +82,17 @@ export const creditCardFormSchema = z.object({
         message: "Enter a 3 digit CVV code refine",
       },
     ),
+});
+
+export const createUserValidationSchema = z.object({
+  username: z.string().min(3, "Name must be at least 3 characters"),
+  email: z.string().email("Email is required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  type: z
+    .string()
+    .optional()
+    .refine((value) => value === "admin" || value === "regular", {
+      message: 'Role must be either "admin" or "regular"',
+    }),
+  address: z.string().optional(),
 });

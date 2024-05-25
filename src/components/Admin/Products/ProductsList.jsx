@@ -1,5 +1,4 @@
 import {
-  getDocs,
   query,
   collectionGroup,
   onSnapshot,
@@ -8,7 +7,7 @@ import {
 
 import Product from "./Product";
 import { useEffect, useState } from "react";
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { Link } from "react-router-dom";
 
 const ProductsList = () => {

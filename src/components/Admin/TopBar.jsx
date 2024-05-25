@@ -1,4 +1,3 @@
-import Wrapper from "../../UI/Wrapper";
 import Logo from "../../UI/Logo";
 import { Link } from "react-router-dom";
 import { Bars3Icon } from "@heroicons/react/24/outline";

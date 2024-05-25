@@ -7,7 +7,7 @@ import {
   runTransaction,
 } from "firebase/firestore";
 
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";

@@ -5,7 +5,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./CarouselStyles.css";
-
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -37,7 +36,7 @@ const ProductImages = ({ images, title }) => {
               >
                 <img
                   src={imgObj}
-                  alt=""
+                  alt={title}
                   loading="lazy"
                   className="max-h-full max-w-full"
                 />
@@ -46,19 +45,23 @@ const ProductImages = ({ images, title }) => {
           })}
         </Swiper>
 
-        <button
-          className={`prev absolute -top-0 right-1/2 z-10
+        {images.length > 4 && (
+          <>
+            <button
+              className={`prev absolute -top-0 right-1/2 z-10
           flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-light`}
-        >
-          <ChevronUp />
-        </button>
+            >
+              <ChevronUp />
+            </button>
 
-        <button
-          className={`next absolute -bottom-0 right-1/2 z-10 
+            <button
+              className={`next absolute -bottom-0 right-1/2 z-10 
         flex h-8 w-8 translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full bg-light`}
-        >
-          <ChevronDown />
-        </button>
+            >
+              <ChevronDown />
+            </button>
+          </>
+        )}
       </div>
 
       <Swiper

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { UserIcon } from "@heroicons/react/24/solid";
 import CategoriesMenu from "./CategoriesMenu";
 import AccountDropDown from "./AccountDropDown";
-import { auth } from "../../../Utils/firebase";
+import { auth } from "../../../Utils/firebaseConfig";
 import LightSpinner from "../../../UI/LightSpinner";
 import useNoScroll from "../../../Hooks/useNoScroll";
 import { AnimatePresence } from "framer-motion";
@@ -15,14 +15,14 @@ const Navbar = () => {
 
   const {
     elementRef: categoriesMenuRef,
-    isMenu: categoriesMenu,
-    setMenu: setCategoriesMenu,
+    isOpen: categoriesMenu,
+    setIsOpen: setCategoriesMenu,
   } = useMenu();
 
   const {
     elementRef: accountDropdownRef,
-    isMenu: isAccountDropdown,
-    setMenu: setAccountDropdown,
+    isOpen: isAccountDropdown,
+    setIsOpen: setAccountDropdown,
   } = useMenu();
 
   const closeAccountDropDown = () => {

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { shippingInfo } from "../../Utils/zod";
 import { userShippingInfoActions } from "../../store/userShippingInfo";
 import { useDispatch } from "react-redux";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import { doc, runTransaction } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 

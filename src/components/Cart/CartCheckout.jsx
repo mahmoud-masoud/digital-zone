@@ -6,7 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import LoginPopup from "../../UI/LoginPopup";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../Utils/firebase";
+import { auth } from "../../Utils/firebaseConfig";
 const CartCheckout = ({ cartItems }) => {
   const [isLoginPopup, setLoginPopup] = useState(false);
   const [user, isLoading, isError] = useAuthState(auth);

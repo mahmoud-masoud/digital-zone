@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAuthState from "./useAuthState";
 import { linkWithPopup } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { db, googlAuthProvider } from "../../Utils/firebase";
+import { db, googlAuthProvider } from "../../Utils/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 const useGoogleSignup = () => {
@@ -17,7 +17,7 @@ const useGoogleSignup = () => {
       setUserIsSingingUp(true);
       const { email, uid } = response.user;
       const docRef = doc(db, "users", uid);
-      await updateDoc(docRef, { email: email, type: "permanent" });
+      await updateDoc(docRef, { email: email, type: "regular" });
       navigate("/");
       setUserIsSingingUp(false);
     } catch (error) {

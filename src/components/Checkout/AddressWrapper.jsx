@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Address from "./Address";
 import AddressForm from "./AddressForm";
-import { auth, db } from "../../Utils/firebase";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "../../Utils/firebaseConfig";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { userShippingInfoActions } from "../../store/userShippingInfo";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -39,7 +39,7 @@ const AddressWrapper = () => {
       setShippingInfoIsLoading(false);
       console.error("Error getting user document:", error);
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return shippingInfoLIsLoading ? (
     <p>Loading...</p>

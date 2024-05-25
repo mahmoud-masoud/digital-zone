@@ -1,40 +1,21 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../../UI/Wrapper";
-import ProductsCarousel from "./ProductsCarousel";
-import { collection, doc, limit, onSnapshot, query } from "firebase/firestore";
-import { db } from "../../Utils/firebase";
-import { useEffect, useState } from "react";
-import ProductsSkeleton from "./ProductsSkeleton";
+import ProductsCarousel from "./UI/ProductsCarousel";
+import { collection, doc, limit, query } from "firebase/firestore";
+import { db } from "../../Utils/firebaseConfig";
+
+import ProductsSkeleton from "./UI/ProductsSkeleton";
+import useSubCollectionProducts from "../../Hooks/firebase/useSubCollectionProducts";
+import { useMemo } from "react";
 
 const Tablets = () => {
-  const [products, setProducts] = useState(null);
-  const [isLoading, seIstLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const categoryRef = doc(db, "categories", "tablets");
 
-  useEffect(() => {
-    const categoryRef = doc(db, "categories", "tablets");
-    const productsCollectionRef = collection(categoryRef, "products");
-
-    const q = query(productsCollectionRef, limit(10));
-
-    try {
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const updatedProducts = querySnapshot.docs.map((doc) => doc.data());
-        if (!updatedProducts.length) {
-          setIsError(true);
-          return;
-        }
-        seIstLoading(false);
-        setProducts(updatedProducts);
-      });
-
-      return () => unsubscribe();
-    } catch (error) {
-      console.error("Firestore Error:", error);
-      seIstLoading(false);
-      setIsError(true);
-    }
+  const q = useMemo(() => {
+    return query(collection(categoryRef, "products"), limit(10));
   }, []);
+
+  const { products } = useSubCollectionProducts(q);
 
   return (
     <section className=" text-fontColor ">

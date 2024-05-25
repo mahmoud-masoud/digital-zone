@@ -1,4 +1,4 @@
-import { auth } from "../../../Utils/firebase";
+import { auth } from "../../../Utils/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LightSpinner from "../../../UI/LightSpinner";
 import { Link } from "react-router-dom";

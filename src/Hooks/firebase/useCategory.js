@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../../Utils/firebase";
+import { db } from "../../Utils/firebaseConfig";
 import {
   collection,
   doc,
@@ -8,8 +8,7 @@ import {
   orderBy,
   limit,
   startAfter,
-  collectionGroup,
-  where,
+  getCountFromServer,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 
@@ -18,6 +17,7 @@ const useCategory = () => {
   const { category } = useParams();
 
   const [products, setProducts] = useState(null);
+  const [maxProductsCount, setMaxProductsCount] = useState(0);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingNextProducts, setLoadingNextProducts] = useState(false);
@@ -26,37 +26,25 @@ const useCategory = () => {
 
   const fetchProducts = async (lastVisible = null) => {
     setLoadingNextProducts(true);
-
     try {
-      // let categoryQuery = query(
-      //   collectionGroup(db, "products"),
-      //   where("category", "==", category),
-      //   orderBy("title"),
-      //   limit(20),
-      // );
-
       const categoryRef = doc(db, "categories", category);
       const productsCollectionRef = collection(categoryRef, "products");
 
-      let q = query(productsCollectionRef, orderBy("title"), limit(20));
+      const productsDocsCountSnapshot = await getCountFromServer(
+        productsCollectionRef,
+      );
+      setMaxProductsCount(productsDocsCountSnapshot.data().count);
+
+      let q = query(productsCollectionRef, orderBy("title"), limit(8));
 
       if (lastVisible) {
         q = query(
           productsCollectionRef,
           orderBy("title"),
-          limit(20),
+          limit(8),
           startAfter(lastVisible),
         );
       }
-      // if (lastVisible) {
-      //   categoryQuery = query(
-      //     collectionGroup(db, "products"),
-      //     where("category", "==", category),
-      //     orderBy("title"),
-      //     limit(20),
-      //     startAfter(lastDocVisible),
-      //   );
-      // }
 
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
@@ -96,6 +84,7 @@ const useCategory = () => {
 
   return {
     products,
+    maxProductsCount,
     fetchMoreProducts,
     loading,
     error,

@@ -1,33 +1,14 @@
-import { useNavigate } from "react-router-dom";
-
 import { useSelector } from "react-redux";
-import { auth, db } from "../../Utils/firebase";
-import {
-  addDoc,
-  collection,
-  collectionGroup,
-  deleteDoc,
-  doc,
-  getDocs,
-  increment,
-  query,
-  serverTimestamp,
-  updateDoc,
-  where,
-} from "firebase/firestore";
 
-import { useState } from "react";
 import LightSpinner from "../../UI/LightSpinner";
 import formatePrice from "../../Utils/formatePrice";
-import { useAuthState } from "react-firebase-hooks/auth";
+import useCreateOrder from "../../Hooks/firebase/useCreateOrder";
 
 const OrderSummery = () => {
-  const navigate = useNavigate();
-  const [user] = useAuthState(auth);
-  const [orderIsCreating, setOrderIsCreating] = useState(false);
   const { shippingInfo, creditCard } = useSelector(
     (state) => state.userShippingInfo,
   );
+
   const cartItems = useSelector((state) => state.cartItems.cartItems);
 
   const cartTotalPrice = cartItems?.reduce((prev, curr) => {
@@ -36,59 +17,11 @@ const OrderSummery = () => {
 
   const formattedTotalPrice = formatePrice(cartTotalPrice);
 
-  const createOrder = async (userId, products) => {
-    try {
-      setOrderIsCreating(true);
-
-      // create an order
-      const ordersColRef = collection(db, "orders");
-      const orderRef = await addDoc(ordersColRef, {
-        products,
-        shippingInfo,
-        userId,
-        totalAmount: cartTotalPrice,
-        timestamp: serverTimestamp(),
-      });
-
-      const orderId = orderRef.id;
-      await updateDoc(orderRef, {
-        id: orderId,
-      });
-
-      // update product sold quantity
-      products.forEach(async (product) => {
-        const q = query(
-          collectionGroup(db, "products"),
-          where("id", "==", product.id),
-        );
-
-        const productDocRef = (await getDocs(q)).docs[0].ref;
-        await updateDoc(productDocRef, {
-          quantitySold: increment(product.quantity),
-        });
-      });
-
-      // update user total amount spent
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        amountSpent: increment(cartTotalPrice),
-        orders: increment(1),
-      });
-
-      // clear the user cart after success order
-      const cartItemsColRef = collection(db, `users/${user.uid}/cartItems`);
-      const cartItemsSnapshot = await getDocs(cartItemsColRef);
-      for (const doc of cartItemsSnapshot.docs) {
-        deleteDoc(doc.ref);
-      }
-
-      setOrderIsCreating(false);
-      navigate("success");
-    } catch (error) {
-      console.log(error, "error happens");
-      setOrderIsCreating(false);
-    }
-  };
+  const { createOrder, orderIsCreating } = useCreateOrder(
+    cartItems,
+    shippingInfo,
+    cartTotalPrice,
+  );
 
   return (
     <div
@@ -114,7 +47,7 @@ const OrderSummery = () => {
         <div className="p-4">
           <button
             onClick={() => {
-              createOrder(user.uid, cartItems);
+              createOrder();
             }}
             className="flex w-full  items-center justify-center rounded-full
              bg-primary px-6 py-2 font-semibold

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { removeProductFromFavorites } from "../../Utils/firebase-functions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import formatePrice from "../../Utils/formatePrice";
-import { auth } from "../../Utils/firebase";
+import { auth } from "../../Utils/firebaseConfig";
 
 const FavItem = ({ title, image, price, id }) => {
   const [user] = useAuthState(auth);
@@ -19,13 +19,13 @@ const FavItem = ({ title, image, price, id }) => {
       <Link to={`/ip/${id}`}>
         <div className="mb-4 flex justify-between gap-2 ">
           <div className="flex justify-between gap-4 md:gap-6 lg:gap-10">
-            <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center">
+            <div className="flex aspect-square h-24 w-24 flex-shrink-0 items-center justify-center">
               <img
                 src={image}
                 alt={title}
                 width="150"
                 height="150"
-                className="max-h-full max-w-full"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
             <div>

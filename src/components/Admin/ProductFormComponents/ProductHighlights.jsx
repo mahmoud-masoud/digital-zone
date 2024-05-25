@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Controller } from "react-hook-form";
 import InputError from "../../../UI/InputError";
 

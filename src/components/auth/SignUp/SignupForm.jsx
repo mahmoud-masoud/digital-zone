@@ -26,6 +26,7 @@ const SignupForm = ({ onSubmit }) => {
           <Input
             type="text"
             name="username"
+            autoComplete="off"
             register={register("username")}
             placeholder="Enter your username"
             className={"w-full py-3"}
@@ -40,6 +41,7 @@ const SignupForm = ({ onSubmit }) => {
           <Input
             type="email"
             name="email"
+            autoComplete="email"
             register={register("email")}
             placeholder="Enter your email address"
             className={"w-full py-3"}

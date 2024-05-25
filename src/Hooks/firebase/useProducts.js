@@ -1,6 +1,6 @@
 import { collectionGroup, onSnapshot, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../../Utils/firebase";
+import { db } from "../../Utils/firebaseConfig";
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);

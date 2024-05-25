@@ -1,4 +1,4 @@
-import { Profiler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   runTransaction,
   serverTimestamp,
@@ -11,7 +11,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import { db } from "../../Utils/firebase";
+import { db } from "../../Utils/firebaseConfig";
 import useAuthState from "./useAuthState";
 import { removeProductFromTheCart } from "../../Utils/firebase-functions";
 
@@ -107,7 +107,7 @@ const useCartProduct = ({ title, price, id, image }) => {
       } catch (error) {
         console.log("error from catch", error);
       }
-  }, [userLoading]);
+  }, [userLoading, productId, user, userUid]);
 
   return {
     quantity,

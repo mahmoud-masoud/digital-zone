@@ -9,12 +9,11 @@ const PasswordInput = ({ className, register, ...props }) => {
     <div className="relative">
       <input
         className={twMerge(
-          `w-full rounded-md border border-slate-400 py-3 pl-3 pr-6 outline-0
+          `w-full rounded-md border border-slate-400 py-2 pl-3 pr-6 outline-0
       duration-300 hover:border-slate-600 focus:shadow-input max-sm:text-sm`,
           className,
         )}
         type={isVisible ? "text" : "password"}
-        autoComplete="true"
         {...props}
         {...register}
       ></input>

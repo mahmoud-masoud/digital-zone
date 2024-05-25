@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { InboxStackIcon } from "@heroicons/react/24/solid";
 import { collection, getCountFromServer } from "firebase/firestore";
 const Orders = () => {

@@ -1,4 +1,4 @@
-import { auth, db, storage } from "./firebase";
+import { auth, db, storage } from "./firebaseConfig";
 import {
   ref,
   uploadBytes,
@@ -23,7 +23,6 @@ export const uploadImages = async (urls, category, productId) => {
   try {
     for (const imgUrl of urls) {
       if (!imgUrl.startsWith("blob")) {
-        console.log(imgUrl);
         imagesUrls.push(imgUrl);
         continue;
       }
@@ -44,8 +43,6 @@ export const uploadImages = async (urls, category, productId) => {
 
       imagesUrls.push(url);
     }
-
-    console.log(imagesUrls);
   } catch (error) {
     console.log(error);
   }
@@ -68,10 +65,10 @@ export const deleteProductImages = async (path) => {
   }
 };
 
-export const addingUserToUsersCollection = async (userData, userUID) => {
+export const addingUserToUsersCollection = async ({ uid, ...userData }) => {
   try {
-    const docRef = doc(db, "users", userUID);
-    return await setDoc(docRef, userData);
+    const docRef = doc(db, "users", uid);
+    await setDoc(docRef, { uid, ...userData });
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -89,10 +86,13 @@ export const createUser = async ({ email: userEmail, password, username }) => {
 
     const { displayName, email, uid, metadata } = userCredential.user;
 
-    await addingUserToUsersCollection(
-      { displayName, email, uid, type: "permanent", metadata: { ...metadata } },
+    await addingUserToUsersCollection({
+      displayName,
+      email,
       uid,
-    );
+      type: "regular",
+      metadata: { ...metadata },
+    });
   } catch (error) {
     return error.code;
   }
@@ -158,7 +158,6 @@ export const addProductToFavorites = async (userUID, product) => {
         // Product exists in the cart, update its quantity
 
         transaction.delete(productRef);
-        console.log("remove product from favorites");
       } else {
         // Product doesn't exist in the cart, add a new document
         const productWithTimestamp = {
@@ -168,7 +167,6 @@ export const addProductToFavorites = async (userUID, product) => {
         };
 
         transaction.set(productRef, productWithTimestamp);
-        console.log("add new product to favorites");
       }
     });
   } catch (error) {
