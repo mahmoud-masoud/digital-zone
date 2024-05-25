@@ -5,7 +5,7 @@ import NotLoggedInPage from "../../Pages/NotLoggedInPage";
 import Order from "./Order";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import EmptyOrders from "./EmptyOrders";
 const OrdersList = () => {
   const [orders, setOrders] = useState(null);

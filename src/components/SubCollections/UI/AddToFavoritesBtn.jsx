@@ -1,9 +1,9 @@
-import HeartIcon from "../../UI/HeartIcon";
+import HeartIcon from "../../../UI/HeartIcon";
 import { useEffect, useState } from "react";
-import { addProductToFavorites } from "../../Utils/firebase-functions";
-import { auth, db } from "../../Utils/firebase";
+import { addProductToFavorites } from "../../../Utils/firebase-functions";
+import { auth, db } from "../../../Utils/firebaseConfig";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
-import LoginPopup from "../../UI/LoginPopup";
+import LoginPopup from "../../../UI/LoginPopup";
 import { AnimatePresence } from "framer-motion";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -45,12 +45,12 @@ const AddToFavoritesBtn = ({ title, price, id, image }) => {
     } catch (error) {
       console.log("error from catch", error);
     }
-  }, [user]);
+  }, [user, id]);
 
   return (
     <>
       <button
-        className="flex h-8 w-8 items-center justify-center
+        className="relative z-10 flex h-8 w-8 items-center justify-center
          rounded-full p-0.5"
         onClick={addItemToFavList}
       >

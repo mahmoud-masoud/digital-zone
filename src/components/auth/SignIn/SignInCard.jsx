@@ -7,9 +7,10 @@ import ErrorPopup from "../../../UI/ErrorPopup";
 import useGoogleSignIn from "../../../Hooks/firebase/useGoogleSignin";
 import RedirectPopup from "../../../UI/RedirectPopup";
 import { motion } from "framer-motion";
-
 const SignInCard = () => {
-  const { onSubmit, error, setError } = useSignInWithEmailAndPassword();
+  const navigateFlag = true;
+  const { onSubmit, error, setError } =
+    useSignInWithEmailAndPassword(navigateFlag);
   const { signInWithGoogle, isSigningIn } = useGoogleSignIn();
 
   return (

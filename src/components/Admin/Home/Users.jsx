@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { UsersIcon } from "@heroicons/react/24/solid";
 
 import { collection, getCountFromServer, query } from "firebase/firestore";
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 const Users = () => {
   const [usersCount, setUsersCount] = useState(0);
   useEffect(() => {

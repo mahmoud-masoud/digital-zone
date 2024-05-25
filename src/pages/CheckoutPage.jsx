@@ -5,10 +5,10 @@ import useCart from "../Hooks/firebase/useCart";
 import EmptyCart from "../components/Checkout/EmptyCart";
 import Checkout from "../components/Checkout/Checkout";
 import PageSpinner from "../UI/PageSpinner";
-import { auth } from "../Utils/firebase";
+import { auth } from "../Utils/firebaseConfig";
 
 const CheckoutPage = () => {
-  const { items, isLoading, error } = useCart();
+  const { items, isLoading } = useCart();
   const [user, { isLoading: userIsLoading }] = useAuthState(auth);
 
   const isDataLoading = isLoading || userIsLoading;
@@ -19,6 +19,10 @@ const CheckoutPage = () => {
   if (isUserLoggedIn && isCartEmpty) return <EmptyCart />;
   if (!isUserLoggedIn) return <NotLoggedIn />;
 
-  return <Checkout />;
+  return (
+    <>
+      <Checkout />
+    </>
+  );
 };
 export default CheckoutPage;

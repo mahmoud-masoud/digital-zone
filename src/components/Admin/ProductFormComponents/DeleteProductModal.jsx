@@ -6,7 +6,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";

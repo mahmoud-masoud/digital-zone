@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 
 const CartIcon = ({ isInputOnFocus }) => {
-  const [user, { loading: userLoading, error: userError }] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [cartQuantity, setCartQuantity] = useState(0);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const CartIcon = ({ isInputOnFocus }) => {
 
       return unsubscribe;
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
     }
   }, [user]);
 
@@ -41,7 +41,7 @@ const CartIcon = ({ isInputOnFocus }) => {
           <ShoppingCart className="text-white" size={30} />
           <span
             className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center
-         rounded-full  border border-red-500 bg-secondary p-0.5 text-sm text-black"
+         rounded-full bg-light p-0.5 text-sm text-black"
           >
             {cartQuantity}
           </span>

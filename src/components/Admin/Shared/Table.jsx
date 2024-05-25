@@ -5,7 +5,7 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, Turtle } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,7 @@ const Table = ({ tableColumns, data }) => {
   });
 
   return (
-    <div className="relative p-4 pb-20 md:p-6">
+    <div className="relative pb-20">
       <div className="flex max-w-xs flex-col">
         <label className="mb-2 text-lg">Search</label>
         <input

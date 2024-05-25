@@ -7,7 +7,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import ProductTitle from "../ProductFormComponents/ProductTitle";
 import ProductPrice from "../ProductFormComponents/ProductPrice";
 import { v4 } from "uuid";
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { uploadImages } from "../../../Utils/firebase-functions";
 import { productFormSchema } from "../../../Utils/zod";
@@ -15,7 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import Description from "../ProductFormComponents/Description";
 import LightSpinner from "../../../UI/LightSpinner";
-import { useState } from "react";
 // import Toast from "../../../UI/Toast";
 // import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -36,7 +35,7 @@ const NewProductForm = () => {
     register,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(productFormSchema),
     defaultValues,
@@ -75,7 +74,7 @@ const NewProductForm = () => {
       // setCreated(true);
       navigate("/admin/products/" + productId);
     } catch (error) {
-      console.log("error happend");
+      // console.log("error happend");
     }
   };
 

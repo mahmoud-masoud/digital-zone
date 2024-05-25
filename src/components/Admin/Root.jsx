@@ -1,20 +1,20 @@
-import { Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import NavbarTopBarWrapper from "./NavbarTopBarWrapper";
+import PageSpinner from "../.../../../UI/PageSpinner";
+import useUserAuthContext from "../../Hooks/firebase/useUserAuthContext";
 
-import useAuthState from "../../Hooks/firebase/useAuthState";
-import { useEffect } from "react";
 const Root = () => {
-  const { user, isLoading, isError } = useAuthState();
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isLoading && user) {
-      if (user.uid != import.meta.env.VITE_ADMIN_ID) navigate("/");
-    }
-  }, [user, isLoading]);
+  const { user, isAdmin, userIsLoading, userDataIsLoading } =
+    useUserAuthContext();
 
-  if (isLoading) return;
+  if (userIsLoading || userDataIsLoading) return <PageSpinner />;
+
+  if (!user || !isAdmin) {
+    navigate("/");
+  }
+
   return (
     <>
       <NavbarTopBarWrapper />

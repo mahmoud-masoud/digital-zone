@@ -1,5 +1,5 @@
 import { collection, doc, onSnapshot } from "firebase/firestore";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import { cartItemsActions } from "../../store/cartItems";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";

@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import useGoogleSignup from "../../../Hooks/firebase/useGoogleSignup";
 import RedirectPopup from "../../../UI/RedirectPopup";
-import useEmailPassSignup from "../../../Hooks/firebase/useEmailPassSignup";
+import useSignupWithEmailAndPassword from "../../../Hooks/firebase/useSignupWithEmailAndPassword";
 import { motion } from "framer-motion";
 
 const SignUpCard = () => {
   const {
     signUpWithGoogle,
     userIsSigningUpWithGoogle,
-    userError,
     signupError,
     setSignupError,
   } = useGoogleSignup();
@@ -21,7 +20,7 @@ const SignUpCard = () => {
     signupEmailPassError,
     setEmailPassSignupError,
     userIsSigningUpWithEmailAndPassword,
-  } = useEmailPassSignup();
+  } = useSignupWithEmailAndPassword();
 
   return (
     <section className="min-h-screen bg-light">

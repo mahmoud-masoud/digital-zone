@@ -1,11 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../Utils/firebase";
+import { auth, db } from "../../Utils/firebaseConfig";
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import randomUsername from "../../Utils/randomUserName.js";
 const useAnonymousLogin = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     const createAnonymousUser = async () => {

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { auth } from "../../../Utils/firebase";
+import { auth } from "../../../Utils/firebaseConfig";
 import { signOut } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { LogOutIcon } from "lucide-react";
+import useUserAuthContext from "../../../Hooks/firebase/useUserAuthContext";
 
 const AccountDropDown = ({ closeAccountDropDown }) => {
-  const [user] = useAuthState(auth);
+  const { user, isAdmin } = useUserAuthContext();
 
   const logout = () => {
     closeAccountDropDown();
@@ -37,8 +37,13 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
               Orders
             </Link>
           )}
+          {user && !user.isAnonymous && (
+            <Link to={"profile"} className="underline-offset-4 hover:underline">
+              Profile
+            </Link>
+          )}
 
-          {user?.uid == import.meta.env.VITE_ADMIN_ID && (
+          {isAdmin && (
             <Link
               to={"admin"}
               onClick={closeAccountDropDown}
@@ -50,7 +55,8 @@ const AccountDropDown = ({ closeAccountDropDown }) => {
 
           {user && !user.isAnonymous && (
             <div
-              className="flex cursor-pointer items-center gap-2 underline-offset-4 hover:underline"
+              className="mt-2 flex cursor-pointer items-center gap-2
+               underline-offset-4 hover:underline"
               onClick={logout}
             >
               <span>Logout</span> <LogOutIcon size={17} />

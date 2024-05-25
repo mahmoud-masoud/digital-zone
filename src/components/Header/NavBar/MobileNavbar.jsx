@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../../Utils/firebase";
+import { auth } from "../../../Utils/firebaseConfig";
 import { signOut } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { motion } from "framer-motion";
 import MobileAccountAvatar from "./MobileAccountAvatar";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { LogOutIcon } from "lucide-react";
-const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
+import useUserAuthContext from "../../../Hooks/firebase/useUserAuthContext";
+const MobileNavbar = ({ closeNavbar }) => {
+  const { user, isAdmin, userIsLoading } = useUserAuthContext();
   const [accordion, setAccordion] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
 
   const handleAccordionBlur = () => {
     setTimeout(() => {
@@ -143,7 +143,19 @@ const MobileNavbar = ({ closeNavbar, navbarIsOpen }) => {
               Favorites
             </Link>
           </li>
-          {user?.uid == import.meta.env.VITE_ADMIN_ID && (
+          <li className="flex items-center gap-1 py-4 text-xl">
+            <Link to={"orders"} onClick={closeNavbar}>
+              Orders
+            </Link>
+          </li>
+          {user && !user.isAnonymous && !userIsLoading && (
+            <li className="flex items-center gap-1 py-4 text-xl">
+              <Link to={"profile"} onClick={closeNavbar}>
+                Profile
+              </Link>
+            </li>
+          )}
+          {isAdmin && (
             <li className="flex items-center gap-1 py-4 text-xl">
               <Link to={"/admin"} onClick={closeNavbar}>
                 Admin Dashboard

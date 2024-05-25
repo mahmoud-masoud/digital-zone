@@ -4,6 +4,44 @@ import Wrapper from "../../UI/Wrapper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 
+const categoriesUrls = [
+  {
+    url: "laptops",
+    imgUrl: "images/Categories/laptop.webp",
+    imgAlt: "laptop image",
+  },
+  {
+    url: "headphones",
+    imgUrl: "images/Categories/headphone.webp",
+    imgAlt: "headphone image",
+  },
+  {
+    url: "mobile-phones",
+    imgUrl: "images/Categories/phone.webp",
+    imgAlt: "mobile phone image",
+  },
+  {
+    url: "smart-watches",
+    imgUrl: "images/Categories/smart-watch.webp",
+    imgAlt: "smart watch image",
+  },
+  {
+    url: "gaming",
+    imgUrl: "images/Categories/gaming.webp",
+    imgAlt: "gaming image",
+  },
+  {
+    url: "monitors",
+    imgUrl: "images/Categories/monitor.webp",
+    imgAlt: "monitor image",
+  },
+  {
+    url: "tablets",
+    imgUrl: "images/Categories/tablet.webp",
+    imgAlt: "tablet image",
+  },
+];
+
 const Categories = () => {
   return (
     <section className="mt-4 px-4 py-8 md:py-12">
@@ -27,83 +65,16 @@ const Categories = () => {
           slidesPerView={2.7}
           modules={[FreeMode]}
         >
-          <SwiperSlide>
-            <Link
-              to={"ct/laptops"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/laptop.webp"}
-                title={"Laptops"}
-              />
-            </Link>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <Link
-              to={"ct/headphones"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/headphone.webp"}
-                title={"Headphones"}
-              />
-            </Link>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <Link
-              to={"ct/mobile-phones"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/phone.webp"}
-                title={"Mobile Phones"}
-              />
-            </Link>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <Link
-              to={"ct/smart-watches"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/smart-watch.webp"}
-                title={"Smart Watches"}
-              />
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Link to={"ct/gaming"} className="flex items-center justify-center">
-              <Category
-                img={"/images/Categories/gaming.webp"}
-                title={"Gaming"}
-              />
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Link
-              to={"ct/monitors"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/monitor.webp"}
-                title={"Monitors"}
-              />
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Link
-              to={"ct/tablets"}
-              className="flex items-center justify-center"
-            >
-              <Category
-                img={"/images/Categories/tablets.webp"}
-                title={"Tablets"}
-              />
-            </Link>
-          </SwiperSlide>
+          {categoriesUrls.map((category) => (
+            <SwiperSlide key={category.url}>
+              <Link
+                to={`ct/${category.url}`}
+                className="flex items-center justify-center"
+              >
+                <Category img={category.imgUrl} title={category.imgAlt} />
+              </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </Wrapper>
     </section>

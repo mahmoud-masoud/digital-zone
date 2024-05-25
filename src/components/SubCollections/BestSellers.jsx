@@ -1,48 +1,29 @@
-import { Suspense, useEffect, useState } from "react";
-
 import Wrapper from "../../UI/Wrapper";
+import ProductsCarousel from "./UI/ProductsCarousel.jsx";
 
-import ProductsCarousel from "./ProductsCarousel";
+import ProductsSkeleton from "./UI/ProductsSkeleton.jsx";
+import useSubCollectionProducts from "../../Hooks/firebase/useSubCollectionProducts.js";
 import {
   collectionGroup,
   limit,
-  onSnapshot,
   orderBy,
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../../Utils/firebase.js";
-
-import ProductsSkeleton from "./ProductsSkeleton";
+import { db } from "../../Utils/firebaseConfig.js";
+import { useMemo } from "react";
 
 const BestSellers = () => {
-  const [products, setProducts] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    try {
-      const q = query(
-        collectionGroup(db, "products"),
-        where("quantitySold", ">=", 0),
-        orderBy("quantitySold", "desc"),
-        limit(10),
-      );
-
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        if (!querySnapshot.empty) {
-          const productData = querySnapshot.docs.map((doc) => doc.data());
-          setProducts(productData);
-          setIsLoading(false);
-        }
-      });
-
-      return () => unsubscribe;
-    } catch (error) {
-      setIsError(false);
-      setIsLoading(false);
-    }
+  const q = useMemo(() => {
+    return query(
+      collectionGroup(db, "products"),
+      where("quantitySold", ">=", 0),
+      orderBy("quantitySold", "desc"),
+      limit(10),
+    );
   }, []);
+
+  const { products } = useSubCollectionProducts(q);
 
   return (
     <section>

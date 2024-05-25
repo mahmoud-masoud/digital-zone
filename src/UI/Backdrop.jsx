@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { createPortal } from "react-dom";
 
 const Backdrop = ({ closeModal }) => {
   return (
@@ -6,7 +7,7 @@ const Backdrop = ({ closeModal }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[11] bg-black/40"
+      className="fixed inset-0 bg-black/40"
       onClick={closeModal}
     ></motion.div>
   );

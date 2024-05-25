@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth } from "../Utils/firebase";
+import { auth } from "../Utils/firebaseConfig";
 
 function HeartIcon({ className, isFavorite }) {
   const [color, setColor] = useState(false);

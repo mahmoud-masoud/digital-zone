@@ -1,17 +1,16 @@
-import { elementFromString } from "@tiptap/react";
 import { useEffect, useRef, useState } from "react";
 
 const useMenu = () => {
-  const [isMenu, setMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const elementRef = useRef(null);
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (elementRef.current && elementRef.current.contains(e.target)) {
-        setMenu(true);
+        setIsOpen(true);
       } else {
-        setMenu(false);
+        setIsOpen(false);
       }
     };
 
@@ -20,6 +19,6 @@ const useMenu = () => {
     return () => document.removeEventListener("click", handleOutsideClick);
   }, []);
 
-  return { elementRef, isMenu, setMenu };
+  return { elementRef, isOpen, setIsOpen };
 };
 export default useMenu;

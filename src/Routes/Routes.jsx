@@ -13,24 +13,25 @@ import ErrorPage from "../Pages/ErrorPage";
 import NotFoundPage from "../Pages/NotFoundPage";
 import PageSpinner from "../UI/PageSpinner";
 import { AnimatePresence } from "framer-motion";
+import NotLoggedIn from "../components/Checkout/NotLoggedIn";
 
 const LazyProductPage = lazy(() => import("../pages/ProductPage"));
 const LazyFavoritesPage = lazy(() => import("../pages/FavoritesPage"));
 const LazyCartPage = lazy(() => import("../pages/CartPage"));
 const LazyCheckoutPage = lazy(() => import("../pages/CheckoutPage"));
 const LazyUserOrdersPage = lazy(() => import("../pages/UserOrdersPage"));
+const LazyUserProfilePage = lazy(() => import("../pages/UserProfilePage"));
 const LazyCategoryPage = lazy(() => import("../pages/CategoryPage"));
 const LazySignInPage = lazy(() => import("../pages/SignIn"));
 const LazySignupPage = lazy(() => import("../pages/SignupPage"));
 
 // Admin pages
-
 const LazyAdminHomePage = lazy(() => import("../pages/Admin/Home"));
 const LazyAdminProductsPage = lazy(() => import("../pages/Admin/Products"));
 const LazyAdminProductPage = lazy(() => import("../pages/Admin/ProductPage"));
 const LazyAdminNewProductPage = lazy(() => import("../pages/Admin/NewProduct"));
 const LazyAdminUsersPage = lazy(() => import("../pages/Admin/Users"));
-const LazyAdminNewUserPage = lazy(() => import("../pages/Admin/NewUser"));
+const LazyAdminNewUserPage = lazy(() => import("../pages/Admin/NewUserPage"));
 const LazyAdminOrdersPage = lazy(() => import("../pages/Admin/Orders"));
 const LazyAdminOrderDetailsPage = lazy(() =>
   import("../pages/Admin/OrderDetails"),
@@ -51,6 +52,7 @@ const Routes = () => {
   // routes
   const router = useRoutes([
     { path: "*", element: <NotFoundPage /> },
+
     {
       path: "/",
       element: <Root />,
@@ -83,6 +85,15 @@ const Routes = () => {
               element: (
                 <Suspense fallback={<PageSpinner />}>
                   <LazyUserOrdersPage />
+                </Suspense>
+              ),
+            },
+
+            {
+              path: "profile",
+              element: (
+                <Suspense fallback={<PageSpinner />}>
+                  <LazyUserProfilePage />
                 </Suspense>
               ),
             },

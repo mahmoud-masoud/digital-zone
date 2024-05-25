@@ -1,7 +1,7 @@
 import { TruckIcon } from "@heroicons/react/24/solid";
 import { RotateCcw, Zap } from "lucide-react";
 import AddToCartBtn from "./AddToCartBtn";
-import AddToFavoritesBtn from "../../SubCollections/AddToFavoritesBtn";
+import AddToFavoritesBtn from "../../SubCollections/UI/AddToFavoritesBtn";
 import { useParams } from "react-router-dom";
 import formatePrice from "../../../Utils/formatePrice";
 const ProductInfo = ({ title, price, id, image, quantity }) => {

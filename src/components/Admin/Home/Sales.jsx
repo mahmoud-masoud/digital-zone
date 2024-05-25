@@ -1,4 +1,4 @@
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import formatePrice from "../../../Utils/formatePrice";

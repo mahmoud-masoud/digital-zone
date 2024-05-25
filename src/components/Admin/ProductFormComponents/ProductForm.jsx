@@ -14,7 +14,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { uploadImages } from "../../../Utils/firebase-functions";
-import { db } from "../../../Utils/firebase";
+import { db } from "../../../Utils/firebaseConfig";
 import { useForm, useFieldArray } from "react-hook-form";
 import { productFormSchema } from "../../../Utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";

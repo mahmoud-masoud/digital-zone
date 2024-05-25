@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../../Utils/firebase";
+import { db } from "../../Utils/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 
 const useDoc = (docId) => {

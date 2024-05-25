@@ -14,7 +14,7 @@ const SearchBox = ({ setInputOnFocus, isInputOnFocus, handleInputOnFocus }) => {
     return () => {
       document.removeEventListener("click", closeSuggestions);
     };
-  }, []);
+  }, [setInputOnFocus]);
 
   return (
     <>
@@ -53,8 +53,8 @@ const SearchBox = ({ setInputOnFocus, isInputOnFocus, handleInputOnFocus }) => {
             >
               &times;
             </button>
-            <button className="rounded-full bg-secondary p-1">
-              <Search className="p-0.5 text-dark" strokeWidth={1.2} />
+            <button className="rounded-full bg-after p-1 ">
+              <Search className="p-0.5 text-white" strokeWidth={1.2} />
             </button>
           </div>
           {/* Suggestions Box */}
