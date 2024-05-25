@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { createPortal } from "react-dom";
-
 const Backdrop = ({ closeModal }) => {
   return (
     <motion.div

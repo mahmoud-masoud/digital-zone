@@ -8,37 +8,37 @@ const categoriesUrls = [
   {
     url: "laptops",
     imgUrl: "images/Categories/laptop.webp",
-    imgAlt: "laptop image",
+    name: "Laptops",
   },
   {
     url: "headphones",
     imgUrl: "images/Categories/headphone.webp",
-    imgAlt: "headphone image",
+    name: "Headphones",
   },
   {
     url: "mobile-phones",
     imgUrl: "images/Categories/phone.webp",
-    imgAlt: "mobile phone image",
+    name: "Smart Phones",
   },
   {
     url: "smart-watches",
     imgUrl: "images/Categories/smart-watch.webp",
-    imgAlt: "smart watch image",
+    name: "Smart Watches",
   },
   {
     url: "gaming",
     imgUrl: "images/Categories/gaming.webp",
-    imgAlt: "gaming image",
+    name: "Gaming",
   },
   {
     url: "monitors",
     imgUrl: "images/Categories/monitor.webp",
-    imgAlt: "monitor image",
+    name: "Monitors",
   },
   {
     url: "tablets",
     imgUrl: "images/Categories/tablet.webp",
-    imgAlt: "tablet image",
+    name: "Tablets",
   },
 ];
 
@@ -71,7 +71,7 @@ const Categories = () => {
                 to={`ct/${category.url}`}
                 className="flex items-center justify-center"
               >
-                <Category img={category.imgUrl} title={category.imgAlt} />
+                <Category img={category.imgUrl} title={category.name} />
               </Link>
             </SwiperSlide>
           ))}

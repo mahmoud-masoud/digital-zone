@@ -13,6 +13,8 @@ const UserProfile = () => {
 
   if (!user || user.isAnonymous) return <NotLoggedInPage />;
 
+  // Check if the user singed with google if true there will not be an update password option
+
   const isSingingWithGoogle =
     user?.providerData[0]?.providerId === "google.com";
 
