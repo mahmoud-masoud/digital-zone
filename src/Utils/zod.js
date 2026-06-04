@@ -15,7 +15,7 @@ export const productFormSchema = z.object({
   ),
   images: z
     .array(z.string())
-    .min(4, "At least 4 images is required for the product."),
+    .min(2, "At least 4 images is required for the product."),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
 });
 

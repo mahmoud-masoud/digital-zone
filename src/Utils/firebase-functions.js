@@ -17,31 +17,81 @@ import {
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
+// export const uploadImages = async (urls, category, productId) => {
+//   const imagesUrls = [];
+
+//   try {
+//     for (const imgUrl of urls) {
+//       if (!imgUrl.startsWith("blob")) {
+//         imagesUrls.push(imgUrl);
+//         continue;
+//       }
+//       const blobData = await fetch(imgUrl).then((response) => response.blob());
+//       const resFile = new File(
+//         [blobData],
+//         Math.random() * 10 * Date.now() + 22,
+//         { type: blobData.type },
+//       );
+
+//       const storageRef = ref(
+//         storage,
+//         `${category}/${productId}/${resFile.name}`,
+//       );
+//       const uploadedTask = await uploadBytes(storageRef, resFile);
+
+//       const url = await getDownloadURL(uploadedTask.ref);
+
+//       imagesUrls.push(url);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+//   return imagesUrls;
+// };
+
 export const uploadImages = async (urls, category, productId) => {
   const imagesUrls = [];
 
   try {
     for (const imgUrl of urls) {
+      // لو الصورة already uploaded
       if (!imgUrl.startsWith("blob")) {
         imagesUrls.push(imgUrl);
         continue;
       }
+
+      // تحويل blob -> file
       const blobData = await fetch(imgUrl).then((response) => response.blob());
-      const resFile = new File(
-        [blobData],
-        Math.random() * 10 * Date.now() + 22,
-        { type: blobData.type },
+
+      const file = new File([blobData], `${Date.now()}-${Math.random()}.png`, {
+        type: blobData.type,
+      });
+
+      // form data
+      const formData = new FormData();
+
+      formData.append("file", file);
+
+      formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+
+      // optional folder structure
+      formData.append("folder", `${category}/${productId}`);
+
+      // upload
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        },
       );
 
-      const storageRef = ref(
-        storage,
-        `${category}/${productId}/${resFile.name}`,
-      );
-      const uploadedTask = await uploadBytes(storageRef, resFile);
+      const data = await res.json();
 
-      const url = await getDownloadURL(uploadedTask.ref);
-
-      imagesUrls.push(url);
+      imagesUrls.push(data.secure_url);
     }
   } catch (error) {
     console.log(error);

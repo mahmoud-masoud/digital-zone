@@ -17,7 +17,7 @@ const AdminRoutes = {
   element: <AdminRoot />,
   children: [
     {
-      // index: true,
+      index: true,
 
       element: (
         <Suspense fallback={<PageSpinner />}>
